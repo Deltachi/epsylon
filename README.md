@@ -7,6 +7,6 @@ Anders als herkömmliche Ansätze, sollen Prüfende in einem digitalen Prüfungs
 
 | Name  | Rolle |
 | ------------- | ------------- |
-| Dominik Scheffler  | Projektmanager/Controller, Programmierer  |
-| Jonas Strunk  | Risikomanager, Programmierer  |
-| Umut Güngör  | Qualitätsmanager, Programmierer  |
+| Dominik Scheffler (Deltachi)  | Projektmanager/Controller, Programmierer  |
+| Jonas Strunk (Ripdip) | Risikomanager, Programmierer  |
+| Umut Güngör (Umsko010) | Qualitätsmanager, Programmierer  |
