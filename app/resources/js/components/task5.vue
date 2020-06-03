@@ -1,20 +1,23 @@
 <template>
     <div class="card">
         <form>
-            <div class="card-header">
+            <div class="card-header p-4 pl-5 pr-5">
                 <h2>{{task.title}}</h2>
                 <div class="text-muted">{{task.hint}}</div>
             </div>
             <div class="card-body">
                 <div class="card mb-4" v-for="subtask in task.subtasks">
-                    <div class="card-header">
+                    <div class="card-header p-3 pl-4 pr-4">
                         <h4>{{subtask.title}}</h4>
                         <div class="text-muted">{{subtask.hint}}</div>
                     </div>
-                    <div id="checkdistance">
-                        <div class="card-body" v-for="index in subtask.solution.length" :key="index">
-                            <div class="checkboxes">
-                                <label for="check"><input type="radio" class="form-check-input" id="check">{{subtask.solution[index-1]}}</label>
+                    <div class="pl-3">
+                        <div class="card-body">
+                            <div class="form-check mb-2" v-for="index in subtask.solution.length" :key="index">
+                                <input class="form-check-input" type="radio" :name="'gridRadios'+subtask.id" :id="'gridRadios'+subtask.id+'-'+index" :value="subtask.solution[index-1]">
+                                <label class="form-check-label" :for="'gridRadios'+subtask.id+'-'+index">
+                                    {{subtask.solution[index-1]}}
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -70,7 +73,5 @@
 </script>
 
 <style scoped>
-    #checkdistance{
-        padding-left: 30px;
-    }
+
 </style>
