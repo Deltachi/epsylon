@@ -29,13 +29,6 @@
             </div>
             <div class="card-footer d-flex flex-column align-items-end">
                 <button type="button" @click="submitTask()" class="btn btn-primary">Speichern</button>
-                <div class="lightbox-bg"></div>
-                <div class="status confirm">
-                    <p>All Answers Answered</p>
-                </div>
-                <div class="status deny">
-                    <p>Answers Remain</p>
-                </div>
             </div>
         </form>
     </div>
@@ -71,20 +64,6 @@
                         });
                         answersLeft.push(answerValue);
                     } else { }
-                });
-                $('.quiz-wrapper button[type="submit"]').click( function() {
-                    if ( answersLeft.length > 0 ) {
-                        $('.lightbox-bg').show();
-                        $('.status.deny').show();
-                        $('.lightbox-bg').click( function() {
-                            $('.lightbox-bg').hide();
-                            $('.status.deny').hide();
-                            $('.lightbox-bg').unbind('click');
-                        });
-                    } else {
-                        $('.lightbox-bg').show();
-                        $('.status.confirm').show();
-                    }
                 });
             });
         },
@@ -128,10 +107,11 @@
     .quiz-wrapper .option{
         z-index: 999;
     }
+    .quiz-wrapper .option:hover{
+        cursor: pointer;
+    }
     .quiz-wrapper .answers {
         display: inline-block;
-        width: 335px;
-        font-size: 13px;
         line-height: 25px;
     }
     .quiz-wrapper .answers ol{
@@ -142,46 +122,18 @@
     }
     .quiz-wrapper .answers .target {
         display: inline-block;
-        width: 110px;
+        width: 130px;
         background: lightgray;
         margin: 0px 3px;
         text-align: center;
         height: 22px;
         vertical-align: text-bottom;
         border-radius: 3px;
+        border: 1px solid lightgray;
+        transition: background-color .2s ease;
     }
-    .quiz-wrapper button[type="submit"] {
-        display: block;
-        position: relative;
-        margin: 10px auto;
-        padding: 10px;
-        background: #19286c;
-        border: none;
-        color: white;
-        font-size: 16px;
-    }
-    .lightbox-bg {
-        display: none;
-        position: absolute;
-        z-index: 100;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(0, 0, 0, 0.7);
-    }
-    .status {
-        display: none;
-        position: absolute;
-        z-index: 110;
-        text-align: center;
-        width: 80%;
-        top: 220px;
-        left: 47px;
-    }
-    .status p {
-        background: white;
-        padding: 30px;
+    .quiz-wrapper .answers .target:hover{
+        background-color: white;
     }
 
 </style>
