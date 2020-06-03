@@ -24,7 +24,6 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        if(!view()->exists('tasks/task'.$id)) abort(404);
-        return view('tasks/task'.$id);
+        return view('tasks', ['task_id' => $id]);
     }
 }
