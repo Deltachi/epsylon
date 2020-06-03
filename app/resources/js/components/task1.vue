@@ -26,6 +26,10 @@
 <script>
     export default {
         name: "task1",
+        created() {
+            //Methodenaufrufe
+            //Variablenzuweisungen
+        },
         data(){
             return {
                 task: {
