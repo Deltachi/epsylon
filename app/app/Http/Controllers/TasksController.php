@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
+class TasksController extends Controller
 {
     /**
      * Create a new controller instance.
