@@ -3,7 +3,8 @@
         <form>
             <div class="card-header">
                 <h2>{{task.title}}</h2>
-                <div class="text-muted">{{task.hint}}</div>
+                <div v-html="task.description"></div>
+                <div class="text-muted small">{{task.hint}}</div>
             </div>
             <div class="card-body">
                 <MonacoEditor
@@ -41,6 +42,7 @@
                 task: {
                     type: 1,
                     title: "Das hier ist eine Programmier-Aufgabe in C++",
+                    description: "<p>Hier ist eine detaillierte Beschreibung der Aufgabe</p><ul><li>Aufgabe 1.1</li><li>Aufgabe 1.2</li><li>Aufgabe 1.3</li></ul>",
                     hint: "Hier stehen Hinweise zur Aufgabe",
                     subtasks: [
                         {
