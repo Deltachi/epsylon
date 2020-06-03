@@ -6,7 +6,7 @@
                 <div v-html="task.description"></div>
                 <div class="text-muted small">{{task.hint}}</div>
             </div>
-            <div class="card-body">
+            <div class="card-body editor-wrapper">
                 <MonacoEditor
                     width="100%"
                     height="500px"
@@ -83,5 +83,8 @@
 </script>
 
 <style scoped>
-
+    .editor-wrapper{
+        width: calc(100%);
+        overflow: hidden;
+    }
 </style>
