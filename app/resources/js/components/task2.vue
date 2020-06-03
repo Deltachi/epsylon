@@ -7,8 +7,8 @@
             </div>
             <div class="card-body">
                 <MonacoEditor
-                    width="800"
-                    height="500"
+                    width="100%"
+                    height="500px"
                     theme="vs-dark"
                     language="cpp"
                     :options="options"
