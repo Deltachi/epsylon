@@ -11,5 +11,27 @@ const mix = require('laravel-mix');
  |
  */
 
+
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
+
+
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+// module.exports = {
+//     plugins: [
+//         new MonacoWebpackPlugin({
+//             // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+//             languages: ['javascript','c','cpp','java','python']
+//         })
+//     ]
+// }
+mix.webpackConfig(webpack => {
+    return {
+        plugins: [
+            new MonacoWebpackPlugin({
+                // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+                languages: ['javascript','cpp','java','python']
+            })
+        ]
+    };
+});
