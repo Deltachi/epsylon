@@ -14,7 +14,7 @@
                     <div id="checkdistance">
                         <div class="form-group row" v-for="index in subtask.solution.length" :key="index">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" :id="'check'+subtask.id+'-'+index" >
+                                <input class="form-check-input" type="checkbox" :id="'check'+subtask.id+'-'+index" :value="subtask.solution[index-1]" v-model="answer[subtask.id]">
                                 <label class="form-check-label" :for="'check'+subtask.id+'-'+index">{{subtask.solution[index-1]}}</label>
                             </div>
                         </div>
@@ -22,7 +22,8 @@
 
                 </div>
             </div>
-            <div class="card-footer d-flex flex-column align-items-end">
+            <div class="card-footer d-flex flex-row justify-content-between">
+                <button type="button" @click="reset()" class="btn btn-outline-info">Zurücksetzen</button>
                 <button type="button" @click="submitTask()" class="btn btn-primary">Speichern</button>
             </div>
         </form>
@@ -35,6 +36,7 @@
         created() {
             //Methodenaufrufe
             //Variablenzuweisungen
+            this.localLoad();
         },
         data(){
             return {
@@ -57,13 +59,36 @@
                             solution:["rot", "pink","weiß","magenta","gelb"]
                         },
                     ]
-                }
+                },
+                answer: [
+                    [],[]
+                ]
             }
         },
         methods: {
             submitTask(){
-                alert("Aufgabe wird abgegeben!");
+                alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
+                this.localSave(JSON.stringify(this.answer));
             },
+            localSave(){
+                localStorage.setItem("task_"+this.task.type,JSON.stringify(this.answer));
+            },
+            localLoad(){
+                if(localStorage.getItem("task_"+this.task.type)){
+                    this.answer = JSON.parse(localStorage.getItem("task_"+this.task.type));
+                }
+            },
+            localDelete(){
+                if(localStorage.getItem("task_"+this.task.type)){
+                    localStorage.removeItem("task_"+this.task.type);
+                }
+            },
+            reset(){
+                if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
+                    this.localDelete();
+                    this.answer = {}
+                }
+            }
 
         }
 
