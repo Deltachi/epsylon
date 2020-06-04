@@ -30,7 +30,7 @@
         created() {
             //Methodenaufrufe
             //Variablenzuweisungen
-            //this.localLoad();
+            this.localLoad();
         },
         data(){
             return {
