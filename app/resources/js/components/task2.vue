@@ -82,16 +82,16 @@
                 //console.log(value);
             },
             localSave(){
-                localStorage.setItem("task_"+this.type,JSON.stringify(this.code));
+                localStorage.setItem("task_"+this.task.type,JSON.stringify(this.code));
             },
             localLoad(){
-                if(localStorage.getItem("task_"+this.type)){
-                    this.code = JSON.parse(localStorage.getItem("task_"+this.type));
+                if(localStorage.getItem("task_"+this.task.type)){
+                    this.code = JSON.parse(localStorage.getItem("task_"+this.task.type));
                 }
             },
             localDelete(){
-                if(localStorage.getItem("task_"+this.type)){
-                    localStorage.removeItem("task_"+this.type);
+                if(localStorage.getItem("task_"+this.task.type)){
+                    localStorage.removeItem("task_"+this.task.type);
                 }
             },
             reset(){
