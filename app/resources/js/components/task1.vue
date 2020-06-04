@@ -81,7 +81,7 @@
             },
             reset(){
                 this.localDelete();
-                this.answer = {};
+                this.answer = {}
             }
         }
 
