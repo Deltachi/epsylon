@@ -24,6 +24,15 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        return view('tasks', ['task_id' => $id]);
+        return view('task', ['task_id' => $id]);
+    }
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        return view('tasks');
     }
 }
