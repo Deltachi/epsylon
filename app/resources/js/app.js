@@ -10,6 +10,7 @@ window.Vue = require('vue');
 
 import 'jquery-ui/ui/widgets/draggable.js';
 import 'jquery-ui/ui/widgets/droppable.js';
+import 'jquery-ui/ui/widgets/sortable.js';
 
 /**
  * The following block of code may be used to automatically register your
