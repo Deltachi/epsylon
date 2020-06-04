@@ -37,16 +37,13 @@
             $( function() {
                 $( ".sortable").sortable({
                     connectWith: ".sortable",
-                    handle: ".input",
                     revert: 'invalid',
-                    containment: false
                 });
                 $(".draggable").each(function(i){
                     $(this).draggable({
                         connectToSortable: ".sortable",
                         helper: "original",
                         revert: 'invalid',
-                        containment: false
                     });
                 });
             } );
