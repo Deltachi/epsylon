@@ -12,11 +12,12 @@
                         <div class="text-muted">{{subtask.hint}}</div>
                     </div>
                     <div class="card-body">
-                        <input :name="'answer-'+subtask.id" type="text" class="form-control" placeholder="Antwort...">
+                        <input v-model="answer[subtask.id]" :name="'answer-'+subtask.id" type="text" class="form-control" placeholder="Antwort...">
                     </div>
                 </div>
             </div>
-            <div class="card-footer d-flex flex-column align-items-end">
+            <div class="card-footer d-flex flex-row justify-content-between">
+                <button type="button" @click="localDelete()" class="btn btn-outline-info">Zurücksetzen</button>
                 <button type="button" @click="submitTask()" class="btn btn-primary">Speichern</button>
             </div>
         </form>
@@ -29,11 +30,12 @@
         created() {
             //Methodenaufrufe
             //Variablenzuweisungen
+            //this.localLoad();
         },
         data(){
             return {
                 task: {
-                    type: 0,
+                    type: 1,
                     title: "Das hier ist eine Aufgabe mit vielen Fragen",
                     hint: "Hier stehen Hinweise zur Aufgabe",
                     subtasks: [
@@ -53,12 +55,33 @@
                             hint: "Hier ist ein Hinweis.."
                         }
                     ]
+                },
+                answer:{
+
                 }
             }
         },
         methods: {
             submitTask(){
-                alert("Aufgabe wird abgegeben!");
+                alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
+                this.localSave(JSON.stringify(this.answer))
+            },
+            localSave(){
+                localStorage.setItem("task_"+this.type,JSON.stringify(this.answer));
+            },
+            localLoad(){
+                if(localStorage.getItem("task_"+this.type)){
+                    this.answer = JSON.parse(localStorage.getItem("task_"+this.type));
+                }
+            },
+            localDelete(){
+                if(localStorage.getItem("task_"+this.type)){
+                    localStorage.removeItem("task_"+this.type);
+                }
+            },
+            reset(){
+                this.localDelete();
+                this.answer = {};
             }
         }
 
