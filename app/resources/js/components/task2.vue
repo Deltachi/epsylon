@@ -1,12 +1,12 @@
 <template>
     <div class="card">
         <form>
-            <div class="card-header">
+            <div class="card-header p-4 pl-5 pr-5">
                 <h2>{{task.title}}</h2>
                 <div v-html="task.description"></div>
                 <div class="text-muted small">{{task.hint}}</div>
             </div>
-            <div class="card-body editor-wrapper">
+            <div class="card-body editor-wrapper p-0">
                 <MonacoEditor
                     width="100%"
                     height="500px"

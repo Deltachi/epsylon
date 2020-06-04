@@ -45,14 +45,14 @@
                     subtasks: [
                         {
                             id: 0,
-                            title: "Aufgabe 1: Welche Farbe enthält die Flagge von Deutschland",
+                            title: "Aufgabe 1: Welche Farben enthält die Flagge von Deutschland?",
                             hint: "Hier ist ein Hinweis zur Frage 1",
                             solution:["blau", "rot","gelb","weiß","schwarz"]
 
                         },
                         {
                             id: 1,
-                            title: "Aufgabe 2: Welche Farbe enthält die Flagge von Frankreich",
+                            title: "Aufgabe 2: Welche Farben enthält die Flagge von Frankreich?",
                             hint: "Hier ist ein Hinweis zur Frage 2",
                             solution:["rot", "pink","weiß","magenta","gelb"]
                         },

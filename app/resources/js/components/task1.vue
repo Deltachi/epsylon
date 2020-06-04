@@ -1,13 +1,13 @@
 <template>
     <div class="card">
         <form>
-            <div class="card-header">
+            <div class="card-header p-4 pl-5 pr-5">
                 <h2>{{task.title}}</h2>
                 <div class="text-muted">{{task.hint}}</div>
             </div>
             <div class="card-body">
                 <div class="card mb-4" v-for="subtask in task.subtasks">
-                    <div class="card-header">
+                    <div class="card-header p-3 pl-4 pr-4">
                         <h4>{{subtask.title}}</h4>
                         <div class="text-muted">{{subtask.hint}}</div>
                     </div>

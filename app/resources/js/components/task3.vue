@@ -1,29 +1,29 @@
 <template>
     <div class="card">
         <form>
-            <div class="card-header">
+            <div class="card-header p-4 pl-5 pr-5">
                 <h2>{{task.title}}</h2>
                 <div v-html="task.description"></div>
                 <div class="text-muted small">{{task.hint}}</div>
             </div>
-            <div class="card-body row quiz-wrapper">
+            <div class="card-body row quiz-wrapper p-5">
                 <div class="col-4">
                     <div><b>Antwortmöglichkeiten</b></div>
                     <ul class="list-group">
-                        <li class="list-group-item"><a class="option" data-target="carraway">Nick Carraway</a></li>
-                        <li class="list-group-item"><a class="option" data-target="fitz">F. Scott Fitzgerald</a></li>
-                        <li class="list-group-item"><a class="option" data-target="westegg">West Egg</a></li>
-                        <li class="list-group-item"><a class="option" data-target="buchanan">Tom Buchanan</a></li>
-                        <li class="list-group-item"><a class="option" data-target="daisy">Daisy</a></li>
-                        <li class="list-group-item"><a class="option" data-target="ashes">Valley of Ashes</a></li>
+                        <li class="list-group-item"><a class="option" data-target="policy">policy</a></li>
+                        <li class="list-group-item"><a class="option" data-target="banana">banana</a></li>
+                        <li class="list-group-item"><a class="option" data-target="rights">rights</a></li>
+                        <li class="list-group-item"><a class="option" data-target="laughs">laughs</a></li>
+                        <li class="list-group-item"><a class="option" data-target="apple">apple</a></li>
+                        <li class="list-group-item"><a class="option" data-target="wrongs">wrongs</a></li>
                     </ul>
                 </div>
                 <div class="answers col-8 d-flex flex-column justify-content-center">
                     <ol>
-                        <li><span class="target" data-accept="fitz">&nbsp;</span>, a native of St Paul, Minnesota, and also a member of the "Lost Generation" finished four novels including "This Side of Paradise".</li>
-                        <li><span class="target" data-accept="carraway">&nbsp;</span> attended Yale with the large and brooding<span class="target" data-accept="buchanan">&nbsp;</span>.</li>
-                        <li>George Wilson owns an unsuccessful garage in an area known as the <span class="target" data-accept="ashes">&nbsp;</span>, where Tom brings Nick for a party.</li>
-                        <li>Jay Gatsby, the Buchanans, and Nick himself all make<span class="target" data-accept="westegg">&nbsp;</span>their home.</li>
+                        <li>An <span class="target" data-accept="apple">&nbsp;</span> a day keeps the doctor away.</li>
+                        <li>Honesty is the best <span class="target" data-accept="policy">&nbsp;</span>.</li>
+                        <li>He who  <span class="target" data-accept="laughs">&nbsp;</span> last laughs longest.</li>
+                        <li>Two <span class="target" data-accept="wrongs">&nbsp;</span> don't make it right.</li>
                     </ol>
                 </div>
             </div>
@@ -132,10 +132,6 @@
         border: 1px solid lightgray;
         transition: background-color .2s ease;
     }
-    .quiz-wrapper .answers .target:hover{
-        background-color: white;
-    }
-
 </style>
 
 
