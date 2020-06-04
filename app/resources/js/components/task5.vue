@@ -14,7 +14,7 @@
                     <div class="pl-3">
                         <div class="card-body">
                             <div class="form-check mb-2" v-for="index in subtask.solution.length" :key="index">
-                                <input class="form-check-input" type="radio" :name="'gridRadios'+subtask.id" :id="'gridRadios'+subtask.id+'-'+index" :value="subtask.solution[index-1]">
+                                <input class="form-check-input" type="radio" :name="'gridRadios'+subtask.id" :id="'gridRadios'+subtask.id+'-'+index" :value="subtask.solution[index-1]" v-model="answer[subtask.id]">
                                 <label class="form-check-label" :for="'gridRadios'+subtask.id+'-'+index">
                                     {{subtask.solution[index-1]}}
                                 </label>

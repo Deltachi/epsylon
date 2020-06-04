@@ -86,12 +86,12 @@
             reset(){
                 if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
                     this.localDelete();
-                    this.answer = {}
+                    this.answer = [
+                        [],[]
+                    ]
                 }
             }
-
         }
-
     }
 </script>
 
