@@ -40,7 +40,7 @@
                     '    return out;\n' +
                     '}',
                 task: {
-                    type: 1,
+                    type: 2,
                     title: "Das hier ist eine Programmier-Aufgabe in C++",
                     description: "<p>Hier ist eine detaillierte Beschreibung der Aufgabe</p><ul><li>Aufgabe 1.1</li><li>Aufgabe 1.2</li><li>Aufgabe 1.3</li></ul>",
                     hint: "Hier stehen Hinweise zur Aufgabe",

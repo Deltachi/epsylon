@@ -36,7 +36,7 @@
         data(){
             return {
                 task: {
-                    type: 5,
+                    type: 6,
                     title: "Finden Sie die richtige Reihenfolge",
                     description: "<p>Sortieren Sie die Antworten von wichtigster Bedeutung zu unwichtigster.</p>",
                     hint: "Hier stehen Hinweise zur Aufgabe",

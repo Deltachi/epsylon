@@ -39,7 +39,7 @@
         data(){
             return {
                 task: {
-                    type: 0,
+                    type: 4,
                     title: "Bitte klicken Sie die richtigen Antworten an",
                     hint: "Hier stehen Hinweise zur Aufgabe",
                     subtasks: [

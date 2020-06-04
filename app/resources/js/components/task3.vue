@@ -70,7 +70,7 @@
         data(){
             return {
                 task: {
-                    type: 1,
+                    type: 3,
                     title: "Drag und Drop Aufgabe",
                     description: "<p class=\"question-description\">Fill in the blanks by dragging the missing answer.</p>",
                     hint: "Hier stehen Hinweise zur Aufgabe",

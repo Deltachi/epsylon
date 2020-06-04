@@ -41,7 +41,7 @@
         data(){
             return {
                 task: {
-                    type: 0,
+                    type: 5,
                     title: "Bitte Klicken Sie die richtigen Antworten an",
                     hint: "Hier stehen Hinweise zur Aufgabe",
                     subtasks: [

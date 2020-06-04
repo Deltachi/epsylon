@@ -51,7 +51,7 @@
         data(){
             return {
                 task: {
-                    type: 5,
+                    type: 7,
                     title: "Welche Antworten passen zu welchen Aussagen?",
                     description: "<p>Ordnen Sie die Antworten den passenden Aussagen zu.</p>",
                     hint: "Hier stehen Hinweise zur Aufgabe",
