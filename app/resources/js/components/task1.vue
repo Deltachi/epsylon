@@ -80,8 +80,10 @@
                 }
             },
             reset(){
-                this.localDelete();
-                this.answer = {}
+                if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
+                    this.localDelete();
+                    this.answer = {}
+                }
             }
         }
 

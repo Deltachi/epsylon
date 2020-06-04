@@ -95,8 +95,10 @@
                 }
             },
             reset(){
-                this.localDelete();
-                this.code = "";
+                if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")) {
+                    this.localDelete();
+                    this.code = "";
+                }
             }
         }
 
