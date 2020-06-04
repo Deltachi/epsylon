@@ -32,6 +32,9 @@
         components: {
             MonacoEditor
         },
+        created() {
+            this.localLoad();
+        },
         data(){
             return {
                 code: 'int x = 0;\n' +
@@ -62,6 +65,7 @@
                         }
                     ]
                 },
+                answer:"",
                 options: {
                     //Monaco Editor Options
                 }
@@ -69,13 +73,29 @@
         },
         methods: {
             submitTask(){
-
                 alert("Aufgabe wird abgegeben!\n"+this.code);
-                console.log(this.code);
+                this.localSave();
             },
             onChange(value) {
                 //this.code = value;
                 //console.log(value);
+            },
+            localSave(){
+                localStorage.setItem("task_"+this.type,JSON.stringify(this.code));
+            },
+            localLoad(){
+                if(localStorage.getItem("task_"+this.type)){
+                    this.code = JSON.parse(localStorage.getItem("task_"+this.type));
+                }
+            },
+            localDelete(){
+                if(localStorage.getItem("task_"+this.type)){
+                    localStorage.removeItem("task_"+this.type);
+                }
+            },
+            reset(){
+                this.localDelete();
+                this.code = "";
             }
         }
 
