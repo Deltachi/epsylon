@@ -18,7 +18,8 @@
                     @change="onChange"
                 ></MonacoEditor>
             </div>
-            <div class="card-footer d-flex flex-column align-items-end">
+            <div class="card-footer d-flex flex-row justify-content-between">
+                <button type="button" @click="localDelete()" class="btn btn-outline-info">Zurücksetzen</button>
                 <button type="button" @click="submitTask()" class="btn btn-primary">Speichern</button>
             </div>
         </form>
