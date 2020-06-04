@@ -59,6 +59,9 @@
                             solution:["Lösung1", "Lösung2","Lösung3","Lösung4","Lösung5"]
                         },
                     ]
+                },
+                answer: {
+
                 }
             }
         },

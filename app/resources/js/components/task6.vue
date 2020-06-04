@@ -59,6 +59,9 @@
                             hint: "Hier ist ein Hinweis.."
                         }
                     ]
+                },
+                answer: {
+
                 }
             }
         },
