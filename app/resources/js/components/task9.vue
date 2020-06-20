@@ -33,11 +33,14 @@
             //Methodenaufrufe
             //Variablenzuweisungen
             $( function() {
-                var replacestring = /blank/gi;
-                for(var i=0;i<6;i++){
+                var stringreplace = "blank";
+                var str1 = document.getElementById("blanks").innerHTML;
+                var countblank = (document.getElementById("blanks").value = str1.split(stringreplace).length) - 1;
+                for(var i=0;i<countblank;i++){
                     var str = document.getElementById("blanks").innerHTML;
-                    var dynname = "answer-" + i;
-                    var res = str.replace(replacestring,"<input v-model='answer[i]' :name='answer-' type='text' placeholder='Antwort...'>");
+                    var replacename = "answer-" + i;
+                    var replaceinput = "<input v-model='answer[" + i + "]' :name=" + replacename + "type='text' placeholder='Antwort...'>";
+                    var res = str.replace(stringreplace,replaceinput);
                     document.getElementById("blanks").innerHTML = res;
                 }
 
@@ -54,7 +57,6 @@
                             id: 0,
                             title: "Aufgabe1: Aufgabenstellung des Lückentext",
                             hint: "Hier ist ein Hinweis zum Lückentext",
-                            countblank: "6",
                             solution:"Wenn jeder von uns zu Hause blank sich ganz allein blank dann können wir blank auch besiegen. Es geht blank um mich um uns um jeden den man schützen blank. Auch wenn die Zeiten blank bleib zu Haus"
                         },
                     ]
