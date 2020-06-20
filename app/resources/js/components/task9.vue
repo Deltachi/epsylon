@@ -70,9 +70,6 @@
             submitTask(){
                 alert("Aufgabe wird abgegeben!");
             },
-            myreplace(){
-
-            }
         }
 
     }
