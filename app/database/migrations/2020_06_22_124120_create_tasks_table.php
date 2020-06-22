@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->char('title', 100)->comment("Titel der Aufgabe");
             $table->longText('description')->comment("Aufgabenbeschreibung");
             $table->text('hint')->comment("Hinweis zur Aufgabe");
-            $table->json('data')->comment("Aufgabe im JSON-Format");
+            $table->json('data')->nullable(true)->comment("Aufgabe im JSON-Format");
             $table->json('solution')->comment("Erwartungshorizont zur Aufgabe im JSON-Format");
             $table->timestamps();
         });
@@ -31,42 +31,13 @@ class CreateTasksTable extends Migration
               'title' => "Das hier ist eine Aufgabe mit vielen Fragen",
               'description' => "<p>In dieser Aufgabe sollst du Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ut aliquip ex ea commodo consequat. Duis aute irure dolor anim id est laborum. machen.</p>",
               'hint' => "Hier steht ein Hinweis zur Aufgabe",
-              'data' => json_encode(array("Subtasks"=> array(
+              'data' => null,
+              'solution' => json_encode(
                   array(
-                      "id" => 0,
-                      "title" => "Hier ist die Frage 1",
-                      "hint" => "Hier ist der 1. Hinweis"
-                  ),
-                  array(
-                      "id" => 1,
-                      "title" => "Hier ist die Frage 2",
-                      "hint" => "Hier ist der 2. Hinweis"
-                  ),
-                  array(
-                      "id" => 2,
-                      "title" => "Hier ist die Frage 3",
-                      "hint" => "Hier ist der 3. Hinweis"
-                  )
-                )
-              )),
-              'solution' => json_encode(array("Subtasks"=> array(
-                  array(
-                      "id" => 0,
-                      "solution" => "Lösung zur Aufgabe 1",
+                      "erwartungshorizont" => "Lösung zur Aufgabe 1",
                       "points" => 2
-                  ),
-                  array(
-                      "id" => 1,
-                      "solution" => "Lösung zur Aufgabe 2",
-                      "points" => 2
-                  ),
-                  array(
-                      "id" => 2,
-                      "solution" => "Lösung zur Aufgabe 3",
-                      "points" => 3
                   )
-              )
-              )),
+              ),
           ]
         );
     }
