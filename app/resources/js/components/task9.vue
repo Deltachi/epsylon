@@ -33,7 +33,7 @@
             //Methodenaufrufe
             //Variablenzuweisungen
             $( function() {
-                var stringreplace = "blank";
+                var stringreplace = "_BLANK";
                 var str1 = document.getElementById("blanks").innerHTML;
                 var countblank = (document.getElementById("blanks").value = str1.split(stringreplace).length) - 1;
                 for(var i=0;i<countblank;i++){
@@ -57,7 +57,7 @@
                             id: 0,
                             title: "Aufgabe1: Aufgabenstellung des Lückentext",
                             hint: "Hier ist ein Hinweis zum Lückentext",
-                            solution:"Wenn jeder von uns zu Hause blank sich ganz allein blank dann können wir blank auch besiegen. Es geht blank um mich um uns um jeden den man schützen blank. Auch wenn die Zeiten blank bleib zu Haus"
+                            solution:"Wenn jeder von uns zu Hause _BLANK sich ganz allein _BLANK dann können wir blank auch besiegen. Es geht _BLANK um mich um uns um jeden den man schützen _BLANK. Auch wenn die Zeiten _BLANK bleib zu Haus"
                         },
                     ]
                 },
