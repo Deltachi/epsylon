@@ -3,3 +3,7 @@
 *.sass.map
 *.scss.map
 .idea/
+
+# Ignore the public folder, but not the assets folder
+app/public/*
+!app/public/assets
