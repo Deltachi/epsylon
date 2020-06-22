@@ -15,8 +15,13 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->integer('type')->comment("Typ der Aufgabe, für das richtige parsen der JSON Daten.");
+            $table->char('title', 100)->comment("Titel der Aufgabe");
+            $table->longText('description')->comment("Aufgabenbeschreibung");
+            $table->text('hint')->comment("Hinweis zur Aufgabe");
+            $table->json('data')->comment("Aufgabe im JSON-Format");
+            $table->json('solution')->comment("Erwartungshorizont zur Aufgabe im JSON-Format");
             $table->timestamps();
-
         });
     }
 
