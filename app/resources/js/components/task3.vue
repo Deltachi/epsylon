@@ -10,12 +10,9 @@
                 <div class="col-4">
                     <div><b>Antwortmöglichkeiten</b></div>
                     <ul class="list-group">
-                        <li class="list-group-item"><a class="option" data-target="policy">policy</a></li>
-                        <li class="list-group-item"><a class="option" data-target="banana">banana</a></li>
-                        <li class="list-group-item"><a class="option" data-target="rights">rights</a></li>
-                        <li class="list-group-item"><a class="option" data-target="laughs">laughs</a></li>
-                        <li class="list-group-item"><a class="option" data-target="apple">apple</a></li>
-                        <li class="list-group-item"><a class="option" data-target="wrongs">wrongs</a></li>
+                        <div v-for="solutions in task.subtasks.solution.length" :key="solutions">
+                            <li class="list-group-item"><a class="option">{{task.subtasks.solution[solutions]}}</a></li>
+                        </div>
                     </ul>
                 </div>
                 <div class="answers col-8 d-flex flex-column justify-content-center">
@@ -78,17 +75,8 @@
                         {
                             id: 0,
                             title: "Hier ist die Frage 1",
-                            hint: "Hier ist ein Hinweis zur Frage 1"
-                        },
-                        {
-                            id: 1,
-                            title: "Hier ist die Frage 2",
-                            hint: "Hier ist ein Hinweis.."
-                        },
-                        {
-                            id: 2,
-                            title: "Hier ist die Frage 3",
-                            hint: "Hier ist ein Hinweis.."
+                            hint: "Hier ist ein Hinweis zur Frage 1",
+                            solution:["policy", "banana", "rights", "laughs", "apple", "word"]
                         }
                     ]
                 },

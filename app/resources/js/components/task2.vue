@@ -48,23 +48,6 @@
                     title: "Das hier ist eine Programmier-Aufgabe in C++",
                     description: "<p>Hier ist eine detaillierte Beschreibung der Aufgabe</p><ul><li>Aufgabe 1.1</li><li>Aufgabe 1.2</li><li>Aufgabe 1.3</li></ul>",
                     hint: "Hier stehen Hinweise zur Aufgabe",
-                    subtasks: [
-                        {
-                            id: 0,
-                            title: "Hier ist die Frage 1",
-                            hint: "Hier ist ein Hinweis zur Frage 1"
-                        },
-                        {
-                            id: 1,
-                            title: "Hier ist die Frage 2",
-                            hint: "Hier ist ein Hinweis.."
-                        },
-                        {
-                            id: 2,
-                            title: "Hier ist die Frage 3",
-                            hint: "Hier ist ein Hinweis.."
-                        }
-                    ]
                 },
                 answer:"",
                 options: {

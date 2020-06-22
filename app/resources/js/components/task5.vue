@@ -51,13 +51,7 @@
                             hint: "Hier ist ein Hinweis zur Frage 1",
                             solution:["Lösung1", "Lösung2","Lösung3","Lösung4","Lösung5"]
 
-                        },
-                        {
-                            id: 1,
-                            title: "Aufgabe2: Aufgabenstellung",
-                            hint: "Hier ist ein Hinweis zur Frage 2",
-                            solution:["Lösung1", "Lösung2","Lösung3","Lösung4","Lösung5"]
-                        },
+                        }
                     ]
                 },
                 answer: {
