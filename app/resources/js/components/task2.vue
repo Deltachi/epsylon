@@ -13,8 +13,8 @@
                     theme="vs-dark"
                     language="cpp"
                     :options="options"
-                    :value="code"
-                    v-model="code"
+                    :value="task.data.code"
+                    v-model="task.data.code"
                     @change="onChange"
                 ></MonacoEditor>
             </div>
@@ -33,21 +33,29 @@
         components: {
             MonacoEditor
         },
+        props: [
+            'dataTask'
+        ],
         created() {
             this.localLoad();
+            if(this.dataTask !== "null"){
+                this.task = JSON.parse(this.dataTask);
+            }
         },
         data(){
             return {
-                code: 'int x = 0;\n' +
-                    'int myFunc(int a, int b){\n' +
-                    '    int out = a + b;\n' +
-                    '    return out;\n' +
-                    '}',
+                type: 2,
                 task: {
-                    type: 2,
                     title: "Das hier ist eine Programmier-Aufgabe in C++",
                     description: "<p>Hier ist eine detaillierte Beschreibung der Aufgabe</p><ul><li>Aufgabe 1.1</li><li>Aufgabe 1.2</li><li>Aufgabe 1.3</li></ul>",
                     hint: "Hier stehen Hinweise zur Aufgabe",
+                    data: {
+                        code: 'int x = 0;\n' +
+                            'int myFunc(int a, int b){\n' +
+                            '    int out = a + b;\n' +
+                            '    return out;\n' +
+                            '}'
+                    },
                 },
                 answer:"",
                 options: {
