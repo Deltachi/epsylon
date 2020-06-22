@@ -9,9 +9,8 @@
         <div class="card-body d-flex flex-column align-items-start pl-5 pr-5">
             <div class="task-top" v-if="task.top">{{task.top}}</div>
             <ul class="task-body" id="sortable">
-                <li class="task-option" v-for="option in task.options" :data="option.id">
-                    <div>{{option.title}}</div>
-                    <div class="text-muted small" v-if="option.hint">{{option.hint}}</div>
+                <li class="task-option" v-for="option in task.data" :data="option">
+                    <div>{{option}}</div>
                 </li>
             </ul>
             <div class="task-bottom" v-if="task.bottom">{{task.bottom}}</div>
@@ -42,23 +41,7 @@
                     hint: "Hier stehen Hinweise zur Aufgabe",
                     top: "wichtig",
                     bottom: "unwichtig",
-                    options: [
-                        {
-                            id: 0,
-                            title: "Option 1",
-                            hint: "Hier ist ein Hinweis zur Option 1"
-                        },
-                        {
-                            id: 1,
-                            title: "Option 2",
-                            hint: "Hier ist ein Hinweis.."
-                        },
-                        {
-                            id: 2,
-                            title: "Option 3",
-                            hint: "Hier ist ein Hinweis.."
-                        }
-                    ]
+                    data: ["Option 1","Option 2","Option 3"],
                 },
                 answer: {
 
@@ -67,7 +50,6 @@
         },
         methods:{
             submitTask(){
-
                 alert("Aufgabe wird abgegeben!\n"+this.code);
                 console.log(this.code);
             }
