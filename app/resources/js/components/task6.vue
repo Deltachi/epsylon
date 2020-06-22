@@ -10,7 +10,8 @@
             <div class="task-top" v-if="task.top">{{task.top}}</div>
             <ul class="task-body" id="sortable">
                 <li class="task-option" v-for="option in task.data" :data="option">
-                    <div>{{option}}</div>
+                    <div>{{option.name}}</div>
+                    <div v-if="option.hint" class="text-muted small">{{option.hint}}</div>
                 </li>
             </ul>
             <div class="task-bottom" v-if="task.bottom">{{task.bottom}}</div>
@@ -41,7 +42,11 @@
                     hint: "Hier stehen Hinweise zur Aufgabe",
                     top: "wichtig",
                     bottom: "unwichtig",
-                    data: ["Option 1","Option 2","Option 3"],
+                    data: [
+                        {'name':'Option 1', 'hint':'Hinweis 1'},
+                        {'name':'Option 2', 'hint':'Hinweis 2'},
+                        {'name':'Option 3', 'hint':'Hinweis 3'},
+                    ],
                 },
                 answer: {
 
