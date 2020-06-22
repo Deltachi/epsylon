@@ -10,17 +10,18 @@
                 <div class="col-4">
                     <div><b>Antwortmöglichkeiten</b></div>
                     <ul class="list-group">
-                        <div v-for="solutions in task.subtasks.solution.length" :key="solutions">
-                            <li class="list-group-item"><a class="option">{{task.subtasks.solution[solutions]}}</a></li>
+                        <div v-for="(word, index) in task.data.words">
+                            <li class="list-group-item draggables"><a class="option" :data-word="'word-'+index">{{word}}</a></li>
                         </div>
                     </ul>
                 </div>
                 <div class="answers col-8 d-flex flex-column justify-content-center">
                     <ol>
-                        <li>An <span class="target" data-accept="apple">&nbsp;</span> a day keeps the doctor away.</li>
+                        <!-- <li>An <span class="target" data-accept="apple">&nbsp;</span> a day keeps the doctor away.</li>
                         <li>Honesty is the best <span class="target" data-accept="policy">&nbsp;</span>.</li>
                         <li>He who  <span class="target" data-accept="laughs">&nbsp;</span> last laughs longest.</li>
-                        <li>Two <span class="target" data-accept="wrongs">&nbsp;</span> don't make it right.</li>
+                        <li>Two <span class="target" data-accept="wrongs">&nbsp;</span> don't make it right.</li> -->
+                        <li class="droppables" v-for="(sentence, index) in task.data.sentences" v-html="getSentence(sentence, index)"></li>
                     </ol>
                 </div>
             </div>
@@ -38,30 +39,30 @@
             $(document).ready( function() {
                 //initialize the quiz options
                 var answersLeft = [];
-                $('.quiz-wrapper').find('li>a.option').each( function(i) {
+                $('.quiz-wrapper').find('li.draggables>a').each( function(i) {
                     var $this = $(this);
-                    var answerValue = $this.data('target');
-                    var $target = $('.answers .target[data-accept="'+answerValue+'"]');
+                    //var answerValue = $this.data('target');
+                    //var $target = $('.answers .target[data-accept="'+answerValue+'"]');
                     var labelText = $this.html();
                     $this.draggable( {
                         revert: "invalid",
                         containment: ".quiz-wrapper"
                     });
-
-                    if ( $target.length > 0 ) {
-                        $target.droppable( {
-                            accept: 'li>a.option[data-target="'+answerValue+'"]',
-                            drop: function( event, ui ) {
-                                $this.draggable('destroy');
-                                $target.droppable('destroy');
-                                $this.html('&nbsp;');
-                                $target.html(labelText);
-                                answersLeft.splice( answersLeft.indexOf( answerValue ), 1 );
-                            }
-                        });
-                        answersLeft.push(answerValue);
-                    } else { }
                 });
+                $('.quiz-wrapper').find('li.droppables>span').each( function(i) {
+                    var $this = $(this);
+                    $this.droppable( {
+                        //accept: 'li>a.option[data-target="'+answerValue+'"]',
+                        accept: 'li.draggables>a',
+                        drop: function( event, ui ) {
+                            $this.draggable('destroy');
+                            $this.droppable('destroy');
+                            $this.html('&nbsp;');
+                            $this.html(labelText);
+                            //answersLeft.splice( answersLeft.indexOf( answerValue ), 1 );
+                        }
+                    });
+                })
             });
         },
         data(){
@@ -71,14 +72,16 @@
                     title: "Drag und Drop Aufgabe",
                     description: "<p class=\"question-description\">Fill in the blanks by dragging the missing answer.</p>",
                     hint: "Hier stehen Hinweise zur Aufgabe",
-                    subtasks: [
-                        {
-                            id: 0,
-                            title: "Hier ist die Frage 1",
-                            hint: "Hier ist ein Hinweis zur Frage 1",
-                            solution:["policy", "banana", "rights", "laughs", "apple", "word"]
-                        }
-                    ]
+                    data: {
+                        'sentences': [
+                            "An _BLANK a day keeps the doctor away.",
+                            "Honesty is the best _BLANK.",
+                            "He who _BLANK last laughs longest.",
+                            "Two _BLANK don't make it right.",
+                        ],
+                        'words': ["policy", "banana", "rights", "laughs", "apple", "word"],
+                        'blank': "_BLANK"
+                    }
                 },
                 answer: {
 
@@ -88,12 +91,16 @@
         methods:{
             submitTask(){
                 alert("Antwort wird gespeichert!");
+            },
+            getSentence(string, id){
+                string = string.replace("_BLANK", "<span class='target' data-target='sentence-"+id+"'>&nbsp;</span>");
+                return string;
             }
         }
     }
 </script>
 
-<style scoped>
+<style>
 
     .quiz-wrapper .option{
         z-index: 999;
