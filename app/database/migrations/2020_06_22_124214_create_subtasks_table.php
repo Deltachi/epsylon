@@ -15,7 +15,16 @@ class CreateSubtasksTable extends Migration
     {
         Schema::create('subtasks', function (Blueprint $table) {
             $table->id();
+            $table->char('type',50)->comment("Typ der Subtask, für das richtige parsen der JSON Daten.");
+            $table->char('title', 100)->comment("Titel der Subtask");
+            $table->longText('description')->comment("Aufgabenbeschreibung");
+            $table->text('hint')->comment("Hinweis zur Aufgabe");
+            $table->json('data');
+            $table->json('solution');
             $table->timestamps();
+
+            $table->primary('id');
+            $table->foreignId('task_id')->constrained();
         });
     }
 
