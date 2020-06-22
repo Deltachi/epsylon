@@ -19,8 +19,8 @@ class CreateSubtasksTable extends Migration
             $table->char('title', 100)->comment("Titel der Subtask");
             $table->longText('description')->comment("Aufgabenbeschreibung");
             $table->text('hint')->comment("Hinweis zur Aufgabe");
-            $table->json('data');
-            $table->json('solution');
+            $table->json('data')->comment("Aufgabe im JSON-Format");
+            $table->json('solution')->comment("Lösung zur Aufgabe im JSON-Format");
             $table->timestamps();
 
             $table->foreignId('task_id')->constrained();
