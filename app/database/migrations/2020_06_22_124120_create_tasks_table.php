@@ -28,7 +28,7 @@ class CreateTasksTable extends Migration
         DB::table('tasks')->insert(
           [
               'type' => 0,
-              'title' => "Das hier ist eine Aufgabe mit vielen Fragen",
+              'title' => "Aufgabentyp 1: Textfenster",
               'description' => "<p>In dieser Aufgabe sollst du Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ut aliquip ex ea commodo consequat. Duis aute irure dolor anim id est laborum. machen.</p>",
               'hint' => "Hier steht ein Hinweis zur Aufgabe",
               'data' => null,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,12 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        return view('task', ['task_id' => $id]);
+        $task = Task::where('id', $id)->first();
+        if($task && $task['solution']){
+            $task['solution'] = json_decode($task['solution']);
+        }
+        $task_json = json_encode($task);
+        return view('task', ['task_id' => $id, 'task_data' => $task_json]);
     }
     /**
      * Show the application dashboard.

@@ -17,7 +17,7 @@
             </ul>
         </div>
         <div class="col-md-9">
-            <task{{ $task_id }}></task>
+            <task{{ $task_id }} :data-task="'{{$task_data}}'"></task>
         </div>
     </div>
 </div>

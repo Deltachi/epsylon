@@ -3,18 +3,11 @@
         <form>
             <div class="card-header p-4 pl-5 pr-5">
                 <h2>{{task.title}}</h2>
-                <div class="text-muted">{{task.hint}}</div>
+                <div v-html="task.description"></div>
+                <div class="text-muted small">{{task.hint}}</div>
             </div>
             <div class="card-body">
-                <div class="card mb-4" v-for="subtask in task.subtasks">
-                    <div class="card-header p-3 pl-4 pr-4">
-                        <h4>{{subtask.title}}</h4>
-                        <div class="text-muted">{{subtask.hint}}</div>
-                    </div>
-                    <div class="card-body">
-                        <input v-model="answer[subtask.id]" :name="'answer-'+subtask.id" type="text" class="form-control" placeholder="Antwort...">
-                    </div>
-                </div>
+                <input v-model="answer['text']" :name="'answer-text'" type="text" class="form-control" placeholder="Antwort...">
             </div>
             <div class="card-footer d-flex flex-row justify-content-between">
                 <button type="button" @click="reset()" class="btn btn-outline-info">Zurücksetzen</button>
@@ -27,29 +20,22 @@
 <script>
     export default {
         name: "task1",
+        props: [
+          'dataTask'
+        ],
         created() {
             //Methodenaufrufe
             //Variablenzuweisungen
             this.localLoad();
+            this.task = JSON.parse(this.dataTask);
+            console.log(this.task);
         },
         data(){
             return {
                 uuid: "38631",
-                task: {
-                    type: 1,
-                    title: "Das hier ist eine Aufgabe mit vielen Fragen",
-                    hint: "Hier stehen Hinweise zur Aufgabe",
-                    subtasks: [
-                        {
-                            id: 0,
-                            title: "Hier ist die Frage 1",
-                            hint: "Hier ist ein Hinweis zur Frage 1"
-                        }
-                    ]
-                },
-                answer:{
-
-                }
+                type: 1,
+                task: {},
+                answer:{}
             }
         },
         methods: {
