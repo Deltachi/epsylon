@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
 class TasksController extends Controller
@@ -20,7 +21,8 @@ class TasksController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @param $id
+     * @return Renderable
      */
     public function show($id)
     {
@@ -29,7 +31,7 @@ class TasksController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
