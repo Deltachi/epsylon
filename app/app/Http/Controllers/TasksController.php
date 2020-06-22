@@ -27,7 +27,7 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        $task = Task::where('id', $id)->first();
+        $task = Task::find($id);
         if($task && $task['solution']){
             $task['solution'] = json_decode($task['solution']);
         }
