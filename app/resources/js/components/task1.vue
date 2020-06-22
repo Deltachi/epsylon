@@ -44,16 +44,6 @@
                             id: 0,
                             title: "Hier ist die Frage 1",
                             hint: "Hier ist ein Hinweis zur Frage 1"
-                        },
-                        {
-                            id: 1,
-                            title: "Hier ist die Frage 2",
-                            hint: "Hier ist ein Hinweis.."
-                        },
-                        {
-                            id: 2,
-                            title: "Hier ist die Frage 3",
-                            hint: "Hier ist ein Hinweis.."
                         }
                     ]
                 },
