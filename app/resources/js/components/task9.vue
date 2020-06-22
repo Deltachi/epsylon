@@ -39,7 +39,7 @@
                 for(var i=0;i<countblank;i++){
                     var str = document.getElementById("blanks").innerHTML;
                     var replacename = "answer-" + i;
-                    var replaceinput = "<input v-model='answer[" + i + "]' :name=" + replacename + "type='text' placeholder='Antwort...'>";
+                    var replaceinput = "<input v-model='answer[" + i + "]' :name='" + replacename + "' type='text' placeholder='Antwort...'>";
                     var res = str.replace(stringreplace,replaceinput);
                     document.getElementById("blanks").innerHTML = res;
                 }
@@ -68,7 +68,8 @@
         },
         methods: {
             submitTask(){
-                alert("Aufgabe wird abgegeben!");
+                alert("Aufgabe wird abgegeben!\n"+this.answer);
+                console.log(this.answer);
             },
         }
 
