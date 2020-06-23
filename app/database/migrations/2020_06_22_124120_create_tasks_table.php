@@ -147,6 +147,46 @@ class CreateTasksTable extends Migration
                 'points' => 10
             ]
         );
+        DB::table('tasks')->insert(
+            [
+                'type' => 7,
+                'title' => "Welche Antworten passen zu welchen Aussagen?",
+                'description' => "<p>Ordnen Sie die Antworten den passenden Aussagen zu.</p>",
+                'hint' => "Hier steht ein Hinweis zur Aufgabe",
+                'data' => json_encode(
+                    array(
+                        "input" => ["Fakt 1", "Fakt 2", "Fakt 3", "Fakt 4"],
+                        "output" => ["Aussage 1", "Aussage 2", "Aussage 3",]
+                    )
+                ),
+                'solution' => json_encode(
+                    array(
+                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
+                    )
+                ),
+                'points' => 10
+            ]
+        );
+        DB::table('tasks')->insert(
+            [
+                'type' => 8,
+                'title' => "Bitte füllen Sie den Corona-Lückentext aus",
+                'description' => "<p>Ordnen Sie die Antworten den passenden Aussagen zu.</p>",
+                'hint' => "Hier steht ein Hinweis zur Aufgabe",
+                'data' => json_encode(
+                    array(
+                        "sentences" => "Wenn jeder von uns zu Hause _BLANK sich ganz allein _BLANK dann können wir blank auch besiegen. Es geht _BLANK um mich um uns um jeden den man schützen _BLANK. Auch wenn die Zeiten _BLANK bleib zu Haus",
+                        "blank" => "_BLANK"
+                    )
+                ),
+                'solution' => json_encode(
+                    array(
+                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
+                    )
+                ),
+                'points' => 10
+            ]
+        );
     }
 
     /**
