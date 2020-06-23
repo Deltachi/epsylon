@@ -69,12 +69,9 @@ class CreateTasksTable extends Migration
                 'hint' => "Hier steht ein Hinweis zur Aufgabe",
                 'data' => json_encode(
                     array(
-                        "sentences" => "An _BLANK a day keeps the doctor away.",
-                        "Honesty is the best _BLANK.",
-                        "He who _BLANK last laughs longest.",
-                        "Two _BLANK don't make it right.",
-                        "words" => "policy", "banana", "rights", "laughs", "apple", "word",
-                        "blank" => "_BLANK"
+                        "sentences" => ["An _BLANK a day keeps the doctor away.", "Honesty is the best _BLANK.", "He who _BLANK last laughs longest.", "Two _BLANK don't make it right."],
+                        "words" => ["policy", "banana", "rights", "laughs", "apple", "word"],
+                        "blank" => "_BLANK",
                     )
                 ),
                 'solution' => json_encode(
