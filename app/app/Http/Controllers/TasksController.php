@@ -35,6 +35,7 @@ class TasksController extends Controller
             $task['data'] = $task['data'] ? json_decode($task['data']): null;
         }
         $task_json = json_encode($task);
+        $task_json = addslashes($task_json); //falls in Strings ' oder " vorkommen, müssen diese durch \' und \" ersetzt werden
         $component = "task".$id;
         return view('task', ['task_id' => $id, 'task_data' => $task_json, 'component' => $component]);
     }
