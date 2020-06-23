@@ -1,11 +1,7 @@
 <template>
-    <div class="card">
+    <div v-if="ready" class="card">
         <form>
-            <div class="card-header p-4 pl-5 pr-5">
-                <h2>{{task.title}}</h2>
-                <div v-html="task.description"></div>
-                <div class="text-muted small">{{task.hint}}</div>
-            </div>
+            <task-header v-bind:task="task"></task-header>
             <div class="card-body editor-wrapper p-0">
                 <MonacoEditor
                     width="100%"
@@ -18,49 +14,50 @@
                     @change="onChange"
                 ></MonacoEditor>
             </div>
-            <div class="card-footer d-flex flex-row justify-content-between">
-                <button type="button" @click="reset()" class="btn btn-outline-info">Zurücksetzen</button>
-                <button type="button" @click="submitTask()" class="btn btn-primary">Speichern</button>
-            </div>
+            <task-footer></task-footer>
         </form>
     </div>
+    <task-loading-error v-else></task-loading-error>
 </template>
 
 <script>
     import MonacoEditor from 'monaco-editor-vue';
+    import TaskHeader from "./TaskHeader";
+    import TaskFooter from "./TaskFooter";
+    import TaskLoadingError from "./TaskLoadingError";
     export default {
         name: "task2",
-        components: {
-            MonacoEditor
-        },
         props: [
             'dataTask'
         ],
+        components: {
+            TaskHeader,
+            TaskFooter,
+            TaskLoadingError,
+            MonacoEditor,
+        },
         created() {
             this.localLoad();
-            if(this.dataTask !== "null"){
+            if(this.dataTask && this.dataTask !== "null"){
                 this.task = JSON.parse(this.dataTask);
+                this.ready = true;
             }
         },
         data(){
             return {
                 type: 2,
                 task: {
-                    title: "Das hier ist eine Programmier-Aufgabe in C++",
-                    description: "<p>Hier ist eine detaillierte Beschreibung der Aufgabe</p><ul><li>Aufgabe 1.1</li><li>Aufgabe 1.2</li><li>Aufgabe 1.3</li></ul>",
-                    hint: "Hier stehen Hinweise zur Aufgabe",
-                    data: {
-                        code: 'int x = 0;\n' +
-                            'int myFunc(int a, int b){\n' +
-                            '    int out = a + b;\n' +
-                            '    return out;\n' +
-                            '}'
-                    },
+                    title: "",
+                    description: "",
+                    hint: "",
+                    data: {},
+                    points: 0.0,
                 },
                 answer:"",
                 options: {
                     //Monaco Editor Options
-                }
+                },
+                ready: false
             }
         },
         methods: {

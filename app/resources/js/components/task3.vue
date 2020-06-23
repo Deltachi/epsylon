@@ -1,11 +1,7 @@
 <template>
-    <div class="card">
+    <div v-if="ready" class="card">
         <form>
-            <div class="card-header p-4 pl-5 pr-5">
-                <h2>{{task.title}}</h2>
-                <div v-html="task.description"></div>
-                <div class="text-muted small">{{task.hint}}</div>
-            </div>
+            <task-header v-bind:task="task"></task-header>
             <div class="card-body row quiz-wrapper p-5">
                 <div class="col-4">
                     <div><b>Antwortmöglichkeiten</b></div>
@@ -25,17 +21,33 @@
                     </ol>
                 </div>
             </div>
-            <div class="card-footer d-flex flex-column align-items-end">
-                <button type="button" @click="submitTask()" class="btn btn-primary">Speichern</button>
-            </div>
+            <task-footer></task-footer>
         </form>
     </div>
+    <task-loading-error v-else></task-loading-error>
 </template>
 
 <script>
+    import TaskHeader from "./TaskHeader";
+    import TaskFooter from "./TaskFooter";
+    import TaskLoadingError from "./TaskLoadingError";
+
     export default {
         name: "task3",
+        props: [
+            'dataTask'
+        ],
+        components: {
+            TaskHeader,
+            TaskFooter,
+            TaskLoadingError,
+        },
         created() {
+            if(this.dataTask && this.dataTask !== "null"){
+                this.task = JSON.parse(this.dataTask);
+                this.ready = true;
+            }
+
             $(document).ready( function() {
                 //initialize the quiz options
                 var answersLeft = [];
@@ -70,7 +82,7 @@
                 task: {
                     type: 3,
                     title: "Drag und Drop Aufgabe",
-                    description: "<p class=\"question-description\">Fill in the blanks by dragging the missing answer.</p>",
+                    description: "<p>Fill in the blanks by dragging the missing answer.</p>",
                     hint: "Hier stehen Hinweise zur Aufgabe",
                     data: {
                         'sentences': [
@@ -81,11 +93,13 @@
                         ],
                         'words': ["policy", "banana", "rights", "laughs", "apple", "word"],
                         'blank': "_BLANK"
-                    }
+                    },
+                    points: 0.0,
                 },
                 answer: {
 
-                }
+                },
+                ready: false,
             }
         },
         methods:{

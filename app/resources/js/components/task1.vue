@@ -1,41 +1,51 @@
 <template>
-    <div class="card">
+    <div v-if="ready" class="card">
         <form>
-            <div class="card-header p-4 pl-5 pr-5">
-                <h2>{{task.title}}</h2>
-                <div v-html="task.description"></div>
-                <div class="text-muted small">{{task.hint}}</div>
-            </div>
+            <task-header v-bind:task="task"></task-header>
             <div class="card-body">
                 <input v-model="answer['text']" :name="'answer-text'" type="text" class="form-control" placeholder="Antwort...">
             </div>
-            <div class="card-footer d-flex flex-row justify-content-between">
-                <button type="button" @click="reset()" class="btn btn-outline-info">Zurücksetzen</button>
-                <button type="button" @click="submitTask()" class="btn btn-primary">Speichern</button>
-            </div>
+            <task-footer></task-footer>
         </form>
     </div>
+    <task-loading-error v-else></task-loading-error>
 </template>
 
 <script>
+    import TaskHeader from "./TaskHeader";
+    import TaskFooter from "./TaskFooter";
+    import TaskLoadingError from "./TaskLoadingError";
     export default {
         name: "task1",
         props: [
           'dataTask'
         ],
+        components: {
+            TaskHeader,
+            TaskFooter,
+            TaskLoadingError,
+        },
         created() {
             //Methodenaufrufe
-            //Variablenzuweisungen
             this.localLoad();
-            this.task = JSON.parse(this.dataTask);
-            console.log(this.task);
+            //Variablenzuweisungen
+            if(this.dataTask && this.dataTask !== "null"){
+                this.task = JSON.parse(this.dataTask);
+                this.ready = true;
+            }
         },
         data(){
             return {
-                uuid: "38631",
                 type: 1,
-                task: {},
-                answer:{}
+                task: {
+                    title: "",
+                    description: "",
+                    hint: "",
+                    data: {},
+                    points: 0.0,
+                },
+                answer:{},
+                ready: false
             }
         },
         methods: {
