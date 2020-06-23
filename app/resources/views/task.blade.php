@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="app" class="container">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-3">
             <ul class="list-group">
@@ -17,7 +17,7 @@
             </ul>
         </div>
         <div class="col-md-9">
-            <task{{ $task_id }} :data-task="'{{$task_data}}'"></task>
+            <{{$component}} :data-task="'{{$task_data}}'"></{{$component}}>
         </div>
     </div>
 </div>
