@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div id="app" class="container">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-12">
             <ul class="list-group">
