@@ -61,6 +61,69 @@ class CreateTasksTable extends Migration
                 'points' => 10
             ]
         );
+        DB::table('tasks')->insert(
+            [
+                'type' => 3,
+                'title' => "Drag und Drop Aufgabe",
+                'description' => "<p>Fill in the blanks by dragging the missing answer.</p>",
+                'hint' => "Hier steht ein Hinweis zur Aufgabe",
+                'data' => json_encode(
+                    array(
+                        "sentences" => "An _BLANK a day keeps the doctor away.",
+                        "Honesty is the best _BLANK.",
+                        "He who _BLANK last laughs longest.",
+                        "Two _BLANK don't make it right.",
+                        "words" => "policy", "banana", "rights", "laughs", "apple", "word",
+                        "blank" => "_BLANK"
+                    )
+                ),
+                'solution' => json_encode(
+                    array(
+                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
+                    )
+                ),
+                'points' => 10
+            ]
+        );
+
+        DB::table('tasks')->insert(
+            [
+                'type' => 4,
+                'title' => "Aufgabe 1: Welche Farben enthält die Flagge von Deutschland?",
+                'description' => "Beschreibung der Aufgabe",
+                'hint' => "Hier steht ein Hinweis zur Aufgabe",
+                'data' => json_encode(
+                    array(
+                        "solution" => ["blau","rot","gelb","weiß","schwarz"],
+                    )
+                ),
+                'solution' => json_encode(
+                    array(
+                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
+                    )
+                ),
+                'points' => 10
+            ]
+        );
+        DB::table('tasks')->insert(
+            [
+                'type' => 5,
+                'title' => "Aufgabe1: Aufgabenstellung",
+                'description' => "Beschreibung der Aufgabe",
+                'hint' => "Hier steht ein Hinweis zur Aufgabe",
+                'data' => json_encode(
+                    array(
+                        "solution" => ["Lösung1", "Lösung2","Lösung3","Lösung4","Lösung5"],
+                    )
+                ),
+                'solution' => json_encode(
+                    array(
+                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
+                    )
+                ),
+                'points' => 10
+            ]
+        );
     }
 
     /**
