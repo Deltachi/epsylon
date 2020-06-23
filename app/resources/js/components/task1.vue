@@ -3,7 +3,7 @@
         <form>
             <task-header v-bind:task="task"></task-header>
             <div class="card-body">
-                <input v-model="answer['text']" :name="'answer-text'" type="text" class="form-control" placeholder="Antwort...">
+                <input v-model="answer" :name="'answer'" type="text" class="form-control" placeholder="Antwort..." >
             </div>
             <task-footer></task-footer>
         </form>
@@ -44,26 +44,26 @@
                     data: {},
                     points: 0.0,
                 },
-                answer:{},
+                answer:"",
                 ready: false
             }
         },
         methods: {
             submitTask(){
                 alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
-                this.localSave(JSON.stringify(this.answer))
+                this.localSave()
             },
             localSave(){
-                localStorage.setItem("task_"+this.task.type,JSON.stringify(this.answer));
+                localStorage.setItem("task_"+this.type,JSON.stringify(this.answer));
             },
             localLoad(){
-                if(localStorage.getItem("task_"+this.task.type)){
-                    this.answer = JSON.parse(localStorage.getItem("task_"+this.task.type));
+                if(localStorage.getItem("task_"+this.type)){
+                    this.answer = JSON.parse(localStorage.getItem("task_"+this.type));
                 }
             },
             localDelete(){
-                if(localStorage.getItem("task_"+this.task.type)){
-                    localStorage.removeItem("task_"+this.task.type);
+                if(localStorage.getItem("task_"+this.type)){
+                    localStorage.removeItem("task_"+this.type);
                 }
             },
             reset(){
@@ -71,8 +71,21 @@
                     this.localDelete();
                     this.answer = {}
                 }
+            },
+            keyEvent(event) {
+                if (event.ctrlKey || event.metaKey) {
+                    switch (String.fromCharCode(event.which).toLowerCase()) {
+                        case 's':
+                            event.preventDefault();
+                            this.submitTask();
+                            break;
+                    }
+                }
             }
-        }
+        },
+        mounted() {
+            $(window).bind('keydown', this.keyEvent);
+        },
 
     }
 </script>
