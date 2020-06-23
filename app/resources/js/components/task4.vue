@@ -1,87 +1,90 @@
 <template>
     <div class="card">
         <form>
-            <div class="card-header p-4 pl-5 pr-5">
-                <h2>{{task.title}}</h2>
-                <div class="text-muted">{{task.hint}}</div>
-            </div>
+            <task-header v-bind:task="task"></task-header>
             <div class="card-body">
-                <div class="card mb-4" v-for="subtask in task.subtasks">
-                    <div class="card-header p-3 pl-4 pr-4">
-                        <h4>{{subtask.title}}</h4>
-                        <div class="text-muted">{{subtask.hint}}</div>
-                    </div>
-                    <div id="checkdistance">
-                        <div class="form-group row" v-for="index in subtask.solution.length" :key="index">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" :id="'check'+subtask.id+'-'+index" :value="subtask.solution[index-1]" v-model="answer[subtask.id]">
-                                <label class="form-check-label" :for="'check'+subtask.id+'-'+index">{{subtask.solution[index-1]}}</label>
-                            </div>
+                <div id="checkdistance">
+                    <div class="form-group row" v-for="solutions in task.data.solution">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label">{{solutions}}</label>
                         </div>
                     </div>
-
                 </div>
+                <!--
+                old nur als vorlage
+                <div class="form-group row" v-for="index in task.data.solution.length" :key="index">
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" :id="'check'+0+'-'+index" :value="task.data.solution[index-1]" v-model="answer[0]">
+                          <label class="form-check-label" :for="'check'+0+'-'+index">{{task.data.solution[index-1]}}</label>
+                     </div>
+                </div>
+                -->
             </div>
-            <div class="card-footer d-flex flex-row justify-content-between">
-                <button type="button" @click="reset()" class="btn btn-outline-info">Zurücksetzen</button>
-                <button type="button" @click="submitTask()" class="btn btn-primary">Speichern</button>
-            </div>
+            <task-footer></task-footer>
         </form>
     </div>
 </template>
 
 <script>
+    import TaskHeader from "./TaskHeader";
+    import TaskFooter from "./TaskFooter";
+    import TaskLoadingError from "./TaskLoadingError";
+
     export default {
         name: "task4",
-        created() {
-            //Methodenaufrufe
-            //Variablenzuweisungen
-            this.localLoad();
+        props: [
+            'dataTask'
+        ],
+        components: {
+            TaskHeader,
+            TaskFooter,
+            TaskLoadingError,
         },
-        data(){
+        created() {
+            this.localLoad();
+            if (this.dataTask && this.dataTask !== "null") {
+                this.task = JSON.parse(this.dataTask);
+                this.ready = true;
+            }
+        },
+        data() {
             return {
+                type: 4,
                 task: {
-                    type: 4,
-                    title: "Bitte klicken Sie die richtigen Antworten an",
-                    hint: "Hier stehen Hinweise zur Aufgabe",
-                    subtasks: [
-                        {
-                            id: 0,
-                            title: "Aufgabe 1: Welche Farben enthält die Flagge von Deutschland?",
-                            hint: "Hier ist ein Hinweis zur Frage 1",
-                            solution:["blau", "rot","gelb","weiß","schwarz"]
-
-                        }
-                    ]
+                    title: "",
+                    description: "",
+                    hint: "",
+                    data: {},
+                    points: 0.0,
                 },
-                answer: [
-                    [],[]
-                ]
+                answer: "",
+                ready: false
             }
         },
         methods: {
-            submitTask(){
-                alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
+            submitTask() {
+                alert("Aufgabe wird abgegeben!\n" + JSON.stringify(this.answer));
                 this.localSave(JSON.stringify(this.answer));
             },
-            localSave(){
-                localStorage.setItem("task_"+this.task.type,JSON.stringify(this.answer));
+            localSave() {
+                localStorage.setItem("task_" + this.task.type, JSON.stringify(this.answer));
             },
-            localLoad(){
-                if(localStorage.getItem("task_"+this.task.type)){
-                    this.answer = JSON.parse(localStorage.getItem("task_"+this.task.type));
+            localLoad() {
+                if (localStorage.getItem("task_" + this.task.type)) {
+                    this.answer = JSON.parse(localStorage.getItem("task_" + this.task.type));
                 }
             },
-            localDelete(){
-                if(localStorage.getItem("task_"+this.task.type)){
-                    localStorage.removeItem("task_"+this.task.type);
+            localDelete() {
+                if (localStorage.getItem("task_" + this.task.type)) {
+                    localStorage.removeItem("task_" + this.task.type);
                 }
             },
-            reset(){
-                if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
+            reset() {
+                if (confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")) {
                     this.localDelete();
                     this.answer = [
-                        [],[]
+                        [], []
                     ]
                 }
             }
@@ -90,7 +93,7 @@
 </script>
 
 <style scoped>
-    #checkdistance{
+    #checkdistance {
         padding-top: 10px;
         padding-left: 40px;
     }
