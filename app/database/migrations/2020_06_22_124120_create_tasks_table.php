@@ -22,12 +22,13 @@ class CreateTasksTable extends Migration
             $table->text('hint')->comment("Hinweis zur Aufgabe");
             $table->json('data')->nullable(true)->comment("Aufgabe im JSON-Format");
             $table->json('solution')->comment("Erwartungshorizont zur Aufgabe im JSON-Format");
+            $table->float('points')->default(0.0)->comment("Maximal erreichbare Punkte dieser Aufgabe");
             $table->timestamps();
         });
 
         DB::table('tasks')->insert(
           [
-              'type' => 0,
+              'type' => 1,
               'title' => "Aufgabentyp 1: Textfenster",
               'description' => "<p>In dieser Aufgabe sollst du Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ut aliquip ex ea commodo consequat. Duis aute irure dolor anim id est laborum. machen.</p>",
               'hint' => "Hier steht ein Hinweis zur Aufgabe",
@@ -35,10 +36,30 @@ class CreateTasksTable extends Migration
               'solution' => json_encode(
                   array(
                       "erwartungshorizont" => "Lösung zur Aufgabe 1",
-                      "points" => 2
                   )
               ),
+              'points' => 2
           ]
+        );
+
+        DB::table('tasks')->insert(
+            [
+                'type' => 2,
+                'title' => "Das hier ist eine Programmier-Aufgabe in C++",
+                'description' => "<p>Hier ist eine detaillierte Beschreibung der Aufgabe</p><ul><li>Aufgabe 1.1</li><li>Aufgabe 1.2</li><li>Aufgabe 1.3</li></ul>",
+                'hint' => "Hier steht ein Hinweis zur Aufgabe",
+                'data' => json_encode(
+                    array(
+                        "code" => 'int x = 0;\nint myFunc(int a, int b){\n    int out = a + b;\n    return out;\n}'
+                    )
+                ),
+                'solution' => json_encode(
+                    array(
+                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
+                    )
+                ),
+                'points' => 10
+            ]
         );
     }
 
