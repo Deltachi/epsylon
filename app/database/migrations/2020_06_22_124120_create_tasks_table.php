@@ -124,6 +124,29 @@ class CreateTasksTable extends Migration
                 'points' => 10
             ]
         );
+        DB::table('tasks')->insert(
+            [
+                'type' => 6,
+                'title' => "Finden Sie die richtige Reihenfolge",
+                'description' => "<p>Sortieren Sie die Antworten von wichtigster Bedeutung zu unwichtigster.</p>",
+                'hint' => "Hier steht ein Hinweis zur Aufgabe",
+                'data' => json_encode(
+                    array(
+                        "solution1" => ["name" => "Option1", "hint" => "Hinweis1"],
+                        "solution2" => ["name" => "Option2", "hint" => "Hinweis2"],
+                        "solution3" => ["name" => "Option3", "hint" => "Hinweis3"],
+                        "top" => "wichtig",
+                        "bottom" => "unwichtig",
+                    )
+                ),
+                'solution' => json_encode(
+                    array(
+                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
+                    )
+                ),
+                'points' => 10
+            ]
+        );
     }
 
     /**
