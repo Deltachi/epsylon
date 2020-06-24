@@ -14,12 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Auth::routes();
 
+Route::get('/', 'TasksController@index')->name('tasks');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/task/{id}', 'TasksController@show')->name('task.show');
 Route::get('/tasks', 'TasksController@index')->name('tasks');
