@@ -9,8 +9,7 @@
                     theme="vs-dark"
                     language="cpp"
                     :options="options"
-                    :value="task.data.code"
-                    v-model="task.data.code"
+                    v-model="answer"
                     @change="onChange"
                 ></MonacoEditor>
             </div>
@@ -37,11 +36,14 @@
             MonacoEditor,
         },
         created() {
-            this.localLoad();
             if(this.dataTask && this.dataTask !== "null"){
                 this.task = JSON.parse(this.dataTask);
+                this.answer = this.task.data.code;
                 this.ready = true;
             }
+        },
+        mounted() {
+            this.localLoad();
         },
         data(){
             return {
@@ -50,7 +52,9 @@
                     title: "",
                     description: "",
                     hint: "",
-                    data: {},
+                    data: {
+                        code: "",
+                    },
                     points: 0.0,
                 },
                 answer:"",
@@ -62,7 +66,7 @@
         },
         methods: {
             submitTask(){
-                alert("Aufgabe wird abgegeben!\n"+this.code);
+                alert("Aufgabe wird abgegeben!\n"+this.answer);
                 this.localSave();
             },
             onChange(value) {
@@ -70,11 +74,11 @@
                 //console.log(value);
             },
             localSave(){
-                localStorage.setItem("task_"+this.task.type,JSON.stringify(this.code));
+                localStorage.setItem("task_"+this.task.type,JSON.stringify(this.answer));
             },
             localLoad(){
                 if(localStorage.getItem("task_"+this.task.type)){
-                    this.code = JSON.parse(localStorage.getItem("task_"+this.task.type));
+                    this.answer = JSON.parse(localStorage.getItem("task_"+this.task.type));
                 }
             },
             localDelete(){
@@ -85,7 +89,7 @@
             reset(){
                 if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")) {
                     this.localDelete();
-                    this.code = "";
+                    this.answer = this.task.data.code;
                 }
             }
         }
