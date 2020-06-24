@@ -3,7 +3,7 @@
         <form>
             <task-header v-bind:task="task"></task-header>
             <div class="card-body">
-                <input v-model="answer" :name="'answer'" type="text" class="form-control" placeholder="Antwort..." >
+                <input v-model="answer" name="answer" type="text" class="form-control" placeholder="Antwort..." >
             </div>
             <task-footer></task-footer>
         </form>
