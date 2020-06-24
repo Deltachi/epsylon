@@ -24,3 +24,5 @@ Route::get('/', 'TasksController@index')->name('tasks');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/task/{id}', 'TasksController@show')->name('task.show');
 Route::get('/tasks', 'TasksController@index')->name('tasks');
+
+Route::post('/task', 'TasksController@store')->name('task.store');
