@@ -17,7 +17,7 @@
                         <li>Honesty is the best <span class="target" data-accept="policy">&nbsp;</span>.</li>
                         <li>He who  <span class="target" data-accept="laughs">&nbsp;</span> last laughs longest.</li>
                         <li>Two <span class="target" data-accept="wrongs">&nbsp;</span> don't make it right.</li> -->
-                        <li class="droppables" v-for="(sentence, index) in task.data.sentences" v-html="getSentence(sentence, index)"></li>
+                        <li :id="'sentence-'+index" class="droppables" v-for="(sentence, index) in task.data.sentences" v-html="getSentence(sentence, index)"></li>
                     </ol>
                 </div>
             </div>
@@ -47,17 +47,16 @@
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;
             }
-
             $(document).ready( function() {
                 //initialize the quiz options
-                var answersLeft = [];
                 $('.quiz-wrapper').find('li.draggables>a').each( function(i) {
                     var $this = $(this);
                     //var answerValue = $this.data('target');
                     //var $target = $('.answers .target[data-accept="'+answerValue+'"]');
                     var labelText = $this.html();
                     $this.draggable( {
-                        revert: "invalid",
+                        revert: true,
+                        revertDuration: 0,
                         containment: ".quiz-wrapper"
                     });
                 });
@@ -67,11 +66,11 @@
                         //accept: 'li>a.option[data-target="'+answerValue+'"]',
                         accept: 'li.draggables>a',
                         drop: function( event, ui ) {
-                            $this.draggable('destroy');
-                            $this.droppable('destroy');
-                            $this.html('&nbsp;');
-                            $this.html(labelText);
-                            //answersLeft.splice( answersLeft.indexOf( answerValue ), 1 );
+                            //$(ui.draggable).remove();
+                            let item_text = $(ui.draggable).text();
+                            //$this.droppable('destroy');
+                            //$(ui.draggable).html('&nbsp;');
+                            $($this).text(item_text);
                         }
                     });
                 })
@@ -79,8 +78,8 @@
         },
         data(){
             return {
+                type: 3,
                 task: {
-                    type: 3,
                     title: "Drag und Drop Aufgabe",
                     description: "<p>Fill in the blanks by dragging the missing answer.</p>",
                     hint: "Hier stehen Hinweise zur Aufgabe",
@@ -96,20 +95,85 @@
                     },
                     points: 0.0,
                 },
-                answer: {
-
-                },
+                answer: {},
                 ready: false,
             }
         },
         methods:{
             submitTask(){
-                alert("Antwort wird gespeichert!");
+                let targets = document.getElementsByClassName("target");
+                for(let target of targets){
+                    let targetData = target.getAttribute("data-target");
+                    let value = target.innerText;
+                    this.answer[targetData] = value;
+                }
+                alert("Antwort wird gespeichert!\n"+JSON.stringify(this.answer));
+                this.localSave();
             },
             getSentence(string, id){
                 string = string.replace("_BLANK", "<span class='target' data-target='sentence-"+id+"'>&nbsp;</span>");
                 return string;
-            }
+            },
+            localSave(){
+                localStorage.setItem("task_"+this.type,JSON.stringify(this.answer));
+            },
+            localLoad(){
+                if(localStorage.getItem("task_"+this.type)){
+                    this.answer = JSON.parse(localStorage.getItem("task_"+this.type));
+                    let targets = document.getElementsByClassName("target");
+                    for(let target of targets){
+                        let targetData = target.getAttribute("data-target");
+                        if (this.answer[targetData]){
+                            let value = this.answer[targetData];
+                            target.innerText = value;
+                        }
+                    }
+                }
+            },
+            localDelete(){
+                if(localStorage.getItem("task_"+this.type)){
+                    localStorage.removeItem("task_"+this.type);
+                }
+            },
+            reset(){
+                if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
+                    this.localDelete();
+                    this.answer = {};
+
+                    let targets = document.getElementsByClassName("target");
+                    for(let target of targets){
+                        target.innerText = " ";
+                    }
+
+                    /*$('.quiz-wrapper').find('li.droppables>span').each( function(i) {
+                        var $this = $(this);
+                        $this.droppable( {
+                            //accept: 'li>a.option[data-target="'+answerValue+'"]',
+                            accept: 'li.draggables>a',
+                            drop: function( event, ui ) {
+                                //$(ui.draggable).remove();
+                                let item_text = $(ui.draggable).text();
+                                $this.droppable('destroy');
+                                //$(ui.draggable).html('&nbsp;');
+                                $($this).text(item_text);
+                            }
+                        });
+                    })*/
+                }
+            },
+            keyEvent(event) {
+                if (event.ctrlKey || event.metaKey) {
+                    switch (String.fromCharCode(event.which).toLowerCase()) {
+                        case 's':
+                            event.preventDefault();
+                            this.submitTask();
+                            break;
+                    }
+                }
+            },
+        },
+        mounted() {
+            this.localLoad();
         }
     }
 </script>
