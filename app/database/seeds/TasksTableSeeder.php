@@ -153,12 +153,12 @@ class TasksTableSeeder extends Seeder
         DB::table('tasks')->insert(
             [
                 'type' => 8,
-                'title' => "Bitte füllen Sie den Corona-Lückentext aus",
-                'description' => "<p>Ordnen Sie die Antworten den passenden Aussagen zu.</p>",
-                'hint' => "Hier steht ein Hinweis zur Aufgabe",
+                'title' => "Bitte füllen Sie den Lückentext aus",
+                'description' => "<p>Was sind die Grundregeln für richtiges Händewaschen?</p>",
+                'hint' => "https://www.blanco.com/de-de/inspirationen/haendewaschen/",
                 'data' => json_encode(
                     array(
-                        "sentences" => "Wenn jeder von uns zu Hause _BLANK sich ganz allein _BLANK dann können wir blank auch besiegen. Es geht _BLANK um mich um uns um jeden den man schützen _BLANK. Auch wenn die Zeiten _BLANK bleib zu Haus",
+                        "sentence" => "Waschen Sie Ihre Hände gründlich mit Wasser und _BLANK. Für das Händewaschen sollte man sich mindestens _BLANK Sekunden Zeit nehmen. Denken Sie dabei daran, nicht nur die Handinnenflächen, sondern auch die _BLANK, die _BLANK und _BLANK der Finger gründlich einzuseifen.",
                         "blank" => "_BLANK"
                     )
                 ),
