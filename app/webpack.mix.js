@@ -59,7 +59,7 @@ mix.webpackConfig({
     plugins: [
         new CKEditorWebpackPlugin({
             language: 'de',
-            additionalLanguages: ["de","en"]
+            //additionalLanguages: ["de","en"]
         })
     ],
     module: {
