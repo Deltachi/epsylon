@@ -12,6 +12,8 @@
 <script>
     import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
     import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
+    import Heading from '@ckeditor/ckeditor5-heading/src/heading';
+    import List from '@ckeditor/ckeditor5-list/src/list';
     import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
     import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
     import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
@@ -53,6 +55,8 @@
                     language: 'de',
                     plugins: [
                         EssentialsPlugin,
+                        Heading,
+                        List,
                         BoldPlugin,
                         ItalicPlugin,
                         Underline, Strikethrough, Code, Subscript, Superscript,
@@ -63,9 +67,13 @@
 
                     toolbar: {
                         items: [
+                            'heading',
+                            '|',
                             'bold',
                             'italic','underline', 'strikethrough', 'code','subscript', 'superscript',
                             'link',
+                            'bulletedList',
+                            'numberedList',
                             'codeBlock',
                             '|',
                             'undo',
