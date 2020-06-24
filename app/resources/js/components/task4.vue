@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div v-if="ready" class="card">
         <form>
             <task-header v-bind:task="task"></task-header>
             <div class="card-body">
@@ -11,19 +11,11 @@
                         </div>
                     </div>
                 </div>
-                <!--
-                old nur als vorlage
-                <div class="form-group row" v-for="index in task.data.solution.length" :key="index">
-                      <div class="form-check">
-                          <input class="form-check-input" type="checkbox" :id="'check'+0+'-'+index" :value="task.data.solution[index-1]" v-model="answer[0]">
-                          <label class="form-check-label" :for="'check'+0+'-'+index">{{task.data.solution[index-1]}}</label>
-                     </div>
-                </div>
-                -->
             </div>
             <task-footer></task-footer>
         </form>
     </div>
+    <task-loading-error v-else></task-loading-error>
 </template>
 
 <script>

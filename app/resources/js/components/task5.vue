@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div v-if="ready" class="card">
         <form>
             <task-header v-bind:task="task"></task-header>
             <div class="card-body">
@@ -15,6 +15,7 @@
             <task-footer></task-footer>
         </form>
     </div>
+    <task-loading-error v-else></task-loading-error>
 </template>
 
 <script>

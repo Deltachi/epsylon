@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div v-if="ready" class="card">
         <form>
             <div class="card-header p-4 pl-5 pr-5">
                 <h2>{{task.title}}</h2>
@@ -24,6 +24,7 @@
             </div>
         </form>
     </div>
+    <task-loading-error v-else></task-loading-error>
 </template>
 <!--  <input v-model="answer[subtask.id]" :name="'answer-'+subtask.id" type="text" class="form-control" placeholder="Antwort..."> -->
 <script>

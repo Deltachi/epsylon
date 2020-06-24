@@ -1,6 +1,6 @@
 <!-- Antworten in die richtige Reihenfolge bringen -->
 <template>
-    <div class="card">
+    <div v-if="ready" class="card">
         <task-header v-bind:task="task"></task-header>
         <div class="card-body d-flex flex-column align-items-start pl-5 pr-5">
             <div class="task-top" v-if="task.data.top">{{task.data.top}}</div>
@@ -14,6 +14,7 @@
         </div>
         <task-footer></task-footer>
     </div>
+    <task-loading-error v-else></task-loading-error>
 </template>
 
 <script>
