@@ -13,8 +13,8 @@ class AnswersController extends Controller
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(int $id){
-        $answer = Answer::find($id);
+    public function show(int $user_id, int $exam_id, int $task_id){
+        $answer = Answer::where('user_id',$user_id)->where('exam_id',$exam_id)->where('task_id',$task_id)->first();
         if (isset($answer)){
             return response()->json(['success'=>true,'message'=>'Daten geladen!', 'data'=>$answer->data],200);
         }
