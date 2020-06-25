@@ -10,7 +10,7 @@
         name: "TaskFooter",
         methods: {
             reset(){
-                this.$parent.reset();
+                this.$parent.resetTask();
             },
             submitTask(){
                 this.$parent.submitTask();
