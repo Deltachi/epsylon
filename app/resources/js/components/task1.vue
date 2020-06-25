@@ -52,22 +52,21 @@
             submitTask(){
                 alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
                 this.localSave();
-
                 //Database connection
-                /*fetch('/task', {
-                    method: 'POST', // or 'PUT'
+                fetch('/task', {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(this.answer),
                 })
-                .then(response => response.json())
+                .then(axios.post('/task',this.answer))
                 .then(data => {
                     console.log('Success:', data);
                 })
                 .catch((error) => {
                     console.error('Error:', error);
-                });*/
+                });
             },
             localSave(){
                 localStorage.setItem("task_"+this.type,JSON.stringify(this.answer));

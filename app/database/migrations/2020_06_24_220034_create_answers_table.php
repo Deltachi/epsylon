@@ -14,7 +14,11 @@ class CreateAnswersTable extends Migration
     public function up()
     {
         Schema::create('answers', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->integer('user_id')->nullable(true)->comment("ID des User");
+            $table->integer('exam_id')->nullable(true)->comment("ID des User");
+            $table->integer('task_id')->nullable(true)->comment("ID des Task");
+            $table->longText('user_solution')->nullable(true)->comment("Lösung im JSON-Format");
             $table->timestamps();
         });
     }

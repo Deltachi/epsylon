@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use DB;
 
 class TasksController extends Controller
 {
@@ -49,4 +50,11 @@ class TasksController extends Controller
     }
 
     //store Funktion
+    public function store(Request $request){
+        $user_id = 0;
+        $task_id = 1;
+        $exam_id = 1;
+        $data = $request->input("answer");
+        DB::insert("Insert into answers(user_id,exam_id,task_id,user_solution) values ('$user_id','$exam_id', '$task_id','$data')");
+    }
 }
