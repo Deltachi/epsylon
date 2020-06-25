@@ -14,12 +14,14 @@ class CreateAnswersTable extends Migration
     public function up()
     {
         Schema::create('answers', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->integer('user_id')->nullable(true)->comment("ID des User");
-            $table->integer('exam_id')->nullable(true)->comment("ID des User");
-            $table->integer('task_id')->nullable(true)->comment("ID des Task");
-            $table->longText('user_solution')->nullable(true)->comment("Lösung im JSON-Format");
+            //$table->id()->autoIncrement();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('exam_id')->constrained();
+            $table->foreignId('task_id')->constrained();
+            $table->json('data')->comment("Lösung im JSON-Format");
             $table->timestamps();
+
+            $table->primary(array('user_id', 'exam_id', 'task_id'));
         });
     }
 
