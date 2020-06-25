@@ -25,4 +25,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/task/{id}', 'TasksController@show')->name('task.show');
 Route::get('/tasks', 'TasksController@index')->name('tasks');
 
-Route::post('/task', 'TasksController@store')->name('task.store');
+Route::get('/answer/{id}', 'AnswersController@show')->name('task.show');
+Route::post('/answer', 'AnswersController@store')->name('task.store');
+Route::delete('/answer', 'AnswersController@destroy')->name('task.destroy');
