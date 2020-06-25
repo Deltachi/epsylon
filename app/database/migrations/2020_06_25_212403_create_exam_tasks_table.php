@@ -17,7 +17,7 @@ class CreateExamTasksTable extends Migration
             $table->foreignId('exam_id')->constrained();
             $table->foreignId('task_id')->constrained();
             $table->primary(array('exam_id','task_id'));
-            $table->float('points');
+            $table->float('points')->nullable()->comment("Punkte, die diese Aufgabe in dieser Klausur bringen kann.");
             $table->timestamps();
         });
     }
