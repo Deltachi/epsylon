@@ -28,7 +28,7 @@
         },
         created() {
             //Methodenaufrufe
-            this.localLoad();
+            this.loadTask();
             //Variablenzuweisungen
             if(this.dataTask && this.dataTask !== "null"){
                 this.task = JSON.parse(this.dataTask);
@@ -51,13 +51,16 @@
         },
         methods: {
             loadTask(){
-                this.localLoad();
+                //this.localLoad();
 
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                let url = '/answer';
+                let user = 1;
+                let exam = 1;
+                let task = 1;
+                let url = '/answer/'+user+"/"+exam+"/"+task;
                 fetch(url, {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json, text-plain, */*",
@@ -65,21 +68,15 @@
                         "X-CSRF-TOKEN": token
                     },
                     credentials: "same-origin",
-                    body: JSON.stringify({
-                        user: 1,
-                        exam: 1,
-                        task: 1,
-                        data: this.answer
-                    }),
                 })
                 .then(response => response.json())
-                .then(data => this.serverMessage(data))
+                .then(data => this.serverData(data))
                 .catch((error) => {
                     console.error('Error:', error);
                 });
             },
             submitTask(){
-                this.localSave();
+                //this.localSave();
 
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -121,7 +118,7 @@
             },
             resetTask(){
                 if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
-                    this.localDelete();
+                    //this.localDelete();
                     this.answer = null
 
                     //Database connection
@@ -162,6 +159,15 @@
             serverMessage(response){
                 if(response.success){
                     console.log(response.message);
+                }else{
+                    console.log(response.message);
+                }
+            },
+            serverData(response){
+                if(response.success){
+                    console.log(response.message);
+                    console.log(response.data);
+                    this.answer = JSON.parse(response.data);
                 }else{
                     console.log(response.message);
                 }
