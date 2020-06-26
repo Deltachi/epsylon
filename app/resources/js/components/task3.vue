@@ -136,6 +136,28 @@
                     localStorage.removeItem("task_"+this.type);
                 }
             },
+            loadTask(){
+                //this.localLoad();
+
+                //Database connection
+                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                let url = '/answer/'+this.user_id+"/"+this.exam_id+"/"+this.task_id;
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    credentials: "same-origin",
+                })
+                    .then(response => response.json())
+                    .then(data => this.serverData(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            },
             resetTask(affirmation = false){
                 if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
                     //this.localDelete();
@@ -180,6 +202,22 @@
                             break;
                     }
                 }
+            },
+            serverMessage(response){
+                console.log(response.message);
+                this.server_message = response.message;
+                this.server_message_type = response.message_type;
+                this.server_message_handle.$emit('animate');
+            },
+            serverData(response){
+                if(response.success){
+                    console.log(response.data);
+                    this.answer = JSON.parse(response.data);
+                }
+                console.log(response.message);
+                this.server_message = response.message;
+                this.server_message_type = response.message_type;
+                this.server_message_handle.$emit('animate');
             },
         },
         mounted() {
