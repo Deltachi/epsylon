@@ -114,8 +114,31 @@
                     let value = target.innerText;
                     this.answer[targetData] = value;
                 }
-                alert("Antwort wird gespeichert!\n"+JSON.stringify(this.answer));
-                this.localSave();
+                //alert("Antwort wird gespeichert!\n"+JSON.stringify(this.answer));
+                //this.localSave();
+                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                let url = '/answer';
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({
+                        user: this.user_id,
+                        exam: this.exam_id,
+                        task: this.task_id,
+                        data: this.answer
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => this.serverMessage(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
             },
             getSentence(string, id){
                 string = string.replace("_BLANK", "<span class='target' data-target='sentence-"+id+"'>&nbsp;</span>");
@@ -124,17 +147,20 @@
             localSave(){
                 localStorage.setItem("task_"+this.type,JSON.stringify(this.answer));
             },
+            parseAnswer(_answer){
+                let targets = document.getElementsByClassName("target");
+                for(let target of targets){
+                    let targetData = target.getAttribute("data-target");
+                    if (_answer[targetData]){
+                        let value = _answer[targetData];
+                        target.innerText = value;
+                    }
+                }
+            },
             localLoad(){
                 if(localStorage.getItem("task_"+this.type)){
                     this.answer = JSON.parse(localStorage.getItem("task_"+this.type));
-                    let targets = document.getElementsByClassName("target");
-                    for(let target of targets){
-                        let targetData = target.getAttribute("data-target");
-                        if (this.answer[targetData]){
-                            let value = this.answer[targetData];
-                            target.innerText = value;
-                        }
-                    }
+                    this.parseAnswer(this.answer);
                 }
             },
             localDelete(){
@@ -219,6 +245,7 @@
                 if(response.success){
                     console.log(response.data);
                     this.answer = JSON.parse(response.data);
+                    this.parseAnswer(this.answer);
                 }
                 console.log(response.message);
                 this.server_message = response.message;
