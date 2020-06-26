@@ -21,7 +21,10 @@
     export default {
         name: "task1",
         props: [
-          'dataTask'
+            'dataTask',
+            'dataUser',
+            'dataExam',
+            'dataTask',
         ],
         components: {
             TaskHeader,
@@ -63,10 +66,7 @@
 
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                let user = 1;
-                let exam = 1;
-                let task = 1;
-                let url = '/answer/'+user+"/"+exam+"/"+task;
+                let url = '/answer/'+this.user_id+"/"+this.exam_id+"/"+this.task_id;
                 fetch(url, {
                     method: 'GET',
                     headers: {
@@ -99,9 +99,9 @@
                     },
                     credentials: "same-origin",
                     body: JSON.stringify({
-                        user: 1,
-                        exam: 1,
-                        task: 1,
+                        user: this.user_id,
+                        exam: this.exam_id,
+                        task: this.task_id,
                         data: this.answer
                     }),
                 })
@@ -142,9 +142,9 @@
                         },
                         credentials: "same-origin",
                         body: JSON.stringify({
-                            user: 1,
-                            exam: 1,
-                            task: 1,
+                            user: this.user_id,
+                            exam: this.exam_id,
+                            task: this.task_id,
                         }),
                     })
                         .then(response => response.json())
