@@ -27,15 +27,20 @@
     import TaskHeader from "./TaskHeader";
     import TaskFooter from "./TaskFooter";
     import TaskLoadingError from "./TaskLoadingError";
+    import TaskServerMessage from "./TaskServerMessage";
 
     export default {
         name: 'task10',
         props: [
-            'dataTask'
+            'dataTask',
+            'dataUserID',
+            'dataExamID',
+            'dataTaskID',
         ],
         components: {
             TaskHeader,
             TaskFooter,
+            TaskServerMessage,
             TaskLoadingError,
         },
         created() {
@@ -44,6 +49,15 @@
             if (this.dataTask && this.dataTask !== "null") {
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;
+            }
+            if(this.dataUserID && this.dataUserID !== "null"){
+                this.user_id = this.dataUserID;
+            }
+            if(this.dataExamID && this.dataExamID !== "null"){
+                this.exam_id = this.dataExamID;
+            }
+            if(this.dataTaskID && this.dataTaskID !== "null"){
+                this.task_id = this.dataTaskID;
             }
             this.answer = this.task.data.editorData;
         },
@@ -90,14 +104,64 @@
                     },
                     points: 10.0,
                 },
-                answer: "",
-                ready: true
+                answer:"",
+                user_id: 1,
+                exam_id: 1,
+                task_id: 10,
+                ready: true,
+                server_message: "",
+                server_message_type: "",
+                server_message_handle: new Vue(),
             };
         },
         methods: {
+            loadTask(){
+                //Database connection
+                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                let url = '/answer/'+this.user_id+"/"+this.exam_id+"/"+this.task_id;
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    credentials: "same-origin",
+                })
+                    .then(response => response.json())
+                    .then(data => this.serverData(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            },
             submitTask(){
                 alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
                 //this.localSave()
+                //Database connection
+                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                let url = '/answer';
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({
+                        user: this.user_id,
+                        exam: this.exam_id,
+                        task: this.task_id,
+                        data: this.answer
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => this.serverMessage(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
             },
             localSave(){
                 localStorage.setItem("task_"+this.type,JSON.stringify(this.answer));
@@ -110,6 +174,36 @@
             localDelete(){
                 if(localStorage.getItem("task_"+this.type)){
                     localStorage.removeItem("task_"+this.type);
+                }
+            },
+            resetTask(affirmation = false){
+                if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
+                    //this.localDelete();
+                    this.answer = null;
+
+                    //Database connection
+                    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    let url = '/answer';
+                    fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json, text-plain, */*",
+                            "X-Requested-With": "XMLHttpRequest",
+                            "X-CSRF-TOKEN": token
+                        },
+                        credentials: "same-origin",
+                        body: JSON.stringify({
+                            user: this.user_id,
+                            exam: this.exam_id,
+                            task: this.task_id,
+                        }),
+                    })
+                        .then(response => response.json())
+                        .then(data => this.serverMessage(data))
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
                 }
             },
             reset(){
@@ -128,6 +222,23 @@
                     }
                 }
             },
+            serverMessage(response){
+                console.log(response.message);
+                this.server_message = response.message;
+                this.server_message_type = response.message_type;
+
+                this.server_message_handle.$emit('animate');
+            },
+            serverData(response){
+                if(response.success){
+                    console.log(response.data);
+                    this.answer = JSON.parse(response.data);
+                }
+                console.log(response.message);
+                this.server_message = response.message;
+                this.server_message_type = response.message_type;
+                this.server_message_handle.$emit('animate');
+            }
         }
     };
 </script>
