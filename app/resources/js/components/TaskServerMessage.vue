@@ -15,19 +15,19 @@
 <script>
     export default {
         name: "TaskServerMessage",
-        props: ['message','message_type'],
+        props: ['message','message_type','animation_handle'],
         methods: {
             animate(){
                 let container = document.getElementsByClassName("task-server-message")[0];
                 container.classList.add("active");
-                setTimeout(function(){ container.classList.remove("active"); }, 3000);
+                setTimeout(function(){
+                    container.classList.remove("active");
+                }, 3000);
             }
-        },
-        updated() {
-            this.animate();
         },
         mounted() {
             this.animate();
+            this.animation_handle.$on('animate', this.animate);
         }
     }
 </script>

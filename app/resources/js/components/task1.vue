@@ -7,7 +7,7 @@
             </div>
             <task-footer></task-footer>
         </form>
-        <task-server-message v-if="server_message" v-bind:message="server_message" v-bind:message_type="server_message_type"></task-server-message>
+        <task-server-message v-if="server_message" v-bind:message="server_message" v-bind:message_type="server_message_type" :animation_handle="server_message_handle"></task-server-message>
     </div>
     <task-loading-error v-else></task-loading-error>
 </template>
@@ -22,9 +22,9 @@
         name: "task1",
         props: [
             'dataTask',
-            'dataUser',
-            'dataExam',
-            'dataTask',
+            'dataUserID',
+            'dataExamID',
+            'dataTaskID',
         ],
         components: {
             TaskHeader,
@@ -39,6 +39,15 @@
             if(this.dataTask && this.dataTask !== "null"){
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;
+            }
+            if(this.dataUserID && this.dataUserID !== "null"){
+                this.user_id = this.dataUserID;
+            }
+            if(this.dataExamID && this.dataExamID !== "null"){
+                this.exam_id = this.dataExamID;
+            }
+            if(this.dataTaskID && this.dataTaskID !== "null"){
+                this.task_id = this.dataTaskID;
             }
         },
         data(){
@@ -58,6 +67,7 @@
                 ready: false,
                 server_message: "",
                 server_message_type: "",
+                server_message_handle: new Vue(),
             }
         },
         methods: {
@@ -165,28 +175,21 @@
                 }
             },
             serverMessage(response){
-                if(response.success){
-                    console.log(response.message);
-                    this.server_message = response.message;
-                    this.server_message_type = response.message_type;
-                }else{
-                    console.log(response.message);
-                    this.server_message = response.message;
-                    this.server_message_type = response.message_type;
-                }
+                console.log(response.message);
+                this.server_message = response.message;
+                this.server_message_type = response.message_type;
+
+                this.server_message_handle.$emit('animate');
             },
             serverData(response){
                 if(response.success){
-                    console.log(response.message);
                     console.log(response.data);
                     this.answer = JSON.parse(response.data);
-                    this.server_message = response.message;
-                    this.server_message_type = response.message_type;
-                }else{
-                    console.log(response.message);
-                    this.server_message = response.message;
-                    this.server_message_type = response.message_type;
                 }
+                console.log(response.message);
+                this.server_message = response.message;
+                this.server_message_type = response.message_type;
+                this.server_message_handle.$emit('animate');
             }
         },
         mounted() {
