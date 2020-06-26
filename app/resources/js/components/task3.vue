@@ -98,6 +98,12 @@
                 },
                 answer: {},
                 ready: false,
+                user_id: 1,
+                exam_id: 1,
+                task_id: 3,
+                server_message: "",
+                server_message_type: "",
+                server_message_handle: new Vue(),
             }
         },
         methods:{
