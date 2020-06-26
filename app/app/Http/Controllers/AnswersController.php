@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class AnswersController extends Controller
 {
+    public function __construct()
+    {
+        //ohne login kein Zugriff
+        $this->middleware('auth');
+    }
+
     public function verifyAccess(int $user_id){
         $auth_user_id = Auth()->user()->id;
         if($auth_user_id !== $user_id){
