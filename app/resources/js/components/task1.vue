@@ -116,8 +116,8 @@
                     localStorage.removeItem("task_"+this.type);
                 }
             },
-            resetTask(){
-                if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
+            resetTask(affirmation = false){
+                if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
                     //this.localDelete();
                     this.answer = null
 
