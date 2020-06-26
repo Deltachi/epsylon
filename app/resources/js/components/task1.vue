@@ -7,6 +7,7 @@
             </div>
             <task-footer></task-footer>
         </form>
+        <task-server-message v-if="server_message" v-bind:message="server_message" v-bind:message_type="server_message_type"></task-server-message>
     </div>
     <task-loading-error v-else></task-loading-error>
 </template>
@@ -14,6 +15,7 @@
 <script>
     import TaskHeader from "./TaskHeader";
     import TaskFooter from "./TaskFooter";
+    import TaskServerMessage from "./TaskServerMessage";
     import TaskLoadingError from "./TaskLoadingError";
 
     export default {
@@ -24,6 +26,7 @@
         components: {
             TaskHeader,
             TaskFooter,
+            TaskServerMessage,
             TaskLoadingError,
         },
         created() {
@@ -46,7 +49,12 @@
                     points: 0.0,
                 },
                 answer:"",
-                ready: false
+                user_id: 1,
+                exam_id: 1,
+                task_id: 1,
+                ready: false,
+                server_message: "",
+                server_message_type: "",
             }
         },
         methods: {
@@ -159,8 +167,12 @@
             serverMessage(response){
                 if(response.success){
                     console.log(response.message);
+                    this.server_message = response.message;
+                    this.server_message_type = response.message_type;
                 }else{
                     console.log(response.message);
+                    this.server_message = response.message;
+                    this.server_message_type = response.message_type;
                 }
             },
             serverData(response){
@@ -168,8 +180,12 @@
                     console.log(response.message);
                     console.log(response.data);
                     this.answer = JSON.parse(response.data);
+                    this.server_message = response.message;
+                    this.server_message_type = response.message_type;
                 }else{
                     console.log(response.message);
+                    this.server_message = response.message;
+                    this.server_message_type = response.message_type;
                 }
             }
         },
