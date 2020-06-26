@@ -46,6 +46,7 @@
         },
         created() {
             //Methodenaufrufe
+            this.loadTask();
             //Variablenzuweisungen
             if (this.dataTask && this.dataTask !== "null") {
                 this.task = JSON.parse(this.dataTask);

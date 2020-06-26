@@ -33,6 +33,7 @@
             TaskLoadingError,
         },
         created() {
+            this.loadTask();
             if (this.dataTask && this.dataTask !== "null") {
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;

@@ -32,6 +32,7 @@
         name: "task9",
         created() {
             //Methodenaufrufe
+            this.loadTask();
             //Variablenzuweisungen
             $( function() {
                 var stringreplace = "_BLANK";

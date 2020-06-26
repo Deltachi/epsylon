@@ -42,6 +42,8 @@
             MonacoEditor,
         },
         created() {
+            this.loadTask();
+
             if(this.dataTask && this.dataTask !== "null"){
                 this.task = JSON.parse(this.dataTask);
                 this.answer = this.task.data.code;
@@ -109,7 +111,7 @@
                     });
             },
             submitTask(){
-                alert("Aufgabe wird abgegeben!\n"+this.answer);
+                //alert("Aufgabe wird abgegeben!\n"+this.answer);
                 //this.localSave();
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 let url = '/answer';
