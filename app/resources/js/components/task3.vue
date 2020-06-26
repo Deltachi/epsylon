@@ -136,9 +136,9 @@
                     localStorage.removeItem("task_"+this.type);
                 }
             },
-            reset(){
-                if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
-                    this.localDelete();
+            resetTask(affirmation = false){
+                if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
+                    //this.localDelete();
                     this.answer = {};
 
                     let targets = document.getElementsByClassName("target");
@@ -146,20 +146,29 @@
                         target.innerText = " ";
                     }
 
-                    /*$('.quiz-wrapper').find('li.droppables>span').each( function(i) {
-                        var $this = $(this);
-                        $this.droppable( {
-                            //accept: 'li>a.option[data-target="'+answerValue+'"]',
-                            accept: 'li.draggables>a',
-                            drop: function( event, ui ) {
-                                //$(ui.draggable).remove();
-                                let item_text = $(ui.draggable).text();
-                                $this.droppable('destroy');
-                                //$(ui.draggable).html('&nbsp;');
-                                $($this).text(item_text);
-                            }
+                    //Database connection
+                    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    let url = '/answer';
+                    fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json, text-plain, */*",
+                            "X-Requested-With": "XMLHttpRequest",
+                            "X-CSRF-TOKEN": token
+                        },
+                        credentials: "same-origin",
+                        body: JSON.stringify({
+                            user: this.user_id,
+                            exam: this.exam_id,
+                            task: this.task_id,
+                        }),
+                    })
+                        .then(response => response.json())
+                        .then(data => this.serverMessage(data))
+                        .catch((error) => {
+                            console.error('Error:', error);
                         });
-                    })*/
                 }
             },
             keyEvent(event) {

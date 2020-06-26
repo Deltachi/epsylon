@@ -151,7 +151,7 @@
             resetTask(affirmation = false){
                 if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
                     //this.localDelete();
-                    this.answer = null
+                    this.answer = ""
 
                     //Database connection
                     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
