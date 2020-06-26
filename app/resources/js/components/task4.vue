@@ -4,10 +4,10 @@
             <task-header v-bind:task="task"></task-header>
             <div class="card-body">
                 <div id="checkdistance">
-                    <div class="form-group row" v-for="(solutions, index) in task.data.solution">
+                    <div class="form-group row" v-for="(solution, index) in task.data.solution">
                         <div class="form-check">
-                            <input :id="'answer-'+index" class="form-check-input" type="checkbox">
-                            <label class="form-check-label">{{solutions}}</label>
+                            <input :id="'answer-'+index" class="form-check-input" type="checkbox" :value="solution" v-model="answer">
+                            <label class="form-check-label">{{solution}}</label>
                         </div>
                     </div>
                 </div>
@@ -62,10 +62,10 @@
                     title: "",
                     description: "",
                     hint: "",
-                    data: {},
+                    data: {'solution':[]},
                     points: 0.0,
                 },
-                answer:"",
+                answer:[],
                 user_id: 1,
                 exam_id: 1,
                 task_id: 4,
@@ -97,17 +97,7 @@
                     });
             },
             submitTask() {
-                for(let i=0;i<this.task.data.solution.length;i++){
-                    //console.log(this.task.data.solution.length);
-                    let answersolution = "answer-" + i;
-                    let list = document.getElementById(answersolution);
-                    if(list.checked == true){
-                        this.answer = this.answer + "true, " ;
-                    }else{
-                        this.answer = this.answer + "false, ";
-                    }
-                }
-                alert("Aufgabe wird abgegeben!\n" + JSON.stringify(this.answer));
+                //alert("Aufgabe wird abgegeben!\n" + JSON.stringify(this.answer));
                 console.log(this.answer);
 
                 //Database connection
