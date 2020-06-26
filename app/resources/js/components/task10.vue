@@ -4,6 +4,7 @@
         <div class="card-body p-0 task__body">
             <ckeditor :editor="editor" v-model="answer" :config="editorConfig"></ckeditor>
         </div>
+        <task-server-message v-if="server_message" v-bind:message="server_message" v-bind:message_type="server_message_type" :animation_handle="server_message_handle"></task-server-message>
         <task-footer></task-footer>
     </div>
     <task-loading-error v-else></task-loading-error>
