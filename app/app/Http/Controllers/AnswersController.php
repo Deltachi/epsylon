@@ -11,7 +11,7 @@ class AnswersController extends Controller
     public function __construct()
     {
         //ohne login kein Zugriff
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     public function verifyAccess(int $user_id){
