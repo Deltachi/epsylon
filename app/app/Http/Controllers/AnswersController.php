@@ -15,7 +15,9 @@ class AnswersController extends Controller
     }
 
     public function verifyAccess(int $user_id){
-        $auth_user_id = Auth()->user()->id;
+        $auth_user = Auth()->user();
+        if(!isset($auth_user)){return false;}
+        $auth_user_id = $auth_user->id;
         if($auth_user_id !== $user_id){
             return false;
         }
