@@ -20,5 +20,12 @@ class UsersTableSeeder extends Seeder
             'matrikelnummer' => "123456789",
             'password' => Hash::make("123"),
         ]);
+        DB::table('users')->insert([
+            'username' => "Student 2",
+            'firstname' => "Maike",
+            'lastname' => "Mustermann",
+            'matrikelnummer' => "111111119",
+            'password' => Hash::make("123"),
+        ]);
     }
 }
