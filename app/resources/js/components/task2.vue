@@ -61,13 +61,64 @@
                 options: {
                     //Monaco Editor Options
                 },
-                ready: false
+                ready: false,
+                user_id: 1,
+                exam_id: 1,
+                task_id: 2,
+                server_message: "",
+                server_message_type: "",
+                server_message_handle: new Vue(),
             }
         },
         methods: {
+            loadTask(){
+                //this.localLoad();
+
+                //Database connection
+                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                let url = '/answer/'+this.user_id+"/"+this.exam_id+"/"+this.task_id;
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    credentials: "same-origin",
+                })
+                    .then(response => response.json())
+                    .then(data => this.serverData(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            },
             submitTask(){
                 alert("Aufgabe wird abgegeben!\n"+this.answer);
-                this.localSave();
+                //this.localSave();
+                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                let url = '/answer';
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({
+                        user: this.user_id,
+                        exam: this.exam_id,
+                        task: this.task_id,
+                        data: this.answer
+                    }),
+                })
+                    .then(response => response.json())
+                    //.then(data => this.serverMessage(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
             },
             onChange(value) {
                 //this.code = value;
