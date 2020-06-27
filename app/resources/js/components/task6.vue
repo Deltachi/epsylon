@@ -107,6 +107,7 @@
             },
             submitTask() {
                 //this.localLoad();
+                this.answer = [];
                 for(let i=1;i<document.getElementsByTagName("LI").length;i++){
                     var string = document.getElementsByTagName("LI")[i].innerText;
                     this.answer.push(string.replace(/\n/i, " "));
@@ -139,7 +140,6 @@
                     });
             },
             localLoad() {
-                this.answer = document.getElementById("answer-1").innerText;
                 if (localStorage.getItem("task_" + this.type)) {
                     this.answer = JSON.parse(localStorage.getItem("task_" + this.type));
                     console.log("Answer: "+ this.answer);
@@ -148,7 +148,7 @@
             resetTask(affirmation = false){
                 if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
                     //this.localDelete();
-                    this.answer = {}
+                    this.answer = [];
 
                     //Database connection
                     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
