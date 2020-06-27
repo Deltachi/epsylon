@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExamUserTable extends Migration
+class CreateSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateExamUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('exam_user', function (Blueprint $table) {
-            $table->foreignId('exam_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->primary(array('exam_id','user_id'));
+        Schema::create('subjects', function (Blueprint $table) {
+            $table->id();
+            $table->text("name");
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateExamUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exam_user');
+        Schema::dropIfExists('subjects');
     }
 }

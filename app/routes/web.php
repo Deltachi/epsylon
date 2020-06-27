@@ -27,7 +27,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/klausur','ExamController@index')->name('exam.index');
-Route::get('/klausur/{id}','ExamController@show')->name('exam.show');
+Route::get('/exam','ExamController@index')->name('exam.index');
+Route::get('/exam/{id}','ExamController@show')->name('exam.show');
 
 
 /* REST-API für die Task-Frontend-Komponente */

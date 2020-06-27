@@ -29,6 +29,6 @@ class CreateExamTaskTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exam_tasks');
+        Schema::dropIfExists('exam_task');
     }
 }
