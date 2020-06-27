@@ -5,7 +5,7 @@
         <div class="card-body d-flex flex-column align-items-start pl-5 pr-5">
             <div class="task-top" v-if="task.data.top">{{task.data.top}}</div>
             <ul class="task-body" id="sortable">
-                <li class="task-option" v-for="option in task.data" :data="option" v-if="option.name">
+                <li class="task-option" v-for="(option, index) in task.data" :data="option" v-if="option.name">
                     <div v-if="option.name">{{option.name}}</div>
                     <div v-if="option.hint" class="text-muted small">{{option.hint}}</div>
                 </li>
@@ -33,7 +33,7 @@
             TaskLoadingError,
         },
         created() {
-            this.loadTask();
+            //this.loadTask();
             if (this.dataTask && this.dataTask !== "null") {
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;
@@ -56,15 +56,30 @@
                     hint: "",
                     top: "",
                     bottom: "",
-                    data: [],
+                    data: {},
+                    points:0.0,
                 },
-                answer: {}
+                answer: [],
+                ready: false,
             }
         },
         methods: {
             submitTask() {
-                alert("Aufgabe wird abgegeben!\n" + this.code);
-                console.log(this.code);
+                //this.localLoad();
+                for(let i=1;i<document.getElementsByTagName("LI").length;i++){
+                    var string = document.getElementsByTagName("LI")[i].innerText;
+                    this.answer.push(string.replace(/\n/i, " "));
+                }
+                alert("Aufgabe wird abgegeben!\n" + this.answer.length);
+                console.log(this.answer);
+
+            },
+            localLoad() {
+                this.answer = document.getElementById("answer-1").innerText;
+                if (localStorage.getItem("task_" + this.type)) {
+                    this.answer = JSON.parse(localStorage.getItem("task_" + this.type));
+                    console.log("Answer: "+ this.answer);
+                }
             },
             resetTask(affirmation = false){
                 if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
