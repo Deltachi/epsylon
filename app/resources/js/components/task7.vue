@@ -13,8 +13,7 @@
                     <div class="card mb-3" v-for="(output, index) in task.data.output">
                         <div class="card-header"><b>{{output}}</b></div>
                         <div class="card-body">
-                            <ul :id="'sortable'+index" class="sortable">
-                            </ul>
+                            <ul :id="'sortable'+index" class="sortable"></ul>
                         </div>
                     </div>
                 </div>
@@ -41,7 +40,7 @@
             TaskLoadingError,
         },
         created() {
-            this.loadTask();
+            //this.loadTask();
             if (this.dataTask && this.dataTask !== "null") {
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;
@@ -73,12 +72,21 @@
                     },
                     points: 0.0,
                 },
-                answer: "",
+                answer: [],
                 ready: false
             }
         },
         methods:{
-
+            submitTask(){
+                this.answer = [];
+                console.log(document.getElementsByTagName("UL").length);
+                for(let i=3;i<document.getElementsByTagName("UL").length;i++){
+                    console.log(document.getElementsByTagName("UL")[i].id);
+                    console.log(document.getElementsByTagName("UL")[i].innerText);
+                    this.answer.push(document.getElementsByTagName("UL")[i].id + " " + document.getElementsByTagName("UL")[i].innerText + " ");
+                }
+                alert("Aufgabe wird abgegeben!\n" + this.answer);
+            }
         }
     }
 </script>
