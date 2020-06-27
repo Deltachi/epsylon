@@ -112,7 +112,7 @@
                     var string = document.getElementsByTagName("LI")[i].innerText;
                     this.answer.push(string.replace(/\n/i, " "));
                 }
-                alert("Aufgabe wird abgegeben!\n" + this.answer);
+                //alert("Aufgabe wird abgegeben!\n" + this.answer);
                 console.log(this.answer);
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

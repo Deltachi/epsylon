@@ -199,7 +199,7 @@
                 this.server_message = response.message;
                 this.server_message_type = response.message_type;
                 this.server_message_handle.$emit('animate');
-            }
+            },
         }
 
     }
