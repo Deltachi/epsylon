@@ -138,7 +138,7 @@ class TasksTableSeeder extends Seeder
                 'hint' => "Hier steht ein Hinweis zur Aufgabe",
                 'data' => json_encode(
                     array(
-                        "input" => ["Fakt 1", "Fakt 2", "Fakt 3", "Fakt 4"],
+                        "input" => ["Fakt 1", "Fakt 2", "Fakt 3", "Fakt 4", "Fakt 5"],
                         "output" => ["Aussage 1", "Aussage 2", "Aussage 3",]
                     )
                 ),
