@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExamUsersTable extends Migration
+class CreateExamTaskTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateExamUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('exam_users', function (Blueprint $table) {
+        Schema::create('exam_task', function (Blueprint $table) {
             $table->foreignId('exam_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->primary(array('exam_id','user_id'));
+            $table->foreignId('task_id')->constrained();
+            $table->primary(array('exam_id','task_id'));
+            $table->float('points')->nullable()->comment("Punkte, die diese Aufgabe in dieser Klausur bringen kann.");
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateExamUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exam_users');
+        Schema::dropIfExists('exam_tasks');
     }
 }

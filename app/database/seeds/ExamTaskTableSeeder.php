@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ExamTasksTableSeeder extends Seeder
+class ExamTaskTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,17 +12,17 @@ class ExamTasksTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('exam_tasks')->insert([
+        DB::table('exam_task')->insert([
             'exam_id' => 1,
             'task_id' => 1,
             'points' => 2.0,
         ]);
-        DB::table('exam_tasks')->insert([
+        DB::table('exam_task')->insert([
             'exam_id' => 1,
             'task_id' => 2,
             'points' => 10.0,
         ]);
-        DB::table('exam_tasks')->insert([
+        DB::table('exam_task')->insert([
             'exam_id' => 1,
             'task_id' => 3,
             'points' => 4.0,

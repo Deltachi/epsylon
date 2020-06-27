@@ -6,7 +6,7 @@ use App\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AnswersController extends Controller
+class AnswerController extends Controller
 {
     public function __construct()
     {

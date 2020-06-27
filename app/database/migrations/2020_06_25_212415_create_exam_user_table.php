@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubtasksTable extends Migration
+class CreateExamUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateSubtasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('subtasks', function (Blueprint $table) {
-            $table->id();
+        Schema::create('exam_user', function (Blueprint $table) {
+            $table->foreignId('exam_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->primary(array('exam_id','user_id'));
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateSubtasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subtasks');
+        Schema::dropIfExists('exam_users');
     }
 }

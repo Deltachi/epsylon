@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Contracts\Support\Renderable;
 
-class TasksController extends Controller
+class TaskController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -35,7 +35,7 @@ class TasksController extends Controller
         }
         $task_json = json_encode($task, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG);
         $component = "task".$id;
-        return view('task', ['task_id' => $id, 'task_data' => $task_json, 'component' => $component]);
+        return view('task.show', ['task_id' => $id, 'task_data' => $task_json, 'component' => $component]);
     }
     /**
      * Show the application dashboard.
@@ -44,7 +44,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return view('tasks');
+        return view('task.index');
     }
 
 
