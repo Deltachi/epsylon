@@ -30,9 +30,10 @@
         name: "task2",
         props: [
             'dataTask',
-            'dataUserID',
-            'dataExamID',
-            'dataTaskID',
+            'dataAnswer',
+            'dataUserId',
+            'dataExamId',
+            'dataTaskId',
         ],
         components: {
             TaskHeader,
@@ -49,14 +50,14 @@
                 this.answer = this.task.data.code;
                 this.ready = true;
             }
-            if(this.dataUserID && this.dataUserID !== "null"){
-                this.user_id = this.dataUserID;
+            if(this.dataUserId && this.dataUserId !== "null"){
+                this.user_id = this.dataUserId;
             }
-            if(this.dataExamID && this.dataExamID !== "null"){
-                this.exam_id = this.dataExamID;
+            if(this.dataExamId && this.dataExamId !== "null"){
+                this.exam_id = this.dataExamId;
             }
-            if(this.dataTaskID && this.dataTaskID !== "null"){
-                this.task_id = this.dataTaskID;
+            if(this.dataTaskId && this.dataTaskId !== "null"){
+                this.task_id = this.dataTaskId;
             }
         },
         mounted() {
