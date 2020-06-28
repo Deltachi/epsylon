@@ -30,9 +30,10 @@
         name: "task8",
         props: [
             'dataTask',
-            'dataUserID',
-            'dataExamID',
-            'dataTaskID',
+            'dataAnswer',
+            'dataUserId',
+            'dataExamId',
+            'dataTaskId',
         ],
         components: {
             TaskHeader,
@@ -51,14 +52,14 @@
                 this.task.data.blank_ids = [];
                 this.ready = true;
             }
-            if(this.dataUserID && this.dataUserID !== "null"){
-                this.user_id = this.dataUserID;
+            if(this.dataUserId && this.dataUserId !== "null"){
+                this.user_id = this.dataUserId;
             }
-            if(this.dataExamID && this.dataExamID !== "null"){
-                this.exam_id = this.dataExamID;
+            if(this.dataExamId && this.dataExamId !== "null"){
+                this.exam_id = this.dataExamId;
             }
-            if(this.dataTaskID && this.dataTaskID !== "null"){
-                this.task_id = this.dataTaskID;
+            if(this.dataTaskId && this.dataTaskId !== "null"){
+                this.task_id = this.dataTaskId;
             }
         },
         data(){
@@ -76,7 +77,7 @@
                     },
                     points: 0.0,
                 },
-                answer:"",
+                answer:[],
                 user_id: 1,
                 exam_id: 1,
                 task_id: 8,
@@ -88,8 +89,6 @@
         },
         methods: {
             loadTask(){
-                //this.localLoad();
-
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 let url = '/answer/'+this.user_id+"/"+this.exam_id+"/"+this.task_id;
@@ -110,7 +109,8 @@
                     });
             },
             submitTask(){
-                alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
+                //alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
+                console.log(this.answer);
                 //this.localSave();
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

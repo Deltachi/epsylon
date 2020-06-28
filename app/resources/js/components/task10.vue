@@ -34,9 +34,10 @@
         name: 'task10',
         props: [
             'dataTask',
-            'dataUserID',
-            'dataExamID',
-            'dataTaskID',
+            'dataAnswer',
+            'dataUserId',
+            'dataExamId',
+            'dataTaskId',
         ],
         components: {
             TaskHeader,
@@ -52,14 +53,14 @@
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;
             }
-            if(this.dataUserID && this.dataUserID !== "null"){
-                this.user_id = this.dataUserID;
+            if(this.dataUserId && this.dataUserId !== "null"){
+                this.user_id = this.dataUserId;
             }
-            if(this.dataExamID && this.dataExamID !== "null"){
-                this.exam_id = this.dataExamID;
+            if(this.dataExamId && this.dataExamId !== "null"){
+                this.exam_id = this.dataExamId;
             }
-            if(this.dataTaskID && this.dataTaskID !== "null"){
-                this.task_id = this.dataTaskID;
+            if(this.dataTaskId && this.dataTaskId !== "null"){
+                this.task_id = this.dataTaskId;
             }
             this.answer = this.task.data.editorData;
         },
@@ -138,7 +139,8 @@
                     });
             },
             submitTask(){
-                alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
+                //alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
+                console.log(this.answer);
                 //this.localSave()
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
