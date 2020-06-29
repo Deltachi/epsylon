@@ -1,13 +1,11 @@
 <template>
-    <div v-if="ready" class="card">
-        <form>
-            <task-header v-bind:task="task"></task-header>
-            <div class="card-body">
-                <input v-model="answer" name="answer" type="text" class="form-control" placeholder="Antwort..." >
-            </div>
-            <task-footer @save="triggerSave" @reset="triggerReset"></task-footer>
-        </form>
-    </div>
+    <form>
+        <task-header v-bind:task="task"></task-header>
+        <div class="card-body">
+            <input v-model="answer" name="answer" type="text" class="form-control" placeholder="Antwort..." >
+        </div>
+        <task-footer @save="triggerSave" @reset="triggerReset"></task-footer>
+    </form>
 </template>
 
 <script>
@@ -46,13 +44,7 @@
                     points: 0.0,
                 },
                 answer: "",
-                user_id: 1,
-                exam_id: 1,
-                task_id: 1,
-                ready: false,
-                server_message: "",
-                server_message_type: "",
-                server_message_handle: new Vue(),
+                answerFresh: "",
             }
         },
         methods: {
@@ -69,6 +61,7 @@
                 this.$emit('save');
             },
             triggerReset(affirm){
+                this.answer = this.answerFresh;
                 this.$emit('reset', affirm);
             }
         },

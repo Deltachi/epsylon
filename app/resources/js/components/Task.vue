@@ -8,7 +8,6 @@
                @reset="triggerResetHandle"
                ref="taskRef"
         ></task1>
-
     </div>
     <task-loading-error v-else></task-loading-error>
 </template>
@@ -24,7 +23,7 @@
     import task8 from "./task8";
     import task9 from "./task9";
     import task10 from "./task10";
-
+    import TaskLoadingError from "./TaskLoadingError";
     export default {
         name: "Task",
         props: [
@@ -45,6 +44,7 @@
             task8,
             task9,
             task10,
+            TaskLoadingError,
         },
         data(){
             return {
@@ -89,7 +89,6 @@
         methods: {
             loadTask(){
                 //Database connection
-
                 let url = '/answer/'+this.user_id+"/"+this.exam.id+"/"+this.task.id;
                 fetch(url, {
                     method: 'GET',
@@ -135,7 +134,6 @@
             resetTask(affirmation = false){
                 if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
                     this.answer = null
-
                     //Database connection
                     let url = '/answer';
                     fetch(url, {
@@ -158,16 +156,6 @@
                         .catch((error) => {
                             console.error('Error:', error);
                         });
-                }
-            },
-            keyEvent(event) {
-                if (event.ctrlKey || event.metaKey) {
-                    switch (String.fromCharCode(event.which).toLowerCase()) {
-                        case 's':
-                            event.preventDefault();
-                            this.triggerSaveHandle();
-                            break;
-                    }
                 }
             },
             handleServerMessage(response){
@@ -201,10 +189,20 @@
             triggerResetHandle(affirm = false){
                 //console.log("Ich, Task "+this.task.id+" soll vergessen..");
                 this.resetTask(affirm);
-            }
+            },
+            handleKeyEvent(event) {
+                if (event.ctrlKey || event.metaKey) {
+                    switch (String.fromCharCode(event.which).toLowerCase()) {
+                        case 's':
+                            event.preventDefault();
+                            this.triggerSaveHandle();
+                            break;
+                    }
+                }
+            },
         },
         mounted() {
-            $(window).bind('keydown', this.keyEvent);
+            $(window).bind('keydown', this.handleKeyEvent);
             this.triggerSave.$on('save',this.triggerSaveHandle);
         },
     }
