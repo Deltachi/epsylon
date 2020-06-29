@@ -30,3 +30,9 @@
         height: auto;
     }
 }
+
+.progress-bar{
+    &-transition{
+        transition: width 1s ease;
+    }
+}
