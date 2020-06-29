@@ -32,8 +32,8 @@ class TaskController extends Controller
             //Wandel JSON-String in JSON-Objekt um, falls Wert != null
             $task['solution'] = $task['solution'] ? json_decode($task['solution']): null;
             $task['data'] = $task['data'] ? json_decode($task['data']): null;
+            $task_json = json_encode($task, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG);
         }
-        $task_json = json_encode($task, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG);
         $component = "task".$id;
         return view('task.show', ['task_id' => $id, 'task_data' => $task_json, 'component' => $component]);
     }
