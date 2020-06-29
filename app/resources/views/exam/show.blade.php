@@ -16,9 +16,9 @@
                                     <tr onclick="switchTask({{$loop->iteration}})" >
                                         <th class="align-middle text-center px-2 {{$loop->even ? 'bg-success text-white':''}}" scope="row">
                                             @if($loop->even)
-                                                <i class="fa fa-check"></i>
+                                                <span class="text-nowrap"><span class="font-weight-light">{{$loop->iteration}}</span> <i class="fa fa-check"></i></span>
                                             @else
-                                                <i class="fa fa-minus"></i>
+                                                <span class="text-nowrap"><span class="font-weight-light">{{$loop->iteration}}</span> <i class="fa fa-minus"></i></span>
                                             @endif
                                         </th>
                                         <td class="align-middle">{{$task->title}}</td>
