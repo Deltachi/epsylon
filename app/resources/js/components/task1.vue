@@ -19,6 +19,7 @@
         props: [
             'dataTask',
             'dataAnswer',
+            'triggerAnswerLoaded',
         ],
         components: {
             TaskHeader,
@@ -44,7 +45,7 @@
                     data: {},
                     points: 0.0,
                 },
-                answer:"",
+                answer: "",
                 user_id: 1,
                 exam_id: 1,
                 task_id: 1,
@@ -62,7 +63,6 @@
                 return data;
             },
             convertAnswerData(data){
-                console.log("convertAnswerData() ",data);
                 this.answer = this.getAnswerConversion(data);
             },
             triggerSave(){
@@ -72,10 +72,8 @@
                 this.$emit('reset', affirm);
             }
         },
-        watch: {
-            dataAnswer: function(val){
-                this.answer = this.getAnswerConversion(val);
-            }
+        mounted() {
+            this.triggerAnswerLoaded.$on('loaded', this.convertAnswerData);
         }
     }
 </script>

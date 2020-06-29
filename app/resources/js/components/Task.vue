@@ -1,6 +1,13 @@
 <template>
     <div v-if="ready">
-        <task1 v-if="task.type === 1" :data-task="task" :data-answer.sync="answer" @save="triggerSaveHandle" @reset="triggerResetHandle"></task1>
+        <task1 v-if="task.type === 1"
+               :data-task="task"
+               :data-answer.sync="answer"
+               :trigger-answer-loaded="triggerAnswerLoaded"
+               @save="triggerSaveHandle"
+               @reset="triggerResetHandle"
+               ref="taskRef"
+        ></task1>
 
     </div>
     <task-loading-error v-else></task-loading-error>
@@ -57,7 +64,9 @@
                     points: 0.0,
                 },
                 answer:"",
+                triggerAnswerLoaded: new Vue(),
                 ready: false,
+                token: null,
             }
         },
         created() {
@@ -72,7 +81,7 @@
             if(this.dataExam && this.dataExam !== "null"){
                 this.exam = JSON.parse(this.dataExam);
             }
-
+            this.token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //Methodenaufrufe
             this.loadTask();
         },
@@ -80,7 +89,7 @@
         methods: {
             loadTask(){
                 //Database connection
-                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
                 let url = '/answer/'+this.user_id+"/"+this.exam.id+"/"+this.task.id;
                 fetch(url, {
                     method: 'GET',
@@ -88,7 +97,7 @@
                         "Content-Type": "application/json",
                         "Accept": "application/json, text-plain, */*",
                         "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRF-TOKEN": token
+                        "X-CSRF-TOKEN": this.token
                     },
                     credentials: "same-origin",
                 })
@@ -100,7 +109,6 @@
             },
             submitTask(){
                 //Database connection
-                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 let url = '/answer';
                 fetch(url, {
                     method: 'POST',
@@ -108,7 +116,7 @@
                         "Content-Type": "application/json",
                         "Accept": "application/json, text-plain, */*",
                         "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRF-TOKEN": token
+                        "X-CSRF-TOKEN": this.token
                     },
                     credentials: "same-origin",
                     body: JSON.stringify({
@@ -129,7 +137,6 @@
                     this.answer = null
 
                     //Database connection
-                    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                     let url = '/answer';
                     fetch(url, {
                         method: 'DELETE',
@@ -137,7 +144,7 @@
                             "Content-Type": "application/json",
                             "Accept": "application/json, text-plain, */*",
                             "X-Requested-With": "XMLHttpRequest",
-                            "X-CSRF-TOKEN": token
+                            "X-CSRF-TOKEN": this.token
                         },
                         credentials: "same-origin",
                         body: JSON.stringify({
@@ -158,7 +165,7 @@
                     switch (String.fromCharCode(event.which).toLowerCase()) {
                         case 's':
                             event.preventDefault();
-                            this.submitTask();
+                            this.triggerSaveHandle();
                             break;
                     }
                 }
@@ -172,7 +179,8 @@
             handleServerData(response){
                 if(response.success){
                     console.log(response.data);
-                    this.answer = JSON.parse(response.data);
+                    let answerData = JSON.parse(response.data);
+                    this.triggerAnswerLoaded.$emit('loaded',answerData);
                 }
                 console.log(response.message);
                 if (this.isActive){
@@ -181,12 +189,17 @@
             },
             triggerSaveHandle(){
                 if (this.isActive){
-                    console.log("Ich, Task "+this.task.id+" soll speichern!");
+                    //console.log("Ich, Task "+this.task.id+" soll speichern!");
+                    let ref = this.$refs.taskRef;
+                    if (ref) {
+                        this.answer = ref.answer;
+                        console.log(this.answer);
+                    }
                     this.submitTask();
                 }
             },
             triggerResetHandle(affirm = false){
-                console.log("Ich, Task "+this.task.id+" soll vergessen..");
+                //console.log("Ich, Task "+this.task.id+" soll vergessen..");
                 this.resetTask(affirm);
             }
         },
