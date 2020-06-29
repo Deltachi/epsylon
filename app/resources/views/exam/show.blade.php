@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-2">
+        <div class="col-3">
             <Timer :data-end="'{{$exam->end}}'"></Timer>
             <div class="card ">
                 <div class="card-header text-center">
@@ -37,12 +37,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9 d-flex flex-column justify-content-center">
             @foreach($tasks as $task)
-                <Task :data-task="'{{$task}}'" :data-exam="'{{json_encode($exam, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG)}}'" :data-user-id="{{$user->id}}"></Task>
+                <div class="task-container {{$loop->iteration === 1 ? 'active' : ''}}">
+                    <Task :data-task="'{{$task}}'" :data-exam="'{{json_encode($exam, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG)}}'" :data-user-id="{{$user->id}}"></Task>
+                </div>
             @endforeach
         </div>
     </div>
 </div>
+
+
 @endsection
 
