@@ -70,6 +70,7 @@ class ExamController extends Controller
         $user = User::find(Auth::user()->id);
         $exam = Exam::find($exam_id);
         $exams = $this->getOpenUserExams();
+        $tasks_json_array = [];
         $tasks = [];
         if($exams->contains($exam)){
             foreach($exam->tasks as $task){
@@ -80,10 +81,11 @@ class ExamController extends Controller
 
                     $answer = Answer::where('user_id',$user->id)->where('exam_id',$exam->id)->where('task_id',$task->id)->first();
                     $task['answered'] = isset($answer);
-                    $tasks[] = json_encode($task, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG);
+                    $tasks[] = $task;
+                    $tasks_json_array[] = json_encode($task, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG);
                 }
             }
-            return view('exam.show',['user'=>$user,'exam'=>$exam,'tasks'=>$tasks]);
+            return view('exam.show',['user'=>$user,'exam'=>$exam,'tasksJson'=>$tasks_json_array, 'tasks'=>$tasks]);
         }
         return redirect()->route('exam.index');
     }

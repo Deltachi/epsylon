@@ -13,7 +13,6 @@
 <script>
     import TaskHeader from "./TaskHeader";
     import TaskFooter from "./TaskFooter";
-
     export default {
         name: "task1",
         props: [
@@ -65,7 +64,7 @@
             triggerReset(affirm){
                 this.answer = this.answerFresh;
                 this.$emit('reset', affirm);
-            }
+            },
         },
         mounted() {
             this.triggerAnswerLoaded.$on('loaded', this.convertAnswerData);
