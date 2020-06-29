@@ -1,14 +1,9 @@
 <template>
-    <task1 v-if="task.type === 1" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task1>
-    <task2 v-else-if="task.type === 2" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task2>
-    <task3 v-else-if="task.type === 3" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task3>
-    <task4 v-else-if="task.type === 4" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task4>
-    <task5 v-else-if="task.type === 5" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task5>
-    <task6 v-else-if="task.type === 6" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task6>
-    <task7 v-else-if="task.type === 7" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task7>
-    <task8 v-else-if="task.type === 8" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task8>
-    <task9 v-else-if="task.type === 9" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task9>
-    <task10 v-else-if="task.type === 10" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task10>
+    <div v-if="ready">
+        <task1 v-if="task.type === 1" :data-task="task" :data-answer.sync="answer" @save="triggerSaveHandle" @reset="triggerResetHandle"></task1>
+
+    </div>
+    <task-loading-error v-else></task-loading-error>
 </template>
 
 <script>
@@ -29,6 +24,8 @@
             'dataTask',
             'dataUserId',
             'dataExam',
+            'triggerSave',
+            'isActive',
         ],
         components: {
             task1,
@@ -61,14 +58,9 @@
                 },
                 answer:"",
                 ready: false,
-                server_message: "",
-                server_message_type: "",
-                server_message_handle: new Vue(),
             }
         },
         created() {
-            //Methodenaufrufe
-            this.loadTask();
             //Variablenzuweisungen
             if(this.dataTask && this.dataTask !== "null"){
                 this.task = JSON.parse(this.dataTask);
@@ -80,12 +72,13 @@
             if(this.dataExam && this.dataExam !== "null"){
                 this.exam = JSON.parse(this.dataExam);
             }
+
+            //Methodenaufrufe
+            this.loadTask();
         },
 
         methods: {
             loadTask(){
-                //this.localLoad();
-
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 let url = '/answer/'+this.user_id+"/"+this.exam.id+"/"+this.task.id;
@@ -100,14 +93,12 @@
                     credentials: "same-origin",
                 })
                     .then(response => response.json())
-                    .then(data => this.serverData(data))
+                    .then(data => this.handleServerData(data))
                     .catch((error) => {
                         console.error('Error:', error);
                     });
             },
             submitTask(){
-                //this.localSave();
-
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 let url = '/answer';
@@ -128,27 +119,13 @@
                     }),
                 })
                     .then(response => response.json())
-                    .then(data => this.serverMessage(data))
+                    .then(data => this.handleServerMessage(data))
                     .catch((error) => {
                         console.error('Error:', error);
                     });
             },
-            localSave(){
-                localStorage.setItem("task_"+this.type,JSON.stringify(this.answer));
-            },
-            localLoad(){
-                if(localStorage.getItem("task_"+this.type)){
-                    this.answer = JSON.parse(localStorage.getItem("task_"+this.type));
-                }
-            },
-            localDelete(){
-                if(localStorage.getItem("task_"+this.type)){
-                    localStorage.removeItem("task_"+this.type);
-                }
-            },
             resetTask(affirmation = false){
                 if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
-                    //this.localDelete();
                     this.answer = null
 
                     //Database connection
@@ -170,7 +147,7 @@
                         }),
                     })
                         .then(response => response.json())
-                        .then(data => this.serverMessage(data))
+                        .then(data => this.handleServerMessage(data))
                         .catch((error) => {
                             console.error('Error:', error);
                         });
@@ -186,26 +163,36 @@
                     }
                 }
             },
-            serverMessage(response){
+            handleServerMessage(response){
                 console.log(response.message);
-                this.server_message = response.message;
-                this.server_message_type = response.message_type;
-
-                this.server_message_handle.$emit('animate');
+                if (this.isActive){
+                    this.$emit('server-message', {'message': response.message, 'messageType': response.messageType});
+                }
             },
-            serverData(response){
+            handleServerData(response){
                 if(response.success){
                     console.log(response.data);
                     this.answer = JSON.parse(response.data);
                 }
                 console.log(response.message);
-                this.server_message = response.message;
-                this.server_message_type = response.message_type;
-                this.server_message_handle.$emit('animate');
+                if (this.isActive){
+                    this.$emit('server-message', {'message': response.message, 'messageType': response.messageType});
+                }
+            },
+            triggerSaveHandle(){
+                if (this.isActive){
+                    console.log("Ich, Task "+this.task.id+" soll speichern!");
+                    this.submitTask();
+                }
+            },
+            triggerResetHandle(affirm = false){
+                console.log("Ich, Task "+this.task.id+" soll vergessen..");
+                this.resetTask(affirm);
             }
         },
         mounted() {
             $(window).bind('keydown', this.keyEvent);
+            this.triggerSave.$on('save',this.triggerSaveHandle);
         },
     }
 </script>
