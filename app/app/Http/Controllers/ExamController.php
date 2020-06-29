@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Answer;
 use App\Exam;
 use App\User;
 use DateTime;
@@ -76,6 +77,9 @@ class ExamController extends Controller
                     //Wandel JSON-String in JSON-Objekt um, falls Wert != null
                     $task['solution'] = $task['solution'] ? json_decode($task['solution']): null;
                     $task['data'] = $task['data'] ? json_decode($task['data']): null;
+
+                    $answer = Answer::where('user_id',$user->id)->where('exam_id',$exam->id)->where('task_id',$task->id)->first();
+                    $task['answered'] = isset($answer);
                     $tasks[] = json_encode($task, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG);
                 }
             }

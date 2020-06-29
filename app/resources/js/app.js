@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import Exam from "./components/Exam";
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -38,4 +40,7 @@ Vue.use(CKEditor);
 
 const app = new Vue({
     el: '#app',
+    components: {
+        Exam
+    }
 });
