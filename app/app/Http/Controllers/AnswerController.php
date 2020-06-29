@@ -37,9 +37,9 @@ class AnswerController extends Controller
 
         $answer = Answer::where('user_id',$user_id)->where('exam_id',$exam_id)->where('task_id',$task_id)->first();
         if (isset($answer)){
-            return response()->json(['success'=>true,'message'=>'Daten geladen!', 'data'=>$answer->data, 'messageType'=>'success'],200);
+            return response()->json(['method' => 'get','success'=>true,'message'=>'Daten geladen!', 'data'=>$answer->data, 'messageType'=>'success'],200);
         }
-        return response()->json(['success'=>false,'message'=>'Bitte beantworte diese Frage', 'messageType'=>'warning'],200);
+        return response()->json(['method' => 'get','success'=>false,'message'=>'Bitte beantworte diese Frage', 'messageType'=>'warning'],200);
     }
 
     /**
@@ -60,7 +60,7 @@ class AnswerController extends Controller
                 $old_answer = Answer::where('user_id',$user_id)->where('exam_id',$exam_id)->where('task_id',$task_id)->first();
                 if(isset($old_answer)){
                     DB::table('answers')->where('user_id',$user_id)->where('exam_id',$exam_id)->where('task_id',$task_id)->update(['data' => json_encode($data)]);
-                    return response()->json(['success'=>true,'message'=>'Daten aktualisiert!', 'messageType'=>'success'],200);
+                    return response()->json(['method' => 'post','success'=>true,'message'=>'Daten aktualisiert!', 'messageType'=>'success'],200);
                 }else{
                     $answer = new Answer;
                     $answer->user_id = $user_id;
@@ -68,12 +68,12 @@ class AnswerController extends Controller
                     $answer->task_id = $task_id;
                     $answer->data = json_encode($data);
                     $answer->save();
-                    return response()->json(['success'=>true,'message'=>'Neue Daten gespeichert!', 'messageType'=>'success'],200);
+                    return response()->json(['method' => 'post','success'=>true,'message'=>'Neue Daten gespeichert!', 'messageType'=>'success'],200);
                 }
             }
-            return response()->json(['success'=>false,'message'=>'Es sind keine Daten zum Speichern vorhanden!', 'messageType'=>'warning'],200);
+            return response()->json(['method' => 'post','success'=>false,'message'=>'Es sind keine Daten zum Speichern vorhanden!', 'messageType'=>'warning'],200);
         }
-        return response()->json(['success'=>false,'message'=>'Daten können nicht gespeichert werden!', 'messageType'=>'danger'],200);
+        return response()->json(['method' => 'post','success'=>false,'message'=>'Daten können nicht gespeichert werden!', 'messageType'=>'danger'],200);
     }
 
     /**
@@ -89,6 +89,6 @@ class AnswerController extends Controller
         if( !$this->verifyAccess($user_id) ){ return $this->notAuthorizedResponse(); }
 
         DB::table('answers')->where('user_id',$user_id)->where('exam_id',$exam_id)->where('task_id',$task_id)->delete();
-        return response()->json(['success'=>true,'message'=>'Daten gelöscht!', 'messageType'=>'success'],200);
+        return response()->json(['method' => 'delete', 'success'=>true,'message'=>'Daten gelöscht!', 'messageType'=>'success'],200);
     }
 }
