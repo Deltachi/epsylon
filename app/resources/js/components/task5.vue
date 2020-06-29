@@ -29,9 +29,10 @@
         name: "task5",
         props: [
             'dataTask',
-            'dataUserID',
-            'dataExamID',
-            'dataTaskID',
+            'dataAnswer',
+            'dataUserId',
+            'dataExamId',
+            'dataTaskId',
         ],
         components: {
             TaskHeader,
@@ -45,14 +46,14 @@
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;
             }
-            if(this.dataUserID && this.dataUserID !== "null"){
-                this.user_id = this.dataUserID;
+            if(this.dataUserId && this.dataUserId !== "null"){
+                this.user_id = this.dataUserId;
             }
-            if(this.dataExamID && this.dataExamID !== "null"){
-                this.exam_id = this.dataExamID;
+            if(this.dataExamId && this.dataExamId !== "null"){
+                this.exam_id = this.dataExamId;
             }
-            if(this.dataTaskID && this.dataTaskID !== "null"){
-                this.task_id = this.dataTaskID;
+            if(this.dataTaskId && this.dataTaskId !== "null"){
+                this.task_id = this.dataTaskId;
             }
         },
         data() {
@@ -65,7 +66,7 @@
                     data: {},
                     points: 0.0,
                 },
-                answer:"",
+                answer:[],
                 user_id: 1,
                 exam_id: 1,
                 task_id: 5,
@@ -96,19 +97,19 @@
                         console.error('Error:', error);
                     });
             },
-            submitTask() {
-                for(let i=0;i<this.task.data.solution.length;i++){
-                    //console.log(this.task.data.solution.length);
+            submitTask: function () {
+                this.answer = [];
+                for (let i = 0; i < this.task.data.solution.length; i++) {
                     let answersolution = "answer-" + i;
                     let list = document.getElementById(answersolution);
-                    if(list.checked == true){
-                        this.answer = this.answer + "true, " ;
-                    }else{
+                    if (list.checked == true) {
+                        this.answer = this.answer + "true, ";
+                    } else {
                         this.answer = this.answer + "false, ";
                     }
                 }
-                alert("Aufgabe wird abgegeben!\n" + JSON.stringify(this.answer));
-                //this.localSave(JSON.stringify(this.answer));
+                //alert("Aufgabe wird abgegeben!\n" + JSON.stringify(this.answer));
+                console.log(this.answer);
 
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -151,8 +152,14 @@
             resetTask(affirmation = false){
                 if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
                     //this.localDelete();
-                    this.answer = ""
-
+                    this.answer = [];
+                    for(let i=0;i<this.task.data.solution.length;i++){
+                        let answersolution = "answer-" + i;
+                        let list = document.getElementById(answersolution);
+                        if(list.checked == true){
+                            document.getElementById(answersolution).checked = false;
+                        }
+                    }
                     //Database connection
                     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                     let url = '/answer';

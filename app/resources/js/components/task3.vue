@@ -23,6 +23,7 @@
             </div>
             <task-footer></task-footer>
         </form>
+        <task-server-message v-if="server_message" v-bind:message="server_message" v-bind:message_type="server_message_type" :animation_handle="server_message_handle"></task-server-message>
     </div>
     <task-loading-error v-else></task-loading-error>
 </template>
@@ -35,7 +36,11 @@
     export default {
         name: "task3",
         props: [
-            'dataTask'
+            'dataTask',
+            'dataAnswer',
+            'dataUserId',
+            'dataExamId',
+            'dataTaskId',
         ],
         components: {
             TaskHeader,
@@ -47,6 +52,15 @@
             if(this.dataTask && this.dataTask !== "null"){
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;
+            }
+            if(this.dataUserId && this.dataUserId !== "null"){
+                this.user_id = this.dataUserId;
+            }
+            if(this.dataExamId && this.dataExamId !== "null"){
+                this.exam_id = this.dataExamId;
+            }
+            if(this.dataTaskId && this.dataTaskId !== "null"){
+                this.task_id = this.dataTaskId;
             }
             $(document).ready( function() {
                 //initialize the quiz options

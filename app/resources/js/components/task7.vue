@@ -35,9 +35,10 @@
         name: "task7",
         props: [
             'dataTask',
-            'dataUserID',
-            'dataExamID',
-            'dataTaskID',
+            'dataAnswer',
+            'dataUserId',
+            'dataExamId',
+            'dataTaskId',
         ],
         components: {
             TaskHeader,
@@ -51,14 +52,14 @@
                 this.task = JSON.parse(this.dataTask);
                 this.ready = true;
             }
-            if(this.dataUserID && this.dataUserID !== "null"){
-                this.user_id = this.dataUserID;
+            if(this.dataUserId && this.dataUserId !== "null"){
+                this.user_id = this.dataUserId;
             }
-            if(this.dataExamID && this.dataExamID !== "null"){
-                this.exam_id = this.dataExamID;
+            if(this.dataExamId && this.dataExamId !== "null"){
+                this.exam_id = this.dataExamId;
             }
-            if(this.dataTaskID && this.dataTaskID !== "null"){
-                this.task_id = this.dataTaskID;
+            if(this.dataTaskId && this.dataTaskId !== "null"){
+                this.task_id = this.dataTaskId;
             }
             $( function() {
                 $( ".sortable").sortable({
@@ -127,8 +128,8 @@
                     var string = document.getElementsByTagName("UL")[i].id + ": " + document.getElementsByTagName("UL")[i].innerText + " ";
                     this.answer.push(string.replace(/\n/i, " "));
                 }
-                alert("Aufgabe wird abgegeben!\n" + this.answer);
-
+                //alert("Aufgabe wird abgegeben!\n" + this.answer);
+                console.log(this.answer);
                 //Database connection
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 let url = '/answer';
