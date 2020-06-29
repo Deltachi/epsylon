@@ -1,11 +1,13 @@
 <template>
-    <form>
-        <task-header v-bind:task="task"></task-header>
-        <div class="card-body">
-            <input v-model="answer" name="answer" type="text" class="form-control" placeholder="Antwort..." >
-        </div>
-        <task-footer @save="triggerSave" @reset="triggerReset"></task-footer>
-    </form>
+    <div class="card">
+        <form>
+            <task-header v-bind:task="task"></task-header>
+            <div class="card-body">
+                <input v-model="answer" name="answer" type="text" class="form-control" placeholder="Antwort..." >
+            </div>
+            <task-footer @save="triggerSave" @reset="triggerReset"></task-footer>
+        </form>
+    </div>
 </template>
 
 <script>

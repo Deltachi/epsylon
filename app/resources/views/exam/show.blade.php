@@ -47,6 +47,7 @@
                             :data-exam="'{{json_encode($exam, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG)}}'"
                             :data-user-id="{{$user->id}}"
                             :is-active="isActive({{$loop->iteration}})"
+                            :was-active="wasActive({{$loop->iteration}})"
                             :trigger-save="triggerSave"
                             @server-message="incomingMessage"
                         ></task>

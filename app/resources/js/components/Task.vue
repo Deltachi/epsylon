@@ -32,6 +32,7 @@
             'dataExam',
             'triggerSave',
             'isActive',
+            'wasActive',
         ],
         components: {
             task1,
@@ -160,7 +161,7 @@
             },
             handleServerMessage(response){
                 console.log(response.message);
-                if (this.isActive){
+                if (this.isActive || this.wasActive){
                     this.$emit('server-message', {'message': response.message, 'messageType': response.messageType});
                 }
             },

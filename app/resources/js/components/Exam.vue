@@ -33,7 +33,10 @@
                 }
             },
             isActive(task_id){
-                  return (task_id === this.activeTask || task_id === this.wasActiveTask);
+                  return (task_id === this.activeTask);
+            },
+            wasActive(task_id){
+                return (task_id === this.wasActiveTask);
             },
             incomingMessage(data){
                 this.message = data.message;
