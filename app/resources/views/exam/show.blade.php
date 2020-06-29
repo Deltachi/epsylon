@@ -13,7 +13,7 @@
                         <table class="exam-task-table table table-hover table-striped mb-0">
                             <tbody>
                                 @foreach($exam->tasks as $task)
-                                    <tr>
+                                    <tr onclick="switchTask({{$loop->iteration}})" >
                                         <th class="align-middle text-center px-2 {{$loop->even ? 'bg-success text-white':''}}" scope="row">
                                             @if($loop->even)
                                                 <i class="fa fa-check"></i>
@@ -39,14 +39,27 @@
         </div>
         <div class="col-md-9 d-flex flex-column justify-content-center">
             @foreach($tasks as $task)
-                <div class="task-container {{$loop->iteration === 1 ? 'active' : ''}}">
+                <div id="task-{{$loop->iteration}}" class="task-container {{$loop->iteration === 1 ? 'active' : ''}}">
                     <Task :data-task="'{{$task}}'" :data-exam="'{{json_encode($exam, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG)}}'" :data-user-id="{{$user->id}}"></Task>
                 </div>
             @endforeach
         </div>
     </div>
 </div>
-
-
 @endsection
+
+@section('page-script')
+    <script type="text/javascript">
+        let active_task = 1;
+        function switchTask(id){
+            let task = document.getElementById('task-'+active_task);
+            let task_new = document.getElementById('task-'+id);
+            if(task_new){
+                task.classList.remove('active');
+                task_new.classList.add('active');
+                active_task = id;
+            }
+        }
+    </script>
+@stop
 
