@@ -39,6 +39,7 @@
         "@ckeditor/ckeditor5-paragraph": "^19.1.0",
         "@ckeditor/ckeditor5-theme-lark": "^19.1.0",
         "@ckeditor/ckeditor5-vue": "^1.0.1",
+        "font-awesome": "^4.7.0",
         "monaco-editor": "^0.20.0",
         "monaco-editor-vue": "^1.0.10",
         "vue-ckeditor2": "^2.1.5"
