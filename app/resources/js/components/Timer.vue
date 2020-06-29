@@ -4,7 +4,10 @@
             <div class="card timer-contents">
                 <div class="card-header d-flex align-items-center justify-content-between border-bottom-0">
                     <div style="font-size: 1.3em;" class="m-0 font-weight-light flex-grow-1 text-center">Verbleibende Zeit:
-                        <br><span :class="'font-weight-bold '+(time.days===0 && time.hours===0 && time.minutes < 30?'text-danger':'')"><span v-if="time.days>0">{{time.days}} Tage und </span>{{time.hours}}:{{time.minutes}}:{{time.seconds}}</span></div>
+                        <br><span :class="'font-weight-bold '+(time.days===0 && time.hours===0 && time.minutes < 30?'text-danger':'')">
+                            <span v-if="time.days>0">{{time.days}} Tage und </span>
+                            <span v-if="time.hours<10">0</span>{{time.hours}}:<span v-if="time.minutes<10">0</span>{{time.minutes}}:<span v-if="time.seconds<10">0</span>{{time.seconds}}</span>
+                    </div>
                     <div style="font-size: 1.6em;" ><i class="fa fa-eye-slash"></i></div>
                 </div>
             </div>
@@ -43,12 +46,9 @@
                 }
             },
             getTime(){
-                console.log(this.dataEnd);
                 let t = this.dataEnd.split(/[- :]/);
                 let date_future = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
-                console.log(date_future);
                 let date_now = new Date();
-                console.log(date_now)
 
                 let seconds = Math.floor((date_future - (date_now))/1000);
                 let minutes = Math.floor(seconds/60);
