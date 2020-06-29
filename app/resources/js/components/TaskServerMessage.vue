@@ -1,12 +1,12 @@
 <template>
     <div class="task-server-message">
-        <div v-if="message_type === 'success'" class="alert alert-success" role="alert">
+        <div v-if="messageType === 'success'" class="alert alert-success" role="alert">
             {{message}}
         </div>
-        <div v-else-if="message_type === 'danger'" class="alert alert-danger" role="alert">
+        <div v-else-if="messageType === 'danger'" class="alert alert-danger" role="alert">
             {{message}}
         </div>
-        <div v-else-if="message_type === 'warning'" class="alert alert-warning" role="alert">
+        <div v-else-if="messageType === 'warning'" class="alert alert-warning" role="alert">
             {{message}}
         </div>
     </div>
@@ -15,19 +15,18 @@
 <script>
     export default {
         name: "TaskServerMessage",
-        props: ['message','message_type','animation_handle'],
+        props: ['message','messageType','triggerHandle'],
         methods: {
-            animate(){
+            show(){
                 let container = document.getElementsByClassName("task-server-message")[0];
                 container.classList.add("active");
                 setTimeout(function(){
                     container.classList.remove("active");
-                }, 3000);
+                }, 4000);
             }
         },
         mounted() {
-            this.animate();
-            this.animation_handle.$on('animate', this.animate);
+            this.triggerHandle.$on('show', this.show);
         }
     }
 </script>
@@ -37,10 +36,12 @@
         position: fixed;
         bottom: 20px;
         right: 25px;
-        transition: opacity .5s ease;
+        transition: opacity .4s ease, transform .4s ease-in-out;
         opacity: 0;
+        transform: translateY(100%);
     }
     .task-server-message.active{
         opacity: 1;
+        transform: translateY(0);
     }
 </style>
