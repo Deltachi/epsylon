@@ -23,7 +23,7 @@
                     <tbody>
                     @foreach($exams as $exam)
                         <tr>
-                            <th class="align-middle" scope="row">{{$loop->index + 1}}</th>
+                            <th class="align-middle" scope="row">{{$loop->iteration}}</th>
                             <td class="align-middle">{{$exam->subject->name}}</td>
                             <td class="align-middle">{{$exam->id}}</td>
                             <td class="align-middle">{{$exam->title}}</td>
@@ -39,7 +39,7 @@
                                     </div>
                                 </div>
                                 @else
-                                    <span class="font-italic font-weight-light">Keine Angabe</span>
+                                    <span class="font-italic text-muted">Keine Angabe</span>
                                 @endif
                             </td>
                             <td class="align-middle text-right">
