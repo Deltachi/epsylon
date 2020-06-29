@@ -16,11 +16,19 @@
     export default {
         name: "TaskServerMessage",
         props: ['message','messageType','triggerHandle'],
+        data(){
+            return {
+                timeoutTimer: null,
+            }
+        },
         methods: {
             show(){
                 let container = document.getElementsByClassName("task-server-message")[0];
                 container.classList.add("active");
-                setTimeout(function(){
+                if (this.timeoutTimer){
+                    clearTimeout(this.timeoutTimer);
+                }
+                this.timeoutTimer = setTimeout(function(){
                     container.classList.remove("active");
                 }, 4000);
             }
