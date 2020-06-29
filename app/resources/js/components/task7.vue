@@ -20,7 +20,6 @@
             </div>
         </div>
         <task-footer></task-footer>
-        <task-server-message v-if="server_message" v-bind:message="server_message" v-bind:message_type="server_message_type" :animation_handle="server_message_handle"></task-server-message>
     </div>
     <task-loading-error v-else></task-loading-error>
 </template>
