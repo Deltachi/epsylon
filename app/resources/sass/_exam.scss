@@ -1,0 +1,22 @@
+
+.exam-task-table{
+    & tr{
+        cursor: pointer;
+        & td{
+            line-height: 1.2;
+        }
+        & th:not(.bg-success){
+            border-right: 1px solid darken(white,10%);
+        }
+    }
+    &.table-dark{
+        & th{
+            border-right: 1px solid lighten($dark,20%);
+        }
+    }
+}
+.bg-dark{
+    &>.progress{
+        background-color: lighten($dark,20%);
+    }
+}
