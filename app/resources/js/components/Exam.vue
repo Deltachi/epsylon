@@ -26,7 +26,8 @@
                 <div class="card-footer">
                     Bearbeitungsfortschritt:
                     <div class="progress mb-4" >
-                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">50%</div>
+                        <div class="progress-bar progress-bar-transition bg-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" :style="'width: '+calculateProgress()+'%'">
+                            {{calculateProgress()}}%</div>
                     </div>
                     <button type="button" class="btn btn-outline-success btn-block text-uppercase">Klausur abgeben</button>
                 </div>
@@ -43,6 +44,8 @@
                         :was-active="wasActive(index+1)"
                         :trigger-save="triggerSave"
                         @server-message="incomingMessage"
+                        @reset-update="resetTaskAnswered"
+                        @answer-update="updateTaskAnswered"
                     ></task>
                 </div>
             </template>
@@ -62,7 +65,6 @@
     export default {
         name: "Exam",
         props:[
-          'dataTasks',
           'dataExam',
           'dataUser',
         ],
@@ -80,7 +82,7 @@
                 messageType: "",
                 triggerMessage: new Vue(),
                 task: null,
-                tasks: null,
+                progress: 0,
                 user: {
                     id: 1,
                 },
@@ -89,14 +91,16 @@
                     end: "",
                     status: "",
                     title: "",
-                    tasks: {
-                        id: 1,
-                        type: 1,
-                        points: 0,
-                        title: "",
-                        data: null,
-                        answered: false,
-                    },
+                    tasks: [
+                        {
+                            id: 1,
+                            type: 1,
+                            points: 0,
+                            title: "",
+                            data: null,
+                            answered: false,
+                        },
+                    ],
                 },
             }
         },
@@ -118,6 +122,30 @@
             wasActive(task_id){
                 return (task_id === this.wasActiveTask);
             },
+            calculateProgress(){
+                let sum = this.exam.tasks.length;
+                let answered = 0;
+                for(let task of this.exam.tasks){
+                    if (task.answered){
+                        answered += 1;
+                    }
+                }
+                return (answered / sum) * 100;
+            },
+            resetTaskAnswered(taskId){
+                for(let task of this.exam.tasks){
+                    if (task.id === taskId){
+                        task.answered = false;
+                    }
+                }
+            },
+            updateTaskAnswered(taskId){
+                for(let task of this.exam.tasks){
+                    if (task.id === taskId){
+                        task.answered = true;
+                    }
+                }
+            },
             incomingMessage(data){
                 this.message = data.message;
                 this.messageType = data.messageType;
@@ -125,8 +153,6 @@
             },
         },
         created() {
-            console.log(JSON.parse(this.dataTasks));
-            this.tasks = JSON.parse(this.dataTasks)
             console.log(JSON.parse(this.dataExam));
             this.exam = JSON.parse(this.dataExam);
             console.log(JSON.parse(this.dataUser));
