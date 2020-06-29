@@ -12,8 +12,11 @@
                 </div>
             </div>
             <div class="card timer-contents timer-contents--back hidden ">
-                <div class="card-header d-flex align-items-center justify-content-center border-bottom-0">
-                    <div style="font-size: 1.2em;" class="pr-2">Zeit einblenden </div>
+                <div class="card-header d-flex align-items-center justify-content-between border-bottom-0">
+                    <div class="m-0 font-weight-light flex-grow-1 text-center">
+                        <span style="font-size: 1.2em;">Abgabe: </span>
+                        <span style="font-size: 1.2em;" class="pr-2 font-weight-bold">{{end}}</span>
+                    </div>
                     <i style="font-size: 2em;" class="fa fa-clock-o"></i>
                 </div>
             </div>
@@ -36,6 +39,7 @@
                     days: 0,
                 },
                 timer: null,
+                end: "",
             }
         },
         methods: {
@@ -47,7 +51,8 @@
             },
             getTime(){
                 let t = this.dataEnd.split(/[- :]/);
-                let date_future = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
+                let date_future = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+                this.end = date_future.toLocaleString();
                 let date_now = new Date();
 
                 let seconds = Math.floor((date_future - (date_now))/1000);
