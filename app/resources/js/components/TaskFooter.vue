@@ -37,10 +37,10 @@
         },
         methods: {
             reset(affirm = false){
-                this.$parent.resetTask(affirm);
+                this.$emit('reset', affirm);
             },
             submitTask(){
-                this.$parent.submitTask();
+                this.$emit('save');
             },
             randomId(){
                 if(!this.randID){
