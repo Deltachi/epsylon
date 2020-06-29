@@ -33,6 +33,7 @@
             'triggerSave',
             'isActive',
             'wasActive',
+            'resetUpdate',
         ],
         components: {
             task1,
@@ -132,37 +133,43 @@
                         console.error('Error:', error);
                     });
             },
-            resetTask(affirmation = false){
-                if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
-                    this.answer = null
-                    //Database connection
-                    let url = '/answer';
-                    fetch(url, {
-                        method: 'DELETE',
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json, text-plain, */*",
-                            "X-Requested-With": "XMLHttpRequest",
-                            "X-CSRF-TOKEN": this.token
-                        },
-                        credentials: "same-origin",
-                        body: JSON.stringify({
-                            user: this.user_id,
-                            exam: this.exam.id,
-                            task: this.task.id,
-                        }),
-                    })
-                        .then(response => response.json())
-                        .then(data => this.handleServerMessage(data))
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                }
+            resetTask(){
+                this.answer = null
+                //Database connection
+                let url = '/answer';
+                fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": this.token
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({
+                        user: this.user_id,
+                        exam: this.exam.id,
+                        task: this.task.id,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => this.handleServerMessage(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
             },
             handleServerMessage(response){
                 console.log(response.message);
                 if (this.isActive || this.wasActive){
                     this.$emit('server-message', {'message': response.message, 'messageType': response.messageType});
+                }
+                if (response.messageType === 'success'){
+                    if (response.method === 'post'){
+                        this.$emit('answer-update', this.task.id);
+                    }
+                    if (response.method === 'delete'){
+                        this.$emit('reset-update', this.task.id);
+                    }
                 }
             },
             handleServerData(response){
@@ -187,9 +194,11 @@
                     this.submitTask();
                 }
             },
-            triggerResetHandle(affirm = false){
-                //console.log("Ich, Task "+this.task.id+" soll vergessen..");
-                this.resetTask(affirm);
+            triggerResetHandle(affirmation = false){
+                if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")) {
+                    //console.log("Ich, Task "+this.task.id+" soll vergessen..");
+                    this.resetTask();
+                }
             },
             handleKeyEvent(event) {
                 if (event.ctrlKey || event.metaKey) {
