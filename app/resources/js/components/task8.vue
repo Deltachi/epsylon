@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <p id="blanks-sentence">
                             <template v-for="(words, index) in task.data.sentence_exploded">
-                                <input v-if="words === task.data.blank" type="text" v-model="answer[getID(index)]" :name="'blank-'+getID(index)" class="blank-space">
+                                <input v-if="words === task.data.blank" type="text" v-model="answer[getID(index)]" :name="'blank-'+getID(index)" class="form-control blank-space">
                                 <span v-else>{{words}} </span>
                             </template>
                         </p>
@@ -234,5 +234,7 @@
 <style scoped>
     .blank-space{
         margin: 8px 4px;
+        width: auto;
+        display: inline;
     }
 </style>
