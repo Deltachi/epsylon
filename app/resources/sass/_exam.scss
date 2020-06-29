@@ -1,4 +1,3 @@
-
 .exam-task-table{
     & tr{
         cursor: pointer;
@@ -18,5 +17,12 @@
 .bg-dark{
     &>.progress{
         background-color: lighten($dark,20%);
+    }
+}
+
+.task-container{
+    display: none;
+    &.active{
+        display: block;
     }
 }

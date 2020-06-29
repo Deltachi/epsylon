@@ -1,16 +1,14 @@
 <template>
-    <div class="task-container mb-4">
-        <task1 v-if="task.type === 1" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task1>
-        <task2 v-else-if="task.type === 2" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task2>
-        <task3 v-else-if="task.type === 3" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task3>
-        <task4 v-else-if="task.type === 4" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task4>
-        <task5 v-else-if="task.type === 5" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task5>
-        <task6 v-else-if="task.type === 6" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task6>
-        <task7 v-else-if="task.type === 7" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task7>
-        <task8 v-else-if="task.type === 8" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task8>
-        <task9 v-else-if="task.type === 9" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task9>
-        <task10 v-else-if="task.type === 10" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task10>
-    </div>
+    <task1 v-if="task.type === 1" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task1>
+    <task2 v-else-if="task.type === 2" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task2>
+    <task3 v-else-if="task.type === 3" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task3>
+    <task4 v-else-if="task.type === 4" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task4>
+    <task5 v-else-if="task.type === 5" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task5>
+    <task6 v-else-if="task.type === 6" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task6>
+    <task7 v-else-if="task.type === 7" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task7>
+    <task8 v-else-if="task.type === 8" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task8>
+    <task9 v-else-if="task.type === 9" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task9>
+    <task10 v-else-if="task.type === 10" :data-task="dataTask" :data-answer.sync="answer" :data-user-id="dataUserId" :data-exam-id="dataExam.id" :data-task-id="task.id"></task10>
 </template>
 
 <script>
@@ -213,7 +211,5 @@
 </script>
 
 <style scoped>
-    .task-container{
 
-    }
 </style>
