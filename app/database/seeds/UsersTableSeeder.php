@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
             'lastname' => "Mustermann",
             'matrikelnummer' => "123456789",
             'password' => Hash::make("123"),
+            'role' => 'student',
         ]);
         DB::table('users')->insert([
             'username' => "Student 2",
@@ -26,6 +27,7 @@ class UsersTableSeeder extends Seeder
             'lastname' => "Mustermann",
             'matrikelnummer' => "111111119",
             'password' => Hash::make("123"),
+            'role' => 'student',
         ]);
     }
 }

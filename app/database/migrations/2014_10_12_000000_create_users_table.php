@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('firstname');
             $table->string('lastname');
-            $table->integer('matrikelnummer')->unique();
+            $table->enum('role',['lecturer','student','admin']);
+            $table->integer('matrikelnummer')->unique()->nullable()->comment("Haben Dozenten Universitäts-IDs?");
             $table->string('email')->unique()->nullable(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
