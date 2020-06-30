@@ -1,3 +1,8 @@
+.task-overview{
+    max-height: calc(100vh - 400px);
+    overflow-y: scroll;
+}
+
 .exam-task-table{
     & tr{
         cursor: pointer;
