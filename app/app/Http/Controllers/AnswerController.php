@@ -56,7 +56,7 @@ class AnswerController extends Controller
         if( !$this->verifyAccess($user_id) ){ return $this->notAuthorizedResponse(); }
 
         if(isset($user_id, $exam_id, $task_id)){
-            if(isset($data)){
+            if(isset($data) && !empty($data)){
                 $old_answer = Answer::where('user_id',$user_id)->where('exam_id',$exam_id)->where('task_id',$task_id)->first();
                 if(isset($old_answer)){
                     DB::table('answers')->where('user_id',$user_id)->where('exam_id',$exam_id)->where('task_id',$task_id)->update(['data' => json_encode($data)]);
@@ -71,7 +71,7 @@ class AnswerController extends Controller
                     return response()->json(['method' => 'post','success'=>true,'message'=>'Neue Daten gespeichert!', 'messageType'=>'success'],200);
                 }
             }
-            return response()->json(['method' => 'post','success'=>false,'message'=>'Es sind keine Daten zum Speichern vorhanden!', 'messageType'=>'warning'],200);
+            return response()->json(['method' => 'post','success'=>false,'message'=>'Keine Eingabe', 'messageType'=>'warning'],200);
         }
         return response()->json(['method' => 'post','success'=>false,'message'=>'Daten können nicht gespeichert werden!', 'messageType'=>'danger'],200);
     }
