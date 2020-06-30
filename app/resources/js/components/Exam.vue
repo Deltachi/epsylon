@@ -6,7 +6,7 @@
                 <div class="card-header text-center">
                     <h5 class="m-0 font-weight-light">Aufgaben</h5>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body p-0 task-overview">
                     <table class="exam-task-table table table-hover table-striped mb-0">
                         <tbody>
                         <template v-for="(task, index) in exam.tasks">
