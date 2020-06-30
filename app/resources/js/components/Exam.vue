@@ -52,6 +52,7 @@
             <task-server-message
                 v-bind:message="message"
                 v-bind:message-type="messageType"
+                v-bind:redirect="redirect"
                 :trigger-handle="triggerMessage"
             ></task-server-message>
         </div>
@@ -80,6 +81,7 @@
                 triggerSave: new Vue(),
                 message: "",
                 messageType: "",
+                redirect: null,
                 triggerMessage: new Vue(),
                 task: null,
                 progress: 0,
@@ -149,13 +151,14 @@
             incomingMessage(data){
                 this.message = data.message;
                 this.messageType = data.messageType;
+                if(data.redirect){this.redirect = data.redirect;}
                 this.triggerMessage.$emit('show');
             },
         },
         created() {
-            console.log(JSON.parse(this.dataExam));
+            // console.log(JSON.parse(this.dataExam));
             this.exam = JSON.parse(this.dataExam);
-            console.log(JSON.parse(this.dataUser));
+            // console.log(JSON.parse(this.dataUser));
             this.user = JSON.parse(this.dataUser);
         }
     }

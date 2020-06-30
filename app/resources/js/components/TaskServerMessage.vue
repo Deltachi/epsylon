@@ -15,7 +15,7 @@
 <script>
     export default {
         name: "TaskServerMessage",
-        props: ['message','messageType','triggerHandle'],
+        props: ['message','messageType','triggerHandle','redirect'],
         data(){
             return {
                 timeoutTimer: null,
@@ -31,6 +31,11 @@
                 this.timeoutTimer = setTimeout(function(){
                     container.classList.remove("active");
                 }, 4000);
+                if (this.redirect){
+                    setTimeout(function(){
+                        window.location.href = this.redirect;
+                    }, 5000);
+                }
             }
         },
         mounted() {
