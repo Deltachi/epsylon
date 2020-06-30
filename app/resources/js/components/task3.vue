@@ -72,7 +72,8 @@
             });
         },
         mounted() {
-            this.triggerAnswerLoaded.$on('loaded', this.convertAnswerData);
+            this.triggerAnswerLoaded.$on('loaded', this.insertAnswerData);
+            this.triggerAnswerLoaded.$on('generate-answer', this.convertAnswer);
         },
         methods:{
             getSentence(string, id){
@@ -125,7 +126,7 @@
              * Wandele die Antwort-Daten in ein Format um, dass diese Aufgabe benötigt.
              * @param data
              */
-            convertAnswerData(data){
+            insertAnswerData(data){
                 //Falls eine Umwandlung der Daten stattfinden soll
                 this.parseAnswer(data);
                 this.answer = data;
