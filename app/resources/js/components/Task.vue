@@ -35,6 +35,13 @@
                @reset="triggerResetHandle"
                ref="taskRef"
         ></task5>
+        <task6 v-if="task.type === 6"
+               :data-task="task"
+               :trigger-answer-loaded="pushToChild"
+               @save="triggerSaveHandle"
+               @reset="triggerResetHandle"
+               ref="taskRef"
+        ></task6>
     </div>
     <task-loading-error v-else></task-loading-error>
 </template>
