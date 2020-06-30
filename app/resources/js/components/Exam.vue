@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9 d-flex flex-column justify-content-center">
+        <div class="col-md-9 d-flex flex-column justify-content-start">
             <template v-for="(task, index) in exam.tasks">
                 <div :id="'task-'+(index+1)" :class="'task-container'+( isActive(index+1) ? ' active' : '')">
                     <task
