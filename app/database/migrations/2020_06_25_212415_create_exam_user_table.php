@@ -17,6 +17,7 @@ class CreateExamUserTable extends Migration
             $table->foreignId('exam_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->primary(array('exam_id','user_id'));
+            $table->boolean('finished')->default(false)->comment("Hat der Student die Klausur abgegeben?");
             $table->timestamps();
         });
     }

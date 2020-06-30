@@ -18,9 +18,10 @@ class CreateExamsTable extends Migration
             $table->foreignId('subject_id')->constrained();
             $table->text('title');
             $table->enum('status',['draft','pending','open','closed','finished'])->default('pending')->comment("Noch nicht freigegeben, Kann geschrieben werden, Bearbeitung nicht mehr möglich, Bewertung abgeschlossen");
-            $table->boolean('final')->default(false)->comment("Wenn eine Klausur freigegeben wird, darf diese nicht mehr verändert werden");
+            $table->boolean('final')->default(false)->comment("Wenn eine Klausur nach der Erstellung freigegeben wird, darf diese nicht mehr verändert werden");
             $table->timestamp('begin')->nullable()->comment("Startzeitpunkt der Klausur");
             $table->timestamp('end')->nullable()->comment("Endzeitpunkt der Klausur");
+            $table->boolean('reenter')->default(true)->comment("Darf der Student die Klausur (im Zeitrahmen) nochmal öffnen, nachdem sie abgegeben wurde?");
             $table->timestamps();
         });
     }
