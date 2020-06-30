@@ -238,7 +238,7 @@
                     switch (String.fromCharCode(event.which).toLowerCase()) {
                         case 's':
                             event.preventDefault();
-                            this.triggerSaveHandle();
+                            this.triggerSaveHandleExtern();
                             break;
                     }
                 }
