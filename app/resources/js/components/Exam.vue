@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-9 d-flex flex-column justify-content-center">
             <template v-for="(task, index) in exam.tasks">
-                <div :id="'task-'+(index+1)" :class="'task-container'+((index+1) === 1 ? ' active' : '')">
+                <div :id="'task-'+(index+1)" :class="'task-container'+( isActive(index+1) ? ' active' : '')">
                     <task
                         :data-task="JSON.stringify(task)"
                         :data-exam="JSON.stringify(exam)"
@@ -116,6 +116,7 @@
                     task_new.classList.add('active');
                     this.wasActiveTask = this.activeTask;
                     this.activeTask = id;
+                    localStorage.setItem("activeTask",id);
                 }
             },
             isActive(task_id){
@@ -160,6 +161,18 @@
             this.exam = JSON.parse(this.dataExam);
             // console.log(JSON.parse(this.dataUser));
             this.user = JSON.parse(this.dataUser);
+        },
+        mounted() {
+            //Setze Klausur da fort, wo aufgehört wurde
+            if(localStorage.getItem("activeTask")) {
+                let active_id = JSON.parse(localStorage.getItem("activeTask"));
+                for(let task of this.exam.tasks){
+                    if (task.id === active_id){
+                        this.switchTask(active_id);
+                        console.log("Active Task geladen! ",active_id);
+                    }
+                }
+            }
         }
     }
 </script>
