@@ -2,12 +2,25 @@
     <div v-if="ready">
         <task1 v-if="task.type === 1"
                :data-task="task"
-               :data-answer.sync="answer"
-               :trigger-answer-loaded="triggerAnswerLoaded"
+               :trigger-answer-loaded="pushAnswerToChild"
                @save="triggerSaveHandle"
                @reset="triggerResetHandle"
                ref="taskRef"
         ></task1>
+        <task2 v-if="task.type === 2"
+               :data-task="task"
+               :trigger-answer-loaded="pushAnswerToChild"
+               @save="triggerSaveHandle"
+               @reset="triggerResetHandle"
+               ref="taskRef"
+        ></task2>
+        <task3 v-if="task.type === 3"
+               :data-task="task"
+               :trigger-answer-loaded="pushAnswerToChild"
+               @save="triggerSaveHandle"
+               @reset="triggerResetHandle"
+               ref="taskRef"
+        ></task3>
     </div>
     <task-loading-error v-else></task-loading-error>
 </template>
@@ -65,8 +78,8 @@
                     data: {},
                     points: 0.0,
                 },
-                answer:"",
-                triggerAnswerLoaded: new Vue(),
+                answer: null,
+                pushAnswerToChild: new Vue(),
                 ready: false,
                 token: null,
             }
@@ -109,6 +122,14 @@
                     });
             },
             submitTask(){
+                let submit_data = JSON.stringify({
+                    user: this.user_id,
+                    exam: this.exam.id,
+                    task: this.task.id,
+                    data: this.answer,
+                });
+                //console.log("SUBMIT DATA: ",submit_data);
+
                 //Database connection
                 let url = '/answer';
                 fetch(url, {
@@ -120,12 +141,7 @@
                         "X-CSRF-TOKEN": this.token
                     },
                     credentials: "same-origin",
-                    body: JSON.stringify({
-                        user: this.user_id,
-                        exam: this.exam.id,
-                        task: this.task.id,
-                        data: this.answer
-                    }),
+                    body: submit_data,
                 })
                     .then(response => response.json())
                     .then(data => this.handleServerMessage(data))
@@ -159,9 +175,15 @@
                     });
             },
             handleServerMessage(response){
-                console.log(response.message);
+                // console.log(response);
                 if (this.isActive || this.wasActive){
-                    this.$emit('server-message', {'message': response.message, 'messageType': response.messageType});
+                    if (response.exception){
+                        response.messageType = 'danger';
+                        response.redirect = '/login'
+                        this.$emit('server-message', {'message': response.message, 'messageType': response.messageType, 'redirect': response.redirect});
+                    }else{
+                        this.$emit('server-message', {'message': response.message, 'messageType': response.messageType});
+                    }
                 }
                 if (response.messageType === 'success'){
                     if (response.method === 'post'){
@@ -173,12 +195,12 @@
                 }
             },
             handleServerData(response){
+                // console.log(response);
                 if(response.success){
-                    console.log(response.data);
+                    // console.log(response.data);
                     let answerData = JSON.parse(response.data);
-                    this.triggerAnswerLoaded.$emit('loaded',answerData);
+                    this.pushAnswerToChild.$emit('loaded',answerData);
                 }
-                console.log(response.message);
                 if (this.isActive){
                     this.$emit('server-message', {'message': response.message, 'messageType': response.messageType});
                 }
@@ -189,9 +211,9 @@
                     let ref = this.$refs.taskRef;
                     if (ref) {
                         this.answer = ref.answer;
-                        console.log(this.answer);
+                        console.log("Answer to save: ",this.answer);
+                        this.submitTask();
                     }
-                    this.submitTask();
                 }
             },
             triggerResetHandle(affirmation = false){
