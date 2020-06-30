@@ -24,7 +24,7 @@ class TasksTableSeeder extends Seeder
                         "erwartungshorizont" => "Lösung zur Aufgabe 1",
                     )
                 ),
-                'points' => 2
+                'points' => 5
             ]
         );
 
@@ -44,7 +44,7 @@ class TasksTableSeeder extends Seeder
                         "erwartungshorizont" => "Lösung zur Aufgabe 1",
                     )
                 ),
-                'points' => 10
+                'points' => 20
             ]
         );
         DB::table('tasks')->insert(
@@ -85,18 +85,18 @@ class TasksTableSeeder extends Seeder
                         "erwartungshorizont" => "Lösung zur Aufgabe 1",
                     )
                 ),
-                'points' => 10
+                'points' => 5
             ]
         );
         DB::table('tasks')->insert(
             [
                 'type' => 5,
-                'title' => "Aufgabe1: Aufgabenstellung",
+                'title' => "Multiple Choice: Aufgabenstellung",
                 'description' => "Beschreibung der Aufgabe",
                 'hint' => "Hier steht ein Hinweis zur Aufgabe",
                 'data' => json_encode(
                     array(
-                        "solution" => ["Lösung1", "Lösung2","Lösung3","Lösung4","Lösung5"],
+                        "Auswahl 1", "Auswahl 2","Auswahl 3","Auswahl 4","Auswahl 5",
                     )
                 ),
                 'solution' => json_encode(
@@ -104,7 +104,7 @@ class TasksTableSeeder extends Seeder
                         "erwartungshorizont" => "Lösung zur Aufgabe 1",
                     )
                 ),
-                'points' => 10
+                'points' => 5
             ]
         );
         DB::table('tasks')->insert(
