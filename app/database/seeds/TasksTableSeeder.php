@@ -72,12 +72,12 @@ class TasksTableSeeder extends Seeder
         DB::table('tasks')->insert(
             [
                 'type' => 4,
-                'title' => "Aufgabe 1: Welche Farben enthält die Flagge von Deutschland?",
+                'title' => "Checkbox: Welche Farben enthält die Flagge von Deutschland?",
                 'description' => "Beschreibung der Aufgabe",
                 'hint' => "Hier steht ein Hinweis zur Aufgabe",
                 'data' => json_encode(
                     array(
-                        "solution" => ["blau","rot","gelb","weiß","schwarz"],
+                        "blau","rot","gelb","weiß","schwarz"
                     )
                 ),
                 'solution' => json_encode(
