@@ -2,25 +2,32 @@
     <div v-if="ready">
         <task1 v-if="task.type === 1"
                :data-task="task"
-               :trigger-answer-loaded="pushAnswerToChild"
+               :trigger-answer-loaded="pushToChild"
                @save="triggerSaveHandle"
                @reset="triggerResetHandle"
                ref="taskRef"
         ></task1>
         <task2 v-if="task.type === 2"
                :data-task="task"
-               :trigger-answer-loaded="pushAnswerToChild"
+               :trigger-answer-loaded="pushToChild"
                @save="triggerSaveHandle"
                @reset="triggerResetHandle"
                ref="taskRef"
         ></task2>
         <task3 v-if="task.type === 3"
                :data-task="task"
-               :trigger-answer-loaded="pushAnswerToChild"
+               :trigger-answer-loaded="pushToChild"
                @save="triggerSaveHandle"
                @reset="triggerResetHandle"
                ref="taskRef"
         ></task3>
+        <task4 v-if="task.type === 4"
+               :data-task="task"
+               :trigger-answer-loaded="pushToChild"
+               @save="triggerSaveHandle"
+               @reset="triggerResetHandle"
+               ref="taskRef"
+        ></task4>
     </div>
     <task-loading-error v-else></task-loading-error>
 </template>
@@ -79,7 +86,7 @@
                     points: 0.0,
                 },
                 answer: null,
-                pushAnswerToChild: new Vue(),
+                pushToChild: new Vue(),
                 ready: false,
                 token: null,
             }
@@ -122,14 +129,13 @@
                     });
             },
             submitTask(){
+                //Answer Data
                 let submit_data = JSON.stringify({
                     user: this.user_id,
                     exam: this.exam.id,
                     task: this.task.id,
                     data: this.answer,
                 });
-                //console.log("SUBMIT DATA: ",submit_data);
-
                 //Database connection
                 let url = '/answer';
                 fetch(url, {
@@ -150,6 +156,7 @@
                     });
             },
             resetTask(){
+                //Clear Answer Buffer
                 this.answer = null
                 //Database connection
                 let url = '/answer';
@@ -175,7 +182,6 @@
                     });
             },
             handleServerMessage(response){
-                // console.log(response);
                 if (this.isActive || this.wasActive){
                     if (response.exception){
                         response.messageType = 'danger';
@@ -195,19 +201,25 @@
                 }
             },
             handleServerData(response){
-                // console.log(response);
                 if(response.success){
-                    // console.log(response.data);
                     let answerData = JSON.parse(response.data);
-                    this.pushAnswerToChild.$emit('loaded',answerData);
+                    this.pushToChild.$emit('loaded',answerData);
                 }
                 if (this.isActive){
                     this.$emit('server-message', {'message': response.message, 'messageType': response.messageType});
                 }
             },
+            triggerSaveHandleExtern(){
+                if (this.isActive) {
+                    let ref = this.$refs.taskRef;
+                    if (ref) {
+                        this.pushToChild.$emit('generate-answer');
+                        this.triggerSaveHandle();
+                    }
+                }
+            },
             triggerSaveHandle(){
                 if (this.isActive){
-                    //console.log("Ich, Task "+this.task.id+" soll speichern!");
                     let ref = this.$refs.taskRef;
                     if (ref) {
                         this.answer = ref.answer;
@@ -218,7 +230,6 @@
             },
             triggerResetHandle(affirmation = false){
                 if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")) {
-                    //console.log("Ich, Task "+this.task.id+" soll vergessen..");
                     this.resetTask();
                 }
             },
@@ -235,7 +246,7 @@
         },
         mounted() {
             $(window).bind('keydown', this.handleKeyEvent);
-            this.triggerSave.$on('save',this.triggerSaveHandle);
+            this.triggerSave.$on('save',this.triggerSaveHandleExtern);
         },
     }
 </script>
