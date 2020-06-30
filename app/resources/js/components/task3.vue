@@ -77,11 +77,11 @@
         },
         methods:{
             getSentence(string, id){
-                string = string.replace("_BLANK", "<span class='target' data-target='sentence-"+id+"'></span>");
+                string = string.replace("_BLANK", "<span class='"+this.task.id+"-target target' data-target='sentence-"+id+"'></span>");
                 return string;
             },
             parseAnswer(_answer){
-                let targets = document.getElementsByClassName("target");
+                let targets = document.getElementsByClassName(this.task.id+"-target target");
                 for(let target of targets){
                     let targetData = target.getAttribute("data-target");
                     if (_answer[targetData]){
@@ -90,7 +90,7 @@
                 }
             },
             convertAnswer(){
-                let targets = document.getElementsByClassName("target");
+                let targets = document.getElementsByClassName(this.task.id+"-target target");
                 for(let target of targets){
                     let targetData = target.getAttribute("data-target");
                     if(target.innerText){
@@ -99,7 +99,7 @@
                 }
             },
             resetAnswer(){
-                let targets = document.getElementsByClassName("target");
+                let targets = document.getElementsByClassName(this.task.id+"-target target");
                 for(let target of targets){
                     target.innerText = "";
                 }
