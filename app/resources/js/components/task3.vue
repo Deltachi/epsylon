@@ -2,7 +2,7 @@
     <div class="card">
         <form>
             <task-header v-bind:task="task"></task-header>
-            <div class="card-body row quiz-wrapper p-5">
+            <div class="card-body row p-5 quiz-wrapper">
                 <div class="col-4">
                     <div><b>Antwortmöglichkeiten</b></div>
                     <ul class="list-group">

@@ -2,11 +2,11 @@
     <div class="card">
         <form name="form">
             <task-header v-bind:task="task"></task-header>
-            <div class="card-body">
+            <div class="card-body p-5">
                 <div class="form-group" v-for="(choice, index) in task.data">
                     <div class="form-check">
-                        <input :id="'choice-'+index" class="form-check-input" type="checkbox" :value="choice" v-model="answer">
-                        <label class="form-check-label" :for="'choice-'+index">{{choice}}</label>
+                        <input :id="'choice-'+task.id+'-'+index" class="form-check-input" type="checkbox" :value="choice" v-model="answer">
+                        <label class="form-check-label" :for="'choice-'+task.id+'-'+index">{{choice}}</label>
                     </div>
                 </div>
             </div>
@@ -69,6 +69,7 @@
             return {
                 type: 4,
                 task: {
+                    id: 4,
                     title: "",
                     description: "",
                     hint: "",
