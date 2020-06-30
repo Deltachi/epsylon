@@ -9,7 +9,6 @@
         </form>
     </div>
 </template>
-
 <script>
     import TaskHeader from "./TaskHeader";
     import TaskFooter from "./TaskFooter";
@@ -17,7 +16,6 @@
         name: "task1",
         props: [
             'dataTask',
-            'dataAnswer',
             'triggerAnswerLoaded',
         ],
         components: {
@@ -30,9 +28,36 @@
                 this.convertTaskData(this.dataTask);
                 this.ready = true;
             }
-            if(this.dataAnswer && this.dataAnswer !== "null"){
-                this.convertAnswerData(this.dataAnswer);
-            }
+        },
+        mounted() {
+            this.triggerAnswerLoaded.$on('loaded', this.convertAnswerData);
+        },
+        methods: {
+
+            triggerSave(){
+                this.$emit('save');
+            },
+            triggerReset(affirm){
+                this.answer = this.answerFresh;
+                this.$emit('reset', affirm);
+            },
+            /**
+             * Wandele die Task-Daten in ein Format um, dass diese Aufgabe benötigt.
+             * Manipulier gegebenenfalls die DOM
+             * @param data
+             */
+            convertTaskData(task){
+                //Falls eine Umwandlung der Daten stattfinden soll
+                this.task = task;
+            },
+            /**
+             * Wandele die Antwort-Daten in ein Format um, dass diese Aufgabe benötigt.
+             * @param data
+             */
+            convertAnswerData(data){
+                //Falls eine Umwandlung der Daten stattfinden soll
+                this.answer = data;
+            },
         },
         data(){
             return {
@@ -41,33 +66,12 @@
                     title: "",
                     description: "",
                     hint: "",
-                    data: {},
+                    data: null,
                     points: 0.0,
                 },
                 answer: "",
                 answerFresh: "",
             }
-        },
-        methods: {
-            convertTaskData(data){
-                this.task = data;
-            },
-            getAnswerConversion(data){
-                return data;
-            },
-            convertAnswerData(data){
-                this.answer = this.getAnswerConversion(data);
-            },
-            triggerSave(){
-                this.$emit('save');
-            },
-            triggerReset(affirm){
-                this.answer = this.answerFresh;
-                this.$emit('reset', affirm);
-            },
-        },
-        mounted() {
-            this.triggerAnswerLoaded.$on('loaded', this.convertAnswerData);
         }
     }
 </script>
