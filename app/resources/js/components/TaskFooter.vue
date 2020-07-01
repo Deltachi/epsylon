@@ -2,7 +2,7 @@
     <div class="card-footer d-flex flex-row justify-content-between">
         <!--<button type="button" @click="reset()" class="btn btn-outline-info">Zurücksetzen</button>-->
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" :data-target="'#resetAffirmation'+randomId()">
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" :data-target="'#resetAffirmation'+randomId()">
             Zurücksetzen
         </button>
 
@@ -23,7 +23,10 @@
                 </div>
             </div>
         </div>
-        <button type="button" @click="submitTask()" class="btn btn-primary">Speichern</button>
+        <div class="d-flex">
+            <button type="button" @click="submitTask()" class="btn btn-outline-primary mr-2">Speichern</button>
+            <button type="button" @click="submitTask(true)" class="btn btn-primary">Speichern und Weiter</button>
+        </div>
     </div>
 </template>
 
@@ -39,8 +42,8 @@
             reset(affirm = false){
                 this.$emit('reset', affirm);
             },
-            submitTask(){
-                this.$emit('save');
+            submitTask(nextTask = false){
+                this.$emit('save', nextTask);
             },
             randomId(){
                 if(!this.randID){

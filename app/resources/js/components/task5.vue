@@ -40,8 +40,8 @@
             this.triggerAnswerLoaded.$on('loaded', this.convertAnswerData);
         },
         methods: {
-            triggerSave(){
-                this.$emit('save');
+            triggerSave(next = false){
+                this.$emit('save', next);
             },
             triggerReset(affirm){
                 this.answer = this.answerFresh;

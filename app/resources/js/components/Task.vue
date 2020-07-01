@@ -232,7 +232,7 @@
                     }
                 }
             },
-            triggerSaveHandle(){
+            triggerSaveHandle(next = false){
                 if (this.isActive){
                     let ref = this.$refs.taskRef;
                     if (ref) {
@@ -240,7 +240,11 @@
                         console.log("Answer to save: ",this.answer);
                         this.submitTask();
                     }
+                    if (next){
+                        this.$emit('next-task');
+                    }
                 }
+
             },
             triggerResetHandle(affirmation = false){
                 if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")) {

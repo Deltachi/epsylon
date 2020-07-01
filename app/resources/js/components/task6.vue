@@ -80,9 +80,9 @@
                 });
                 this.answer = {};
             },
-            triggerSave(){
+            triggerSave(next = false){
                 this.convertAnswer();
-                this.$emit('save');
+                this.$emit('save', next);
             },
             triggerReset(affirm){
                 this.resetAnswer();
