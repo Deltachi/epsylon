@@ -107,11 +107,11 @@
             }
         },
         methods:{
-            switchTask(id){
+            switchTask(id, trigger_save = true){
                 let task = document.getElementById('task-'+this.activeTask);
                 let task_new = document.getElementById('task-'+id);
                 if(task_new){
-                    this.triggerSave.$emit('save');
+                    if (trigger_save) { this.triggerSave.$emit('save'); }
                     task.classList.remove('active');
                     task_new.classList.add('active');
                     this.wasActiveTask = this.activeTask;
@@ -168,7 +168,7 @@
                 let active_id = JSON.parse(localStorage.getItem("activeTask"));
                 for(let task of this.exam.tasks){
                     if (task.id === active_id){
-                        this.switchTask(active_id);
+                        this.switchTask(active_id, false);
                         console.log("Active Task geladen! ",active_id);
                     }
                 }
