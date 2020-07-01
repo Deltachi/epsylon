@@ -1,9 +1,11 @@
+
+
 .task-overview{
     max-height: calc(100vh - 400px);
     overflow-y: scroll;
 }
 
-.exam-task-table{
+#exam-task-table{
     & tr{
         cursor: pointer;
         & td{
@@ -12,12 +14,16 @@
         & th:not(.bg-success){
             border-right: 1px solid darken(white,10%);
         }
+        &.active{
+
+        }
     }
     &.table-dark{
         & th{
             border-right: 1px solid lighten($dark,20%);
         }
     }
+
 }
 .bg-dark{
     &>.progress{
