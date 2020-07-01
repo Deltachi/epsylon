@@ -24,10 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $role = Auth::user()->role;
+        $user = Auth::user();
+        $role = $user->role;
         if ($role == 'student'){
             return redirect()->route('exam.index');
         }
-        return view('home');
+        return view('home', ['user'=>$user]);
     }
 }
