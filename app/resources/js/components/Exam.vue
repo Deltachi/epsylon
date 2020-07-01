@@ -7,11 +7,11 @@
                     <h5 class="m-0 font-weight-light">Aufgaben</h5>
                 </div>
                 <div class="card-body p-0 task-overview">
-                    <table class="exam-task-table table table-hover table-striped mb-0">
+                    <table id="exam-task-table" class="exam-task-table table table-hover table-striped mb-0">
                         <tbody>
                         <template v-for="(task, index) in exam.tasks">
-                            <tr @click="switchTask(index+1)" >
-                                <th :class="'align-middle text-center px-2 ' + (task.answered ? 'bg-success text-white':'')" scope="row">
+                            <tr @click="switchTask(index+1)" :class="getOverviewRowClass(index+1)">
+                                <th :class="'align-middle text-center px-2 ' + getOverviewClass(task)" scope="row">
                                     <span v-if="task.answered" class="text-nowrap"><i class="fa fa-check"></i></span>
                                     <span v-else class="text-nowrap"><i class="fa fa-minus"></i></span>
                                 </th>
@@ -46,6 +46,7 @@
                         @server-message="incomingMessage"
                         @reset-update="resetTaskAnswered"
                         @answer-update="updateTaskAnswered"
+                        @next-task="nextTask"
                     ></task>
                 </div>
             </template>
@@ -119,6 +120,9 @@
                     localStorage.setItem("activeTask",id);
                 }
             },
+            nextTask(){
+                this.switchTask(this.activeTask + 1, false);
+            },
             isActive(task_id){
                   return (task_id === this.activeTask);
             },
@@ -155,11 +159,19 @@
                 if(data.redirect){this.redirect = data.redirect;}
                 this.triggerMessage.$emit('show');
             },
+            getOverviewRowClass(task_id){
+                let classes = '';
+                if (this.activeTask === task_id){
+                    classes += ' bg-gradient-secondary text-white';
+                }
+                return classes;
+            },
+            getOverviewClass(task){
+                return (task.answered ? 'bg-gradient-success text-white' : '');
+            },
         },
         created() {
-            // console.log(JSON.parse(this.dataExam));
             this.exam = JSON.parse(this.dataExam);
-            // console.log(JSON.parse(this.dataUser));
             this.user = JSON.parse(this.dataUser);
         },
         mounted() {
