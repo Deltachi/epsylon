@@ -70,9 +70,8 @@ class ExamController extends Controller
         $user = User::find(Auth::user()->id);
         $exam = Exam::find($exam_id);
         $exams = $this->getOpenUserExams();
-        $tasks_json_array = [];
-        $tasks = [];
         if($exams->contains($exam)){
+            $user->exams()->updateExistingPivot($exam, array('state' => 'dirty'), false);
             foreach($exam->tasks as $task){
                 if($task){
                     //Wandel JSON-String in JSON-Objekt um, falls Wert != null
@@ -85,6 +84,7 @@ class ExamController extends Controller
                     //$tasks_json_array[] = json_encode($task, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG);
                 }
             }
+
             return view('exam.show',['user'=>$user,'exam'=>$exam]);
         }
         return redirect()->route('exam.index');

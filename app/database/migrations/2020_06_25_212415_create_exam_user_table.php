@@ -17,7 +17,7 @@ class CreateExamUserTable extends Migration
             $table->foreignId('exam_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->primary(array('exam_id','user_id'));
-            $table->enum('status',['pristine','dirty','finished'])->default('pristine')->comment("Klausur: unberührt, angefangen, abgeschlossen");
+            $table->enum('state',['pristine','dirty','finished'])->default('pristine')->comment("Klausur: unberührt, angefangen, abgeschlossen");
             $table->timestamps();
         });
     }

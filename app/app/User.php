@@ -38,6 +38,6 @@ class User extends Authenticatable
     ];
 
     public function exams(){
-        return $this->belongsToMany('App\Exam');
+        return $this->belongsToMany('App\Exam')->withPivot('state');;
     }
 }
