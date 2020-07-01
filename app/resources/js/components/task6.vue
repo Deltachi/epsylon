@@ -6,8 +6,7 @@
             <div class="task-top" v-if="task.data.top">{{task.data.top}}</div>
             <ul class="task-body" id="sortable">
                 <li :class="'task-option target target-'+task.id" v-for="(option, index) in task.data.options">
-                    <div v-if="option.name">{{option.name}}</div>
-                    <div v-if="option.hint" class="text-muted small">{{option.hint}}</div>
+                    <div class="data-target">{{option}}</div>
                 </li>
             </ul>
             <div class="task-bottom" v-if="task.data.bottom">{{task.data.bottom}}</div>
@@ -47,33 +46,38 @@
             });
         },
         mounted() {
-            this.triggerAnswerLoaded.$on('loaded', this.convertAnswerData);
+            this.triggerAnswerLoaded.$on('loaded', this.insertAnswerData);
             this.triggerAnswerLoaded.$on('generate-answer', this.convertAnswer);
         },
         methods: {
             parseAnswer(_answer){
                 let targets = document.getElementsByClassName("target-"+this.task.id);
                 for(let target of targets){
-                    let targetData = target.getAttribute("data-target");
-                    if (_answer[targetData]){
-                        target.innerText = _answer[targetData];
+                    let element = target.getElementsByClassName('data-target')[0];
+                    if(Array.isArray(_answer) && _answer.length > 0){
+                        element.innerText = _answer.shift();
                     }
                 }
             },
             convertAnswer(){
                 let targets = document.getElementsByClassName("target-"+this.task.id);
+                this.answer = [];
                 for(let target of targets){
-                    let targetData = target.getAttribute("data-target");
-                    if(target.innerText){
-                        this.answer[targetData] = target.innerText;
+                    let element = target.getElementsByClassName('data-target')[0];
+                    let targetData = element.innerText;
+                    if(targetData){
+                        this.answer.push(targetData);
                     }
                 }
             },
             resetAnswer(){
-                let targets = document.getElementsByClassName("target-"+this.task.id);
-                for(let target of targets){
-                    target.innerText = "";
-                }
+                let options = this.task.data.options;
+                // Steal the lolli from the component
+                this.task.data.options = null;
+                this.$nextTick().then(() => {
+                    // Give the lolli back and force a re-render
+                    this.task.data.options = options;
+                });
                 this.answer = {};
             },
             triggerSave(){
