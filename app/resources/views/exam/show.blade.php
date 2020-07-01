@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title',$exam->subject->name . " | " . $exam->title)
+
 @section('content')
 <div class="container">
     <exam :data-exam="'{{json_encode($exam, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG)}}'"

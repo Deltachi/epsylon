@@ -1,4 +1,7 @@
 @extends('layouts.app')
+
+@section('title',"Klausuren-Übersicht")
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -48,7 +51,7 @@
                                     <a class="btn btn-outline-secondary disabled" href="#">Keine Bearbeitung möglich</a>
                                     @break
                                     @case("open")
-                                    <a class="btn btn-outline-info" href="/exam/{{$exam->id}}">Starten</a>
+                                    <a class="btn btn-outline-info" href="/exam/{{$exam->id}}">{{($exam->pivot->state == 'pristine' ? 'Bearbeitung beginnen':($exam->pivot->state == 'dirty' ? 'Bearbeitung fortsetzen': 'Erneut bearbeiten'))}}</a>
                                     @break
                                     @case("closed")
                                     <a class="btn btn-outline-secondary disabled" href="#">Bearbeitungszeit abgelaufen</a>
