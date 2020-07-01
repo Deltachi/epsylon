@@ -1,12 +1,6 @@
 <template>
     <div class="task-server-message">
-        <div v-if="messageType === 'success'" class="alert alert-success" role="alert">
-            {{message}}
-        </div>
-        <div v-else-if="messageType === 'danger'" class="alert alert-danger" role="alert">
-            {{message}}
-        </div>
-        <div v-else-if="messageType === 'warning'" class="alert alert-warning" role="alert">
+        <div :class="'alert alert-'+messageType" role="alert">
             {{message}}
         </div>
     </div>
