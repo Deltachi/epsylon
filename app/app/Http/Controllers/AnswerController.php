@@ -39,7 +39,7 @@ class AnswerController extends Controller
         if (isset($answer)){
             return response()->json(['method' => 'get','success'=>true,'message'=>'Daten geladen!', 'data'=>$answer->data, 'messageType'=>'success'],200);
         }
-        return response()->json(['method' => 'get','success'=>false,'message'=>'Bitte beantworte diese Frage', 'messageType'=>'warning'],200);
+        return response()->json(['method' => 'get','success'=>false,'message'=>'Bitte beantworte diese Frage', 'messageType'=>'info'],200);
     }
 
     /**
