@@ -10,6 +10,6 @@ class Exam extends Model
         return $this->belongsTo('App\Subject');
     }
     public function tasks(){
-        return $this->belongsToMany('App\Task');
+        return $this->belongsToMany('App\Task')->withPivot(['points']);
     }
 }
