@@ -80,8 +80,6 @@ class ExamController extends Controller
 
                     $answer = Answer::where('user_id',$user->id)->where('exam_id',$exam->id)->where('task_id',$task->id)->first();
                     $task['answered'] = isset($answer);
-                    //$tasks[] = $task;
-                    //$tasks_json_array[] = json_encode($task, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG);
                 }
             }
 
