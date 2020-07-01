@@ -116,9 +116,9 @@ class TasksTableSeeder extends Seeder
                 'data' => json_encode(
                     array(
                         "options" => [
-                            ["name" => "Option 1", "hint" => "Hinweis 1"],
-                            ["name" => "Option 2", "hint" => "Hinweis 2"],
-                            ["name" => "Option 3", "hint" => "Hinweis 3"],
+                            "Option 1",
+                            "Option 2",
+                            "Option 3",
                         ],
                         "top" => "wichtig",
                         "bottom" => "unwichtig",
