@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ExamsTableSeeder::class,
             ExamUserTableSeeder::class,
             ExamTaskTableSeeder::class,
+            SubjectUserTableSeeder::class,
         ]);
     }
 }
