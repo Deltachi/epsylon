@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', 'TaskController@index')->name('task.index');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/task', 'TaskController@index')->name('task.index');
 Route::get('/task/{id}', 'TaskController@show')->name('task.show');
 Route::get('/home', 'HomeController@index')->name('home');
