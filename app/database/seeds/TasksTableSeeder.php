@@ -19,11 +19,7 @@ class TasksTableSeeder extends Seeder
                 'description' => "<p>In dieser Aufgabe sollst du Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ut aliquip ex ea commodo consequat. Duis aute irure dolor anim id est laborum. machen.</p>",
                 'hint' => "Hier steht ein Hinweis zur Aufgabe",
                 'data' => null,
-                'solution' => json_encode(
-                    array(
-                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
-                    )
-                ),
+                'solution' => "",
                 'points' => 5
             ]
         );
@@ -39,11 +35,7 @@ class TasksTableSeeder extends Seeder
                         "code" => 'int x = 0;\nint myFunc(int a, int b){\n    int out = a + b;\n    return out;\n}'
                     )
                 ),
-                'solution' => json_encode(
-                    array(
-                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
-                    )
-                ),
+                'solution' => "",
                 'points' => 20
             ]
         );
@@ -56,15 +48,11 @@ class TasksTableSeeder extends Seeder
                 'data' => json_encode(
                     array(
                         "sentences" => ["An _BLANK a day keeps the doctor away.", "Honesty is the best _BLANK.", "He who _BLANK last laughs longest.", "Two _BLANK don't make it right."],
-                        "words" => ["policy", "banana", "rights", "laughs", "apple", "word"],
+                        "words" => ["policy", "banana", "rights", "laughs", "apple", "wrongs"],
                         "blank" => "_BLANK",
                     )
                 ),
-                'solution' => json_encode(
-                    array(
-                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
-                    )
-                ),
+                'solution' => "",
                 'points' => 10
             ]
         );
@@ -80,11 +68,7 @@ class TasksTableSeeder extends Seeder
                         "blau","rot","gelb","weiß","schwarz"
                     )
                 ),
-                'solution' => json_encode(
-                    array(
-                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
-                    )
-                ),
+                'solution' => "",
                 'points' => 5
             ]
         );
@@ -99,11 +83,7 @@ class TasksTableSeeder extends Seeder
                         "Auswahl 1", "Auswahl 2","Auswahl 3","Auswahl 4","Auswahl 5",
                     )
                 ),
-                'solution' => json_encode(
-                    array(
-                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
-                    )
-                ),
+                'solution' => "",
                 'points' => 5
             ]
         );
@@ -124,31 +104,7 @@ class TasksTableSeeder extends Seeder
                         "bottom" => "unwichtig",
                     )
                 ),
-                'solution' => json_encode(
-                    array(
-                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
-                    )
-                ),
-                'points' => 10
-            ]
-        );
-        DB::table('tasks')->insert(
-            [
-                'type' => 7,
-                'title' => "Welche Antworten passen zu welchen Aussagen?",
-                'description' => "<p>Ordnen Sie die Antworten den passenden Aussagen zu.</p>",
-                'hint' => "Hier steht ein Hinweis zur Aufgabe",
-                'data' => json_encode(
-                    array(
-                        "input" => ["Fakt 1", "Fakt 2", "Fakt 3", "Fakt 4", "Fakt 5"],
-                        "output" => ["Aussage 1", "Aussage 2", "Aussage 3",]
-                    )
-                ),
-                'solution' => json_encode(
-                    array(
-                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
-                    )
-                ),
+                'solution' => "",
                 'points' => 10
             ]
         );
@@ -164,12 +120,19 @@ class TasksTableSeeder extends Seeder
                         "blank" => "_BLANK"
                     )
                 ),
-                'solution' => json_encode(
-                    array(
-                        "erwartungshorizont" => "Lösung zur Aufgabe 1",
-                    )
-                ),
+                'solution' => "",
                 'points' => 10
+            ]
+        );
+        DB::table('tasks')->insert(
+            [
+                'type' => 10,
+                'title' => "Aufgabentyp 10: Text-Editor",
+                'description' => "<p>In dieser Aufgabe sollst du Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ut aliquip ex ea commodo consequat. Duis aute irure dolor anim id est laborum. machen.</p>",
+                'hint' => "Hier steht ein Hinweis zur Aufgabe",
+                'data' => null,
+                'solution' => "",
+                'points' => 20
             ]
         );
     }

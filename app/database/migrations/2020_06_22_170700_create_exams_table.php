@@ -16,7 +16,7 @@ class CreateExamsTable extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->foreignId('subject_id')->constrained();
-            $table->text('title');
+            $table->text('title')->default('Neue Klausur');
             $table->enum('status',['draft','pending','open','closed','finished'])->default('draft')->comment("Nicht freigegeben, Freigegeben (wartet), Bearbeitet möglich, Bearbeitung nicht mehr möglich, Bewertet");
             $table->boolean('final')->default(false)->comment("Wenn eine Klausur nach der Erstellung freigegeben wird, darf diese nicht mehr verändert werden");
             $table->timestamp('begin')->nullable()->comment("Startzeitpunkt der Klausur");

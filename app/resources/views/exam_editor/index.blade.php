@@ -89,7 +89,7 @@
                                 </div>
                             </td>
                             <td class="align-middle text-right">
-                                <a class="btn btn-outline-info" href="/exam/edit/{{$subject->id}}/{{$exam->id}}">Klausur bearbeiten</a>
+                                <a class="btn btn-outline-info" href="/edit_exam/{{$exam->id}}">Klausur bearbeiten</a>
                             </td>
                         </tr>
                     @endforeach

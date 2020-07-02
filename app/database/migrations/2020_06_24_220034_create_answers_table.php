@@ -16,8 +16,8 @@ class CreateAnswersTable extends Migration
         Schema::create('answers', function (Blueprint $table) {
             //$table->id()->autoIncrement();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('exam_id')->constrained();
-            $table->foreignId('task_id')->constrained();
+            $table->foreignId('exam_id')->constrained()->onDelete('cascade');
+            $table->foreignId('task_id')->constrained()->onDelete('cascade');
             $table->json('data')->comment("Lösung im JSON-Format");
             $table->timestamps();
 

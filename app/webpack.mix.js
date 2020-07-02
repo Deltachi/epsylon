@@ -22,7 +22,7 @@ mix.webpackConfig(webpack => {
         plugins: [
             new MonacoWebpackPlugin({
                 // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
-                languages: ['javascript','cpp','java','python']
+                languages: ['javascript','cpp','java','python','json']
             })
         ]
     };

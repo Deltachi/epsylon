@@ -36,7 +36,7 @@ class HomeController extends Controller
 
     public function action(Request $request){
         if ($request->action_exam_create){
-            echo "Erstelle Klausur für ". Subject::find($request->subject)->name;
+            return redirect()->route('exam.new',[$request->subject]);
         } elseif ($request->action_exam_edit){
             return redirect()->route('exam.edit.index',[$request->subject]);
         } elseif ($request->action_exam_activate){

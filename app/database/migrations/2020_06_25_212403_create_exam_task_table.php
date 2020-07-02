@@ -14,8 +14,8 @@ class CreateExamTaskTable extends Migration
     public function up()
     {
         Schema::create('exam_task', function (Blueprint $table) {
-            $table->foreignId('exam_id')->constrained();
-            $table->foreignId('task_id')->constrained();
+            $table->foreignId('exam_id')->constrained()->onDelete('cascade');
+            $table->foreignId('task_id')->constrained()->onDelete('cascade');
             $table->primary(array('exam_id','task_id'));
             $table->float('points')->nullable()->comment("Punkte, die diese Aufgabe in dieser Klausur bringen kann.");
             $table->timestamps();

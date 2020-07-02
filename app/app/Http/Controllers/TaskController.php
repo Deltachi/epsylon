@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use http\Env\Request;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -45,6 +47,12 @@ class TaskController extends Controller
     public function index()
     {
         return view('task.index');
+    }
+
+    public function destroy(Request $request){
+        $task_id = $request->task;
+        DB::table('tasks')->where('id',$task_id)->delete();
+        return response()->json(['method' => 'delete', 'success'=>true,'message'=>'Daten gelöscht!', 'messageType'=>'success'],200);
     }
 
 

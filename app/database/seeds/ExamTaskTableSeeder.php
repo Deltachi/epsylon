@@ -45,22 +45,12 @@ class ExamTaskTableSeeder extends Seeder
         DB::table('exam_task')->insert([
             'exam_id' => 1,
             'task_id' => 7,
-            'points' => 10.0,
+            'points' => 9.0,
         ]);
         DB::table('exam_task')->insert([
             'exam_id' => 1,
             'task_id' => 8,
-            'points' => 9.0,
-        ]);
-        /*DB::table('exam_task')->insert([
-            'exam_id' => 1,
-            'task_id' => 9,
-            'points' => 2.0,
-        ]);
-        DB::table('exam_task')->insert([
-            'exam_id' => 1,
-            'task_id' => 10,
             'points' => 15.0,
-        ]);*/
+        ]);
     }
 }

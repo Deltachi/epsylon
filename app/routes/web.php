@@ -23,18 +23,28 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/task', 'TaskController@index')->name('task.index');
 Route::get('/task/{id}', 'TaskController@show')->name('task.show');
+Route::delete('/task', 'TaskController@destroy')->name('task.destroy');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/action', 'HomeController@action')->name('user.action');
 
 Route::post('/subject', 'SubjectController@store')->name('subject.store');
 
+//Klausur lösen
 Route::get('/klausur','ExamController@index')->name('exam.index');
 Route::get('/exam','ExamController@index')->name('exam.index');
 Route::get('/exam/{id}','ExamController@show')->name('exam.show');
 
+//Übersicht des Moduls
 Route::get('/exam/edit/{subject}','ExamEditController@index')->name('exam.edit.index');
 Route::get('/exam/edit/{subject}/{exam}','ExamEditController@show')->name('exam.edit.show');
 Route::post('exam/edit/status','ExamEditController@updateStatus')->name('exam.edit.status.update');
+
+//Exam Editor
+Route::get('/new_exam/{subject}','ExamEditController@newExam')->name('exam.new');
+Route::get('/edit_exam/{exam}','ExamEditController@editExam')->name('exam.edit');
+Route::post('/edit_exam/','ExamEditController@saveExam')->name('exam.save');
+Route::delete('/edit_exam/','ExamEditController@destroy')->name('exam.destroy');
+
 
 Route::get('/exam/correct/{subject}','ExamCorrectorController@index')->name('exam.correct.index');
 Route::get('/exam/correct/{subject}/{exam}','ExamCorrectorController@show')->name('exam.correct.show');
