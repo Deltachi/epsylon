@@ -17,6 +17,8 @@
                 </div>
                 <label>Allgemeine Hinweise zur Klausur</label>
                 <ckeditor v-model="exam.terms" :editor="editor" :config="editorConfig"></ckeditor>
+                <label>Teilnehmer der Klausur</label>
+                <input class="form-control" type="text" v-model="exam.students">
             </div>
         </div>
         <div v-for="(task, index) in tasks" class="card task-data createtask spacing mb-4">
@@ -63,6 +65,8 @@
             <button @click="addTask" class="btn btn-primary btn-block mt-0 mr-2">Aufgabe Hinzufügen</button>
             <button @click="saveExam" class="btn btn-success btn-block mt-0 ml-2">Klausur Speichern</button>
         </div>
+        <div class="card p-2 pr-5 save-fix-right"><button @click="saveExam" class="btn btn-success ">Klausur Speichern und Verlassen</button></div>
+
     </div>
 </template>
 
@@ -151,6 +155,7 @@
                     end: "",
                     reenter: false,
                     terms: "",
+                    students: "",
                 },
                 tasks: [],
                 data: {
@@ -248,5 +253,10 @@
 <style>
     .spacing input, .spacing select, .spacing .ck-editor{
         margin-bottom: 20px!important;
+    }
+    .save-fix-right{
+        position: fixed;
+        bottom: 20px;
+        right: -5px;
     }
 </style>

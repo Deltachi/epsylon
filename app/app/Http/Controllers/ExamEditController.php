@@ -84,6 +84,7 @@ class ExamEditController extends Controller
     public function saveExam(Request $request){
         $exam_id = $request->exam;
         $exam = $request->data;
+
         DB::table('exams')->where('id',$exam['id'])->update([
             'subject_id' => $exam['subject_id'],
             'title' => $exam['title'],
@@ -131,6 +132,18 @@ class ExamEditController extends Controller
                 $this_exam->save();
             }
         }
+
+        if($exam['students']){
+            $exam_students = $exam['students'];
+            $exam_students = json_decode($exam_students);
+            foreach ($exam_students as $user_id){
+                DB::table('exam_user')->insertOrIgnore([
+                    'exam_id' => $exam['id'],
+                    'user_id' => $user_id,
+                ]);
+            }
+         }
+
         return response()->json(['method' => 'post', 'success'=>true,'message'=>'Daten gespeichert!', 'messageType'=>'success'],200);
     }
     public function destroy(Request $request){
