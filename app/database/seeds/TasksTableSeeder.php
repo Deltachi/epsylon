@@ -32,7 +32,7 @@ class TasksTableSeeder extends Seeder
                 'hint' => "Hier steht ein Hinweis zur Aufgabe",
                 'data' => json_encode(
                     array(
-                        "code" => 'int x = 0;\nint myFunc(int a, int b){\n    int out = a + b;\n    return out;\n}'
+                        "code" => ''
                     )
                 ),
                 'solution' => "",

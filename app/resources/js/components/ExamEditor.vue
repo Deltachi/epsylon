@@ -94,6 +94,7 @@
         },
         created() {
             if (this.dataExam){
+                console.log(this.dataExam);
                 this.exam = JSON.parse(this.dataExam);
             }
             if (this.exam.tasks){

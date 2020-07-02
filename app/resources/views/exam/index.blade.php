@@ -84,8 +84,10 @@
                                             <a class="btn btn-success" href="/exam/{{$exam->id}}">Bearbeitung beginnen</a>
                                         @elseif($exam->pivot->state == 'dirty')
                                             <a class="btn btn-outline-success" href="/exam/{{$exam->id}}">Bearbeitung fortsetzen</a>
-                                        @else
+                                        @elseif($exam->pivot->state == 'finished' && $exam->reenter)
                                             <a class="btn btn-outline-primary" href="/exam/{{$exam->id}}">Erneut bearbeiten</a>
+                                        @else
+                                            <a class="btn btn-outline-secondary disabled" href="#">Klausur beendet</a>
                                         @endif
                                         @break
                                         @case("closed")

@@ -46,7 +46,7 @@ Route::get('/edit_exam/{exam}','ExamEditController@editExam')->name('exam.edit')
 Route::post('/edit_exam/','ExamEditController@saveExam')->name('exam.save');
 Route::delete('/edit_exam/','ExamEditController@destroy')->name('exam.destroy');
 
-
+//Exam Corrector
 Route::get('/exam/correct/{subject}','ExamCorrectorController@index')->name('exam.correct.index');
 Route::get('/exam/correct/{subject}/{exam}','ExamCorrectorController@show')->name('exam.correct.show');
 

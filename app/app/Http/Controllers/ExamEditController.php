@@ -101,7 +101,7 @@ class ExamEditController extends Controller
                     'description' => $task['description'],
                     'hint' => $task['hint'],
                     'solution' => $task['solution'],
-                    'data' => json_encode($task['data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG),
+                    'data' => $task['data'],
                     'points' => $task['points'],
                 ]);
             }else{
@@ -120,7 +120,7 @@ class ExamEditController extends Controller
                     $new_task->solution = $task['solution'];
                 }
                 if (isset($task['data'])) {
-                    $new_task->data = json_encode($task['data'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG);
+                    $new_task->data = $task['data'];
                 }
                 if (isset($task['points'])) {
                     $new_task->points = $task['points'];

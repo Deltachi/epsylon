@@ -1,5 +1,5 @@
 <template>
-    <div v-if="ready" class="card">
+    <div class="card">
         <form>
             <task-header v-bind:task="task"></task-header>
             <div class="card-body">
@@ -14,10 +14,9 @@
                     </div>
                 </div>
             </div>
-            <task-footer></task-footer>
+            <task-footer @save="triggerSave" @reset="triggerReset"></task-footer>
         </form>
     </div>
-    <task-loading-error v-else></task-loading-error>
 </template>
 <script>
     import TaskHeader from "./TaskHeader";
@@ -29,36 +28,18 @@
         name: "task8",
         props: [
             'dataTask',
-            'dataAnswer',
-            'dataUserId',
-            'dataExamId',
-            'dataTaskId',
+            'triggerAnswerLoaded',
         ],
         components: {
             TaskHeader,
             TaskFooter,
-            TaskServerMessage,
-            TaskLoadingError,
         },
         created() {
-            //Methodenaufrufe
-            this.loadTask();
-            //Variablenzuweisungen
-            if (this.dataTask && this.dataTask !== "null") {
-                this.task = JSON.parse(this.dataTask);
-                this.task.data.sentence = this.replaceAll(this.task.data.sentence, this.task.data.blank, '~'+this.task.data.blank+'~');
-                this.task.data.sentence_exploded = this.task.data.sentence.split("~");
-                this.task.data.blank_ids = [];
+
+            //Initialisierungen
+            if(this.dataTask && this.dataTask !== "null"){
+                this.convertTaskData(this.dataTask);
                 this.ready = true;
-            }
-            if(this.dataUserId && this.dataUserId !== "null"){
-                this.user_id = this.dataUserId;
-            }
-            if(this.dataExamId && this.dataExamId !== "null"){
-                this.exam_id = this.dataExamId;
-            }
-            if(this.dataTaskId && this.dataTaskId !== "null"){
-                this.task_id = this.dataTaskId;
             }
         },
         data(){
@@ -77,124 +58,13 @@
                     points: 0.0,
                 },
                 answer:[],
-                user_id: 1,
-                exam_id: 1,
-                task_id: 8,
-                ready: false,
-                server_message: "",
-                server_message_type: "",
-                server_message_handle: new Vue(),
+                answerFresh:[],
             }
         },
+        mounted() {
+            this.triggerAnswerLoaded.$on('loaded', this.convertAnswerData);
+        },
         methods: {
-            loadTask(){
-                //Database connection
-                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                let url = '/answer/'+this.user_id+"/"+this.exam_id+"/"+this.task_id;
-                fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json, text-plain, */*",
-                        "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRF-TOKEN": token
-                    },
-                    credentials: "same-origin",
-                })
-                    .then(response => response.json())
-                    .then(data => this.serverData(data))
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            },
-            submitTask(){
-                //alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
-                console.log(this.answer);
-                //this.localSave();
-                //Database connection
-                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                let url = '/answer';
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json, text-plain, */*",
-                        "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRF-TOKEN": token
-                    },
-                    credentials: "same-origin",
-                    body: JSON.stringify({
-                        user: this.user_id,
-                        exam: this.exam_id,
-                        task: this.task_id,
-                        data: this.answer
-                    }),
-                })
-                    .then(response => response.json())
-                    .then(data => this.serverMessage(data))
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            },
-            localSave(){
-                localStorage.setItem("task_"+this.type,JSON.stringify(this.answer));
-            },
-            localLoad(){
-                if(localStorage.getItem("task_"+this.type)){
-                    this.answer = JSON.parse(localStorage.getItem("task_"+this.type));
-                }
-            },
-            localDelete(){
-                if(localStorage.getItem("task_"+this.type)){
-                    localStorage.removeItem("task_"+this.type);
-                }
-            },
-            resetTask(affirmation = false){
-                if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
-                    //this.localDelete();
-                    this.answer = null;
-
-                    //Database connection
-                    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    let url = '/answer';
-                    fetch(url, {
-                        method: 'DELETE',
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json, text-plain, */*",
-                            "X-Requested-With": "XMLHttpRequest",
-                            "X-CSRF-TOKEN": token
-                        },
-                        credentials: "same-origin",
-                        body: JSON.stringify({
-                            user: this.user_id,
-                            exam: this.exam_id,
-                            task: this.task_id,
-                        }),
-                    })
-                        .then(response => response.json())
-                        .then(data => this.serverMessage(data))
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                }
-            },
-            reset(){
-                if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
-                    this.localDelete();
-                    this.answer = [];
-                }
-            },
-            keyEvent(event) {
-                if (event.ctrlKey || event.metaKey) {
-                    switch (String.fromCharCode(event.which).toLowerCase()) {
-                        case 's':
-                            event.preventDefault();
-                            this.submitTask();
-                            break;
-                    }
-                }
-            },
             replaceAll(str, find, replace) {
                 return str.replace(new RegExp(find, 'g'), replace);
             },
@@ -206,27 +76,38 @@
                     return this.task.data.blank_ids.indexOf(index);
                 }
             },
-            serverMessage(response){
-                console.log(response.message);
-                this.server_message = response.message;
-                this.server_message_type = response.message_type;
-
-                this.server_message_handle.$emit('animate');
+            triggerSave(next = false){
+                this.$emit('save', next);
             },
-            serverData(response){
-                if(response.success){
-                    console.log(response.data);
-                    this.answer = JSON.parse(response.data);
-                }
-                console.log(response.message);
-                this.server_message = response.message;
-                this.server_message_type = response.message_type;
-                this.server_message_handle.$emit('animate');
-            }
+            triggerReset(affirm){
+                this.answer = "";
+                this.$emit('reset', affirm);
+            },
+            /**
+             * Wandele die Task-Daten in ein Format um, dass diese Aufgabe benötigt.
+             * Manipulier gegebenenfalls die DOM
+             * @param task
+             */
+            convertTaskData(task){
+                //Falls eine Umwandlung der Daten stattfinden soll
+                this.task = task;
+                this.task.data.sentence = this.replaceAll(this.task.data.sentence, this.task.data.blank, '~'+this.task.data.blank+'~');
+                this.task.data.sentence_exploded = this.task.data.sentence.split("~");
+                this.task.data.blank_ids = [];
+
+                this.task = task;
+            },
+            /**
+             * Wandele die Antwort-Daten in ein Format um, dass diese Aufgabe benötigt.
+             * @param data
+             */
+            convertAnswerData(data){
+                //Falls eine Umwandlung der Daten stattfinden soll
+                this.answer = data;
+            },
+
         },
-        mounted() {
-            $(window).bind('keydown', this.keyEvent);
-        },
+
     }
 </script>
 

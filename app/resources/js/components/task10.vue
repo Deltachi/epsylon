@@ -40,7 +40,6 @@
             //Initialisierungen
             if(this.dataTask && this.dataTask !== "null"){
                 this.convertTaskData(this.dataTask);
-                this.ready = true;
             }
         },
         data() {
