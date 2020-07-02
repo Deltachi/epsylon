@@ -1,12 +1,11 @@
 <template>
-    <div v-if="ready" class="card task">
+    <div class="card task">
         <task-header v-bind:task="task"></task-header>
         <div class="card-body p-0 task__body">
             <ckeditor :editor="editor" v-model="answer" :config="editorConfig"></ckeditor>
         </div>
-        <task-footer></task-footer>
+        <task-footer @save="triggerSave" @reset="triggerReset"></task-footer>
     </div>
-    <task-loading-error v-else></task-loading-error>
 </template>
 
 <script>
@@ -26,42 +25,23 @@
     import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
     import TaskHeader from "./TaskHeader";
     import TaskFooter from "./TaskFooter";
-    import TaskLoadingError from "./TaskLoadingError";
-    import TaskServerMessage from "./TaskServerMessage";
 
     export default {
         name: 'task10',
         props: [
             'dataTask',
-            'dataAnswer',
-            'dataUserId',
-            'dataExamId',
-            'dataTaskId',
+            'triggerAnswerLoaded',
         ],
         components: {
             TaskHeader,
             TaskFooter,
-            TaskServerMessage,
-            TaskLoadingError,
         },
         created() {
-            //Methodenaufrufe
-            this.loadTask();
-            //Variablenzuweisungen
-            if (this.dataTask && this.dataTask !== "null") {
-                this.task = JSON.parse(this.dataTask);
+            //Initialisierungen
+            if(this.dataTask && this.dataTask !== "null"){
+                this.convertTaskData(this.dataTask);
                 this.ready = true;
             }
-            if(this.dataUserId && this.dataUserId !== "null"){
-                this.user_id = this.dataUserId;
-            }
-            if(this.dataExamId && this.dataExamId !== "null"){
-                this.exam_id = this.dataExamId;
-            }
-            if(this.dataTaskId && this.dataTaskId !== "null"){
-                this.task_id = this.dataTaskId;
-            }
-            this.answer = this.task.data.editorData;
         },
         data() {
             return {
@@ -98,150 +78,44 @@
                     },
                 },
                 task: {
-                    title: "Eine Aufgabe mit WYSIWYG-Editor",
-                    description:"Hier kann ein vollformatierter Text geschrieben werden, der auch in der DB erhalten bleibt.",
+                    title: "",
+                    description: "",
                     hint: "",
-                    data: {
-                        editorData: '<p>Hello there.</p>',
-                    },
-                    points: 10.0,
+                    data: null,
+                    points: 0.0,
                 },
-                answer:"",
-                user_id: 1,
-                exam_id: 1,
-                task_id: 10,
-                ready: true,
-                server_message: "",
-                server_message_type: "",
-                server_message_handle: new Vue(),
+                answer: "",
+                answerFresh: "",
             };
         },
+        mounted() {
+            this.triggerAnswerLoaded.$on('loaded', this.convertAnswerData);
+        },
         methods: {
-            loadTask(){
-                //Database connection
-                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                let url = '/answer/'+this.user_id+"/"+this.exam_id+"/"+this.task_id;
-                fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json, text-plain, */*",
-                        "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRF-TOKEN": token
-                    },
-                    credentials: "same-origin",
-                })
-                    .then(response => response.json())
-                    .then(data => this.serverData(data))
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
+            triggerSave(next = false){
+                this.$emit('save', next);
             },
-            submitTask(){
-                //alert("Aufgabe wird abgegeben!\n"+JSON.stringify(this.answer));
-                console.log(this.answer);
-                //this.localSave()
-                //Database connection
-                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                let url = '/answer';
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json, text-plain, */*",
-                        "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRF-TOKEN": token
-                    },
-                    credentials: "same-origin",
-                    body: JSON.stringify({
-                        user: this.user_id,
-                        exam: this.exam_id,
-                        task: this.task_id,
-                        data: this.answer
-                    }),
-                })
-                    .then(response => response.json())
-                    .then(data => this.serverMessage(data))
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
+            triggerReset(affirm){
+                this.answer = "";
+                this.$emit('reset', affirm);
             },
-            localSave(){
-                localStorage.setItem("task_"+this.type,JSON.stringify(this.answer));
+            /**
+             * Wandele die Task-Daten in ein Format um, dass diese Aufgabe benötigt.
+             * Manipulier gegebenenfalls die DOM
+             * @param task
+             */
+            convertTaskData(task){
+                //Falls eine Umwandlung der Daten stattfinden soll
+                this.task = task;
             },
-            localLoad(){
-                if(localStorage.getItem("task_"+this.type)){
-                    this.answer = JSON.parse(localStorage.getItem("task_"+this.type));
-                }
+            /**
+             * Wandele die Antwort-Daten in ein Format um, dass diese Aufgabe benötigt.
+             * @param data
+             */
+            convertAnswerData(data){
+                //Falls eine Umwandlung der Daten stattfinden soll
+                this.answer = data;
             },
-            localDelete(){
-                if(localStorage.getItem("task_"+this.type)){
-                    localStorage.removeItem("task_"+this.type);
-                }
-            },
-            resetTask(affirmation = false){
-                if(affirmation || confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
-                    //this.localDelete();
-                    this.answer = null;
-
-                    //Database connection
-                    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    let url = '/answer';
-                    fetch(url, {
-                        method: 'DELETE',
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json, text-plain, */*",
-                            "X-Requested-With": "XMLHttpRequest",
-                            "X-CSRF-TOKEN": token
-                        },
-                        credentials: "same-origin",
-                        body: JSON.stringify({
-                            user: this.user_id,
-                            exam: this.exam_id,
-                            task: this.task_id,
-                        }),
-                    })
-                        .then(response => response.json())
-                        .then(data => this.serverMessage(data))
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                }
-            },
-            reset(){
-                if(confirm("Möchten Sie die Bearbeitung Ihrer Aufgabe zurücksetzen?")){
-                    this.localDelete();
-                    this.answer = '';
-                }
-            },
-            keyEvent(event) {
-                if (event.ctrlKey || event.metaKey) {
-                    switch (String.fromCharCode(event.which).toLowerCase()) {
-                        case 's':
-                            event.preventDefault();
-                            this.submitTask();
-                            break;
-                    }
-                }
-            },
-            serverMessage(response){
-                console.log(response.message);
-                this.server_message = response.message;
-                this.server_message_type = response.message_type;
-
-                this.server_message_handle.$emit('animate');
-            },
-            serverData(response){
-                if(response.success){
-                    console.log(response.data);
-                    this.answer = JSON.parse(response.data);
-                }
-                console.log(response.message);
-                this.server_message = response.message;
-                this.server_message_type = response.message_type;
-                this.server_message_handle.$emit('animate');
-            }
         }
     };
 </script>

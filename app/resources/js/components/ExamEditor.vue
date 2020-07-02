@@ -187,6 +187,7 @@
             },
             saveExam(){
                 this.submitData();
+                window.location.href = "http://localhost/exam/edit/"+this.exam.subject_id;
             },
             submitData(){
                 //Answer Data

@@ -32,6 +32,7 @@ Route::post('/subject', 'SubjectController@store')->name('subject.store');
 //Klausur lösen
 Route::get('/klausur','ExamController@index')->name('exam.index');
 Route::get('/exam','ExamController@index')->name('exam.index');
+Route::post('/exam','ExamController@store')->name('exam.store');
 Route::get('/exam/{id}','ExamController@show')->name('exam.show');
 
 //Übersicht des Moduls

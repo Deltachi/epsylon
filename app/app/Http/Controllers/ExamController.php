@@ -89,4 +89,14 @@ class ExamController extends Controller
         }
         return redirect()->route('exam.index');
     }
+
+    public function store(Request $request){
+        $user_id = $request->user;
+        $exam_id = $request->exam;
+        $exam = Exam::find($exam_id);
+        $user = User::find($user_id);
+        $user->exams()->updateExistingPivot($exam, array('state' => 'finished'), false);
+        $user->save();
+        return response()->json(['method' => 'post', 'success'=>true,'message'=>'Daten gespeichert!', 'messageType'=>'success'],200);
+    }
 }

@@ -42,6 +42,14 @@
                @reset="triggerResetHandle"
                ref="taskRef"
         ></task6>
+
+        <task10 v-if="parseInt(task.type) === 10"
+               :data-task="task"
+               :trigger-answer-loaded="pushToChild"
+               @save="triggerSaveHandle"
+               @reset="triggerResetHandle"
+               ref="taskRef"
+        ></task10>
     </div>
     <task-loading-error v-else></task-loading-error>
 </template>

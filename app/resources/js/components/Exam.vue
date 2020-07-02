@@ -29,7 +29,7 @@
                         <div class="progress-bar progress-bar-transition bg-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" :style="'width: '+calculateProgress()+'%'">
                             {{calculateProgress()}}%</div>
                     </div>
-                    <button type="button" class="btn btn-outline-success btn-block text-uppercase">Klausur abgeben</button>
+                    <button @click="finishExam" type="button" class="btn btn-outline-success btn-block text-uppercase">Klausur abgeben</button>
                 </div>
             </div>
         </div>
@@ -168,6 +168,35 @@
             },
             getOverviewClass(task){
                 return (task.answered ? 'bg-gradient-success text-white' : '');
+            },
+            finishExam(){
+                //Answer Data
+                let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                let submit_data = JSON.stringify({
+                    user: this.user.id,
+                    exam: this.exam.id,
+                });
+                //Database connection
+                let url = '/exam';
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    credentials: "same-origin",
+                    body: submit_data,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Response:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                window.location.href = "/home";
             },
         },
         created() {
