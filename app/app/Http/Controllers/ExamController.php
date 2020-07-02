@@ -24,16 +24,18 @@ class ExamController extends Controller
     public function findAndSetActiveExams($exams){
         $now = new DateTime("now");
         foreach ($exams as $exam){
-            if(isset($exam->begin, $exam->end) && $exam->status === "pending" && $exam->final == true){
+            if(isset($exam->begin, $exam->end)){
                 try {
                     $exam->begin = new DateTime($exam->begin);
                     $exam->end = new DateTime($exam->end);
+                } catch (\Exception $e) {
+                }
+                if(($exam->status === "pending" ||  $exam->status === "open" )){
                     if ($now > $exam->begin && $now < $exam->end){
                         $exam->status = "open";
                     }elseif ($now > $exam->end){
                         $exam->status = "closed";
                     }
-                } catch (\Exception $e) {
                 }
             }
         }

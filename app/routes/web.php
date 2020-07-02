@@ -24,11 +24,20 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/task', 'TaskController@index')->name('task.index');
 Route::get('/task/{id}', 'TaskController@show')->name('task.show');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/action', 'HomeController@action')->name('user.action');
 
+Route::post('/subject', 'SubjectController@store')->name('subject.store');
 
 Route::get('/klausur','ExamController@index')->name('exam.index');
 Route::get('/exam','ExamController@index')->name('exam.index');
 Route::get('/exam/{id}','ExamController@show')->name('exam.show');
+
+Route::get('/exam/edit/{subject}','ExamEditController@index')->name('exam.edit.index');
+Route::get('/exam/edit/{subject}/{exam}','ExamEditController@show')->name('exam.edit.show');
+Route::post('exam/edit/status','ExamEditController@updateStatus')->name('exam.edit.status.update');
+
+Route::get('/exam/correct/{subject}','ExamCorrectorController@index')->name('exam.correct.index');
+Route::get('/exam/correct/{subject}/{exam}','ExamCorrectorController@show')->name('exam.correct.show');
 
 
 /* REST-API für die Task-Frontend-Komponente */

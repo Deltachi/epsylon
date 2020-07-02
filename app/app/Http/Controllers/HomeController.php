@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Subject;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,4 +33,18 @@ class HomeController extends Controller
         }
         return view('home', ['user'=>$user]);
     }
+
+    public function action(Request $request){
+        if ($request->action_exam_create){
+            echo "Erstelle Klausur für ". Subject::find($request->subject)->name;
+        } elseif ($request->action_exam_edit){
+            return redirect()->route('exam.edit.index',[$request->subject]);
+        } elseif ($request->action_exam_activate){
+            return redirect()->route('exam.edit.index',[$request->subject]);
+        } elseif ($request->action_exam_correct){
+            return redirect()->route('exam.correct.index',[$request->subject]);
+        }
+    }
+
+
 }
